@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/nav_truck"
+            android:icon="@drawable/ic_truck"
+            android:title="@string/menu_truck" />
+        <item
+            android:id="@+id/nav_goodlist"
+            android:icon="@drawable/ic_parcel"
+            android:title="@string/menu_goods_list" />
+        <item
+            android:id="@+id/nav_locationList"
+            android:icon="@drawable/ic_tour"
+            android:title="@string/menu_locationList" />
+        <item
+            android:id="@+id/nav_checkList"
+            android:icon="@drawable/ic_checklist"
+            android:title="@string/menu_checkList" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/menu_logout" />
+    </group>
+</menu>

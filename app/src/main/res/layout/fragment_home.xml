@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F8F8F8"
+        tools:context=".Activity.ui.home.HomeFragment">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/primary_bottomcorner"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/Enquiries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enquiries"
+                android:textAppearance="@style/toolbartext"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/view8"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/EnquiriesValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gotham"
+                android:maxLength="4"
+                android:text="60"
+                android:textAppearance="@style/toolbartext"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="@+id/Enquiries"
+                app:layout_constraintStart_toStartOf="@+id/Enquiries"
+                app:layout_constraintTop_toBottomOf="@+id/Enquiries" />
+
+
+            <TextView
+                android:id="@+id/Booking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Booking"
+                android:textAppearance="@style/toolbartext"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/view9"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/view8"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/BookingValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="4"
+                android:text="30"
+                android:textAppearance="@style/toolbartext"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="@+id/Booking"
+                app:layout_constraintStart_toStartOf="@+id/Booking"
+                app:layout_constraintTop_toBottomOf="@+id/Booking" />
+
+
+            <TextView
+                android:id="@+id/Pending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daily Rates"
+                android:textAppearance="@style/toolbartext"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/view9"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="4"
+                android:text="30"
+                android:textAppearance="@style/toolbartext"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="@+id/Pending"
+                app:layout_constraintStart_toStartOf="@+id/Pending"
+                app:layout_constraintTop_toBottomOf="@+id/Pending" />
+
+            <View
+                android:id="@+id/view8"
+                android:layout_width="2dp"
+                android:layout_height="60dp"
+                android:background="@color/whiteTextColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/Booking"
+                app:layout_constraintStart_toEndOf="@+id/Enquiries"
+                app:layout_constraintTop_toTopOf="@+id/Booking" />
+
+            <View
+                android:id="@+id/view9"
+                android:layout_width="2dp"
+                android:layout_height="60dp"
+                android:background="@color/whiteTextColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/Pending"
+                app:layout_constraintStart_toEndOf="@+id/Booking"
+                app:layout_constraintTop_toTopOf="@+id/Pending" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/whiteTextColor"
+            app:rippleColor="@color/grey_20"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/salesImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/reports_header_bk"
+                    android:padding="8dp"
+                    android:tint="@color/whiteTextColor"
+                    android:src="@drawable/ic_pay" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/salesImageView"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/reportContentText"
+                        android:text="Payments"
+                        android:textColor="#333" />
+
+                    <TextView
+                        style="@style/viewParent.headerText"
+                        android:text="(Manage Payments)"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textColor="@color/grey_40"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/whiteTextColor"
+            app:rippleColor="@color/grey_20"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/salesImageView1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/reports_header_bk"
+                    android:padding="8dp"
+                    android:tint="@color/whiteTextColor"
+                    android:src="@drawable/ic_location"  />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/salesImageView1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/reportContentText"
+                        android:text="All Routes"
+                        android:textColor="#333" />
+
+                    <TextView
+                        style="@style/viewParent.headerText"
+                        android:text="(Routes Added to the list)"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textColor="@color/grey_40"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/whiteTextColor"
+            app:rippleColor="@color/grey_20"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/salesImageView2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/reports_header_bk"
+                    android:padding="8dp"
+                    android:tint="@color/whiteTextColor"
+                    android:src="@drawable/ic_plus"  />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/salesImageView2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/reportContentText"
+                        android:text="Add"
+                        android:textColor="#333" />
+
+                    <TextView
+                        style="@style/viewParent.headerText"
+                        android:text="(Add Routes, Goods Type, Motor, Owner, Driver, Truck)"
+                        android:textSize="12dp"
+                        android:singleLine="true"
+                        android:textStyle="normal"
+                        android:textColor="@color/grey_40"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/whiteTextColor"
+            app:rippleColor="@color/grey_20"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView2">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/salesImageView3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/reports_header_bk"
+                    android:padding="8dp"
+                    android:tint="@color/whiteTextColor"
+                    android:src="@drawable/ic_seo_report"  />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/salesImageView3"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/reportContentText"
+                        android:text="Reports"
+                        android:textColor="#333" />
+
+                    <TextView
+                        style="@style/viewParent.headerText"
+                        android:text="(All Reports)"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textColor="@color/grey_40"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/whiteTextColor"
+            app:rippleColor="@color/grey_20"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView3">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/salesImageView5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/reports_header_bk"
+                    android:padding="8dp"
+                    android:tint="@color/whiteTextColor"
+                    android:src="@drawable/ic_delivery"  />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/salesImageView5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/reportContentText"
+                        android:text="Fleets"
+                        android:textColor="#333" />
+
+                    <TextView
+                        style="@style/viewParent.headerText"
+                        android:text="(Tracking Status)"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        android:textColor="@color/grey_40"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".Activity.OtpVerification">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+             />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-16dp"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:padding="16dp">
+
+
+                <ImageView
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/mail_box_img" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/gotham"
+                    android:text="OTP Verification"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/gotham"
+                    android:lineSpacingExtra="6dp"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+
+
+                <com.truckexpress.Extras.CustomPinview
+                    android:id="@+id/enterPin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="4dp"
+                    android:visibility="visible"
+                    app:cursorVisible="false"
+                    app:forceKeyboard="false"
+                    app:inputType="number"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    app:password="true"
+                    app:pinHeight="50dp"
+                    app:pinLength="4"
+                    app:pinWidth="55dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/gotham"
+                    android:text="Don't recieve the OTP?"
+                    android:textAlignment="center"
+                    android:textColor="#a3a3a3"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/gotham"
+                    android:text="RESEND OTP"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/verify"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/buttonshape"
+                    android:fontFamily="@font/gotham"
+                    android:text="VERIFY"
+                    android:onClick="Authenticate"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

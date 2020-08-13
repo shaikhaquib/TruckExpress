@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TruckExpress</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Welcome to Truck Express</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_truck">Truck</string>
+    <string name="menu_goods_list">Goods List</string>
+    <string name="menu_locationList">Location List</string>
+    <string name="menu_checkList">Check List</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_profile">Profile</string>
+    <string name="title_activity_enquires">EnquiresActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+</resources>

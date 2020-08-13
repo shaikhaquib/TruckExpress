@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/gotham"
+                android:text="Add New BID"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/bookingID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/gotham"
+                android:text="Booking ID : 00005"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/trckType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_truck"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/gotham"
+                android:gravity="center"
+                android:text="Truck Type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bookingID" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/noofTruck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_truck"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/gotham"
+                android:gravity="center"
+                android:text="Truck Type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/trckType" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_rupee"
+                app:layout_constraintEnd_toStartOf="@+id/rate"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/noofTruck" />
+
+            <EditText
+                android:id="@+id/rate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:background="@null"
+                android:fontFamily="@font/gotham"
+                android:hint="00.0"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:textColor="#000000"
+                android:textColorHint="#c7c7c8"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+                <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/gotham"
+                android:gravity="center"
+                android:text="Ton"
+                app:layout_constraintBottom_toBottomOf="@+id/rate"
+                app:layout_constraintStart_toEndOf="@+id/rate"
+                app:layout_constraintTop_toTopOf="@+id/rate" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rate"
+                app:startIconDrawable="@drawable/ic_truck"
+                app:startIconTint="@color/colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtNoofTruck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="Number of Truck"
+                    android:inputType="number"
+                    android:padding="12.5dp"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveBid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/gotham"
+                android:text="Add BID"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/blue_grey_100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+
+            <ImageButton
+                android:id="@+id/closeDiloge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_close"
+                android:tint="@color/splash"
+                app:layout_constraintBottom_toBottomOf="@+id/materialTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/materialTextView" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
