@@ -1,17 +1,11 @@
 package com.truckexpress.Activity.ui.home;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,29 +13,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.truckexpress.Activity.BookingActivity;
 import com.truckexpress.Activity.EnquiresActivity;
-import com.truckexpress.Activity.LoginActivity;
 import com.truckexpress.Activity.MainActivity;
-import com.truckexpress.Activity.OtpVerification;
 import com.truckexpress.Extras.Constants;
 import com.truckexpress.Extras.Progress;
-import com.truckexpress.Models.UserInfo;
-import com.truckexpress.Network.AppController;
 import com.truckexpress.R;
 import com.truckexpress.databinding.FragmentHomeBinding;
 
@@ -54,12 +30,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import static androidx.databinding.DataBindingUtil.inflate;
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
@@ -67,7 +40,6 @@ import static com.truckexpress.Extras.Constants.Alert;
 import static com.truckexpress.Extras.Constants.CONNECTION_TIMEOUT;
 import static com.truckexpress.Extras.Constants.READ_TIMEOUT;
 import static com.truckexpress.Network.API.DashboardCount;
-import static com.truckexpress.Network.API.LOGIN;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -97,6 +69,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         binding.Enquiries.setOnClickListener(this);
         binding.EnquiriesValue.setOnClickListener(this);
+        binding.Booking.setOnClickListener(this);
+        binding.BookingValue.setOnClickListener(this);
 
 
         new DashBoard().execute();
@@ -200,12 +174,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.Enquiries:
                 startActivity(new Intent(getActivity(), EnquiresActivity.class));
                 break;
             case R.id.EnquiriesValue:
                 startActivity(new Intent(getActivity(), EnquiresActivity.class));
+                break;
+            case R.id.Booking:
+                startActivity(new Intent(getActivity(), BookingActivity.class));
+                break;
+            case R.id.BookingValue:
+                startActivity(new Intent(getActivity(), BookingActivity.class));
                 break;
         }
 

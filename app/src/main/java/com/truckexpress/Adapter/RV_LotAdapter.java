@@ -1,6 +1,8 @@
 package com.truckexpress.Adapter;
 
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,9 @@ import com.truckexpress.R;
 import com.truckexpress.databinding.ItemLotBinding;
 
 import java.util.List;
+
+import static com.truckexpress.Extras.Constants.Alert;
+import static com.truckexpress.Extras.Constants.AlertAutoLink;
 
 public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder> {
 
@@ -63,7 +68,7 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
             itemLotBinding.pickUPdate.setText(modelLOT.getPickupdate());
 
             if (modelLOT.getWeight().isEmpty() || modelLOT.getWeight() == null) {
-                itemLotBinding.weight.setText("No Data Available");
+                itemLotBinding.weight.setText("No Data");
             } else {
                 itemLotBinding.weight.setText(modelLOT.getWeight() + " " + modelLOT.getUnitid());
             }
@@ -80,6 +85,19 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
             itemLotBinding.totalfreight.setText(modelLOT.getTotalfreight());
             itemLotBinding.expense.setText(String.valueOf(modelLOT.getTotalexpenses()));
             itemLotBinding.checkList.setText("Checklist : " + String.valueOf(modelLOT.getChecklistcount()));
+
+            itemLotBinding.corporateName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String msg = "Name : "+modelLOT.getName()+"\n"+
+                            "Email ID : "+modelLOT.getCorporateContactPersoneEmail()+"\n"+
+                            "Mobile No : "+modelLOT.getCorporateContactPerson();
+
+                    AlertAutoLink(context,msg,"Corporate Details");
+                }
+            });
+
 
             itemLotBinding.checkList.setOnClickListener(new View.OnClickListener() {
                 @Override

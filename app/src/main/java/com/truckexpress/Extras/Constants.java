@@ -1,13 +1,22 @@
 package com.truckexpress.Extras;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.truckexpress.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,11 +35,40 @@ public class Constants {
     public static final String DATABASE_NAME = "UserDB";
 
     public static void Alert(Context context,String message) {
-         new MaterialAlertDialogBuilder(context)
-                 .setTitle("Alert")
-                 .setMessage(message)
-                 .setPositiveButton("Ok",null)
-                 .show();
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
+                 dialogBuilder.setTitle("Alert");
+                 dialogBuilder.setMessage(message);
+                 dialogBuilder.setPositiveButton("Ok",null);
+                 dialogBuilder.show();
+
+    }
+    public static void AlertAutoLink (Context context,String strMessage ,String strTitle) {
+        final Dialog dialog;
+        dialog  = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.clickable_link_dialoge);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+
+        TextView title = dialog.findViewById(R.id.title);
+        title.setText(strTitle);
+
+        TextView message = dialog.findViewById(R.id.message);
+        message.setText(strMessage);
+        message.setMovementMethod(LinkMovementMethod.getInstance());
+
+        dialog.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
 
     }
 

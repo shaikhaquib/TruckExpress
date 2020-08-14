@@ -1,25 +1,27 @@
 package com.truckexpress.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.truckexpress.Adapter.ViewPagerAdapter;
 import com.truckexpress.Extras.Progress;
 import com.truckexpress.Fragments.Fragment_ADHOC;
 import com.truckexpress.Fragments.Fragment_Contract;
+import com.truckexpress.Fragments.Fragment_CurrentBookings;
 import com.truckexpress.Fragments.Fragment_LOT;
+import com.truckexpress.Fragments.Fragment_TripIn_Process;
+import com.truckexpress.Fragments.Fragment_Trip_Completed;
+import com.truckexpress.Models.ModelCurrentBooking;
 import com.truckexpress.Models.ModelLOT;
 import com.truckexpress.R;
 
@@ -45,27 +47,26 @@ import static com.truckexpress.Extras.Constants.Alert;
 import static com.truckexpress.Extras.Constants.CONNECTION_TIMEOUT;
 import static com.truckexpress.Extras.Constants.READ_TIMEOUT;
 import static com.truckexpress.Network.API.BOOKINGLIST;
+import static com.truckexpress.Network.API.CURRENTBOOKING;
 
-public class EnquiresActivity extends AppCompatActivity {
-
+public class BookingActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
 
-    Fragment_ADHOC fragment_adHoc = new Fragment_ADHOC();
-    Fragment_LOT fragment_lot = new Fragment_LOT();
-    Fragment_Contract fragment_contract = new Fragment_Contract();
+    Fragment_CurrentBookings fragment_currentBookings = new Fragment_CurrentBookings();
+    Fragment_TripIn_Process fragment_tripIn_process = new Fragment_TripIn_Process();
+    Fragment_Trip_Completed fragment_trip_completed = new Fragment_Trip_Completed();
     ActionBar actionBar;
-    public List<ModelLOT> modelLOTS = new ArrayList<>();
+    public List<ModelCurrentBooking> currentBookings = new ArrayList<>();
     public List<ModelLOT> modelADHOC = new ArrayList<>();
-    private static final String TAG = "EnquiresActivity";
+    private static final String TAG = "BookingActivity";
     Progress progress;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enquires);
+        setContentView(R.layout.activity_booking);
+        setTitle("Booking");
         actionBar = getSupportActionBar();
-        actionBar.setTitle("Enquiries");
         actionBar.setElevation(0);
         actionBar.setDisplayHomeAsUpEnabled(true);
         viewPager = findViewById(R.id.view_pager);
@@ -78,9 +79,9 @@ public class EnquiresActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        adapter.addFragment(fragment_adHoc, "ADHOC");
-        adapter.addFragment(fragment_lot, "LOT");
-        adapter.addFragment(fragment_contract, "Contract");
+        adapter.addFragment(fragment_currentBookings, "Current Bookings");
+        adapter.addFragment(fragment_tripIn_process, "Trip in Process");
+        adapter.addFragment(fragment_trip_completed, "Trip Completed");
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(1);
 
@@ -95,7 +96,6 @@ public class EnquiresActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     public class BookingListTask extends AsyncTask<String , Void ,String> {
         String server_response;
@@ -112,7 +112,7 @@ public class EnquiresActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                url = new URL(BOOKINGLIST);
+                url = new URL(CURRENTBOOKING);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -190,16 +190,8 @@ public class EnquiresActivity extends AppCompatActivity {
                             try {
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 Gson gson = new Gson();
-                                ModelLOT modelLOT = gson.fromJson(object.toString(), ModelLOT.class);
-                                String type = modelLOT.getBookingtype();
-                                if (type.equals("1")) {
-                                    modelLOTS.add(modelLOT);
-                                //    rvLOT.getAdapter().notifyDataSetChanged();
-                                }else if (type.equals("0")){
-                                    modelADHOC.add(modelLOT);
-                                }
-
-
+                                ModelCurrentBooking modelLOT = gson.fromJson(object.toString(), ModelCurrentBooking.class);
+                                 currentBookings.add(modelLOT);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -207,16 +199,11 @@ public class EnquiresActivity extends AppCompatActivity {
                     }else   if (json instanceof JSONObject){
                         JSONObject object = new JSONObject(s);
                         Gson gson = new Gson();
-                        ModelLOT modelLOT = gson.fromJson(object.toString(), ModelLOT.class);
-
-                        if (modelLOT.getBookingtype().equals("1")) {
-                            modelLOTS.add(modelLOT);
-                          //  rvLOT.getAdapter().notifyDataSetChanged();
-                        }else if (modelLOT.getBookingtype().equals("0")){
-                            modelADHOC.add(modelLOT);
-                        }
+                        ModelCurrentBooking modelLOT = gson.fromJson(object.toString(), ModelCurrentBooking.class);
+                        currentBookings.add(modelLOT);
+                        
                     }else {
-                        Alert(EnquiresActivity.this, s);
+                        Alert(BookingActivity.this, s);
 
                     }
 
@@ -227,11 +214,10 @@ public class EnquiresActivity extends AppCompatActivity {
                 sendBroadcast(intent);
 
             } else {
-                Alert(EnquiresActivity.this, "Some thing went wrong..");
+                Alert(BookingActivity.this, "Some thing went wrong..");
             }
 
         }
     }
-
 
 }
