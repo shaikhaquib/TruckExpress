@@ -277,7 +277,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:drawableLeft="@drawable/ic_rupee"
+                    android:drawableLeft="@drawable/ic_product"
                     android:drawablePadding="4dp"
                     android:drawableTint="@color/colorPrimary"
                     android:fontFamily="@font/gotham"

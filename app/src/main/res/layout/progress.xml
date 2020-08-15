@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_speed="2"
+        app:lottie_scale="4"
         app:lottie_fileName="truck.json"
         app:lottie_loop="true" />
 

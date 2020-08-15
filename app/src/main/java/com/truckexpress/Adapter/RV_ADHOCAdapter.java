@@ -110,7 +110,7 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                 itemLotBinding.weight.setText("No Data");
             }
             else {
-                itemLotBinding.weight.setText(modelLOT.getWeight() + " " + modelLOT.getUnitid());
+                itemLotBinding.weight.setText(modelLOT.getWeight() + "Ton");
             }
 
             itemLotBinding.Amount.setText(modelLOT.getRate()+ " " + modelLOT.getUnitid());
@@ -121,9 +121,9 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
             itemLotBinding.dropLocation.setText(modelLOT.getDropaddress());
 
             itemLotBinding.goodsType.setText(modelLOT.getGoodstype());
-            itemLotBinding.paymentmode.setText(modelLOT.getPaymentmode());
-            itemLotBinding.totalfreight.setText(modelLOT.getAmmountpaid());
-            itemLotBinding.expense.setText(String.valueOf(modelLOT.getTotalfreight()));
+            itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
+            itemLotBinding.totalfreight.setText(modelLOT.getTotalfreight());
+            itemLotBinding.expense.setText("₹ "+modelLOT.getTotalexpenses());
             itemLotBinding.noofTruck.setText(String.valueOf("Number : "+modelLOT.getBookingnooftruck()));
             itemLotBinding.checkList.setText("Checklist : "+String.valueOf(modelLOT.getChecklistcount()));
 
@@ -131,10 +131,31 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                 itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#00C853"));
             }
 
+            itemLotBinding.paymentmode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick: "+itemLotBinding.paymentmode);
+                    if (modelLOT.getPaymentmode().equals("2")){
+                        String msg = "Advance : "+modelLOT.getAdvance()+ " %"+"\n"+
+                                "Balance : "+modelLOT.getBalance();
+                        AlertAutoLink(context,msg,"Payments Details");
+                    } else if (modelLOT.getPaymentmode().equals("4")) {
+                        String msg = "Advance : "+modelLOT.getAdvance()+ " %"+"\n"+
+                                "Balance : "+modelLOT.getBalance()+"\n"+
+                                "No Of Days : "+modelLOT.getNoofdays();
+                        AlertAutoLink(context,msg,"Payments Details");
+                    } else if (modelLOT.getPaymentmode().equals("3")) {
+                        String msg =
+                                "No Of Days : "+modelLOT.getNoofdays();
+                        AlertAutoLink(context,msg,"Payments Details");
+                    }
+                }
+            });
+
             itemLotBinding.checkList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new GetChecklist(progress).execute(String.valueOf(modelLOT.getId()));
+                    new GetChecklist(progress,context).execute(String.valueOf(modelLOT.getId()));
                 }
             });
 
@@ -488,15 +509,17 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
 
         }
     }
-    public class GetChecklist extends AsyncTask<String , Void ,String> {
+    public static class GetChecklist extends AsyncTask<String , Void ,String> {
         String server_response;
         String Json;
         HttpURLConnection conn;
         URL url = null;
         Progress progress;
+        Context context;
 
-        public GetChecklist(Progress progress) {
+        public GetChecklist(Progress progress, Context context) {
             this.progress = progress;
+            this.context = context;
         }
 
         @Override
@@ -581,7 +604,7 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                     if (json instanceof JSONArray) {
                         JSONArray jsonArray = new JSONArray(s);
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(0);
+                            JSONObject object = jsonArray.getJSONObject(i);
                             strings.add(object.getString("cheklist"));
                         }
                     }else {
@@ -592,7 +615,7 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                     e.printStackTrace();
                 }
 
-                showChecklist(strings);
+                showChecklist(strings,context);
             } else {
                 Alert(context, "Some thing went wrong..");
             }
@@ -600,7 +623,7 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
         }
     }
 
-    private void showChecklist(List<String> strings) {
+    public static void showChecklist(List<String> strings , Context context) {
         if (strings.size()>0) {
             String[] checkList = new String[strings.size()];
             checkList = strings.toArray(checkList);

@@ -11,10 +11,10 @@ public class ModelLOT{
 	private int totalexpenses;
 
 	@SerializedName("phone2")
-	private String phone2;
+	private Object phone2;
 
 	@SerializedName("phone3")
-	private String phone3;
+	private Object phone3;
 
 	@SerializedName("source")
 	private String source;
@@ -32,7 +32,7 @@ public class ModelLOT{
 	private int bookingid;
 
 	@SerializedName("phone1")
-	private String phone1;
+	private Object phone1;
 
 	@SerializedName("advance")
 	private String advance;
@@ -47,7 +47,7 @@ public class ModelLOT{
 	private String balance;
 
 	@SerializedName("tlname")
-	private String tlname;
+	private Object tlname;
 
 	@SerializedName("unitname")
 	private String unitname;
@@ -65,7 +65,7 @@ public class ModelLOT{
 	private String bookingtype;
 
 	@SerializedName("pincode")
-	private String pincode;
+	private Object pincode;
 
 	@SerializedName("shortageallowance")
 	private String shortageallowance;
@@ -78,6 +78,9 @@ public class ModelLOT{
 
 	@SerializedName("weight")
 	private String weight;
+
+	@SerializedName("paymentname")
+	private String paymentname;
 
 	@SerializedName("lotweight")
 	private int lotweight;
@@ -101,13 +104,13 @@ public class ModelLOT{
 	private String goodstype;
 
 	@SerializedName("tfname")
-	private String tfname;
+	private Object tfname;
 
 	@SerializedName("expenseslist")
-	private String expenseslist;
+	private Object expenseslist;
 
 	@SerializedName("UIMessage")
-	private String uIMessage;
+	private Object uIMessage;
 
 	@SerializedName("nooftrucks")
 	private String nooftrucks;
@@ -146,13 +149,13 @@ public class ModelLOT{
 	private int selectbookingtype;
 
 	@SerializedName("email")
-	private String email;
+	private Object email;
 
 	@SerializedName("checklistname")
 	private String checklistname;
 
 	@SerializedName("address")
-	private String address;
+	private Object address;
 
 	@SerializedName("noofdays")
 	private int noofdays;
@@ -193,23 +196,23 @@ public class ModelLOT{
 		this.totalexpenses = totalexpenses;
 	}
 
-	public int 	getTotalexpenses(){
+	public int getTotalexpenses(){
 		return totalexpenses;
 	}
 
-	public void setPhone2(String phone2){
+	public void setPhone2(Object phone2){
 		this.phone2 = phone2;
 	}
 
-	public String getPhone2(){
+	public Object getPhone2(){
 		return phone2;
 	}
 
-	public void setPhone3(String phone3){
+	public void setPhone3(Object phone3){
 		this.phone3 = phone3;
 	}
 
-	public String getPhone3(){
+	public Object getPhone3(){
 		return phone3;
 	}
 
@@ -253,11 +256,11 @@ public class ModelLOT{
 		return bookingid;
 	}
 
-	public void setPhone1(String phone1){
+	public void setPhone1(Object phone1){
 		this.phone1 = phone1;
 	}
 
-	public String getPhone1(){
+	public Object getPhone1(){
 		return phone1;
 	}
 
@@ -293,11 +296,11 @@ public class ModelLOT{
 		return balance;
 	}
 
-	public void setTlname(String tlname){
+	public void setTlname(Object tlname){
 		this.tlname = tlname;
 	}
 
-	public String getTlname(){
+	public Object getTlname(){
 		return tlname;
 	}
 
@@ -341,11 +344,11 @@ public class ModelLOT{
 		return bookingtype;
 	}
 
-	public void setPincode(String pincode){
+	public void setPincode(Object pincode){
 		this.pincode = pincode;
 	}
 
-	public String getPincode(){
+	public Object getPincode(){
 		return pincode;
 	}
 
@@ -379,6 +382,14 @@ public class ModelLOT{
 
 	public String getWeight(){
 		return weight;
+	}
+
+	public void setPaymentname(String paymentname){
+		this.paymentname = paymentname;
+	}
+
+	public String getPaymentname(){
+		return paymentname;
 	}
 
 	public void setLotweight(int lotweight){
@@ -437,27 +448,27 @@ public class ModelLOT{
 		return goodstype;
 	}
 
-	public void setTfname(String tfname){
+	public void setTfname(Object tfname){
 		this.tfname = tfname;
 	}
 
-	public String getTfname(){
+	public Object getTfname(){
 		return tfname;
 	}
 
-	public void setExpenseslist(String expenseslist){
+	public void setExpenseslist(Object expenseslist){
 		this.expenseslist = expenseslist;
 	}
 
-	public String getExpenseslist(){
+	public Object getExpenseslist(){
 		return expenseslist;
 	}
 
-	public void setUIMessage(String uIMessage){
+	public void setUIMessage(Object uIMessage){
 		this.uIMessage = uIMessage;
 	}
 
-	public String getUIMessage(){
+	public Object getUIMessage(){
 		return uIMessage;
 	}
 
@@ -557,11 +568,11 @@ public class ModelLOT{
 		return selectbookingtype;
 	}
 
-	public void setEmail(String email){
+	public void setEmail(Object email){
 		this.email = email;
 	}
 
-	public String getEmail(){
+	public Object getEmail(){
 		return email;
 	}
 
@@ -573,11 +584,11 @@ public class ModelLOT{
 		return checklistname;
 	}
 
-	public void setAddress(String address){
+	public void setAddress(Object address){
 		this.address = address;
 	}
 
-	public String getAddress(){
+	public Object getAddress(){
 		return address;
 	}
 

@@ -75,8 +75,8 @@ public class Fragment_ADHOC extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "onReceive: ");
-            if (mainActivity.modelLOTS.size() > 0){
-                modelLOTS.addAll(mainActivity.modelLOTS);
+            if (mainActivity.modelADHOC.size() > 0){
+                modelLOTS.addAll(mainActivity.modelADHOC);
                 rvLOT.getAdapter().notifyDataSetChanged();
             }
 

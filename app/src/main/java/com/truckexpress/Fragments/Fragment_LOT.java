@@ -79,7 +79,7 @@ public class Fragment_LOT extends Fragment {
             Log.d(TAG, "onReceive: ");
 
             if (mainActivity.modelLOTS.size() > 0){
-                modelADHOC.addAll(mainActivity.modelADHOC);
+                modelADHOC.addAll(mainActivity.modelLOTS);
                 rvLOT.getAdapter().notifyDataSetChanged();
             }
 
