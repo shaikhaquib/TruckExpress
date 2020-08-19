@@ -2,7 +2,7 @@ package com.truckexpress.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ModelLOT{
+public class ModelRoute{
 
 	@SerializedName("tyre_id")
 	private int tyreId;
@@ -15,9 +15,6 @@ public class ModelLOT{
 
 	@SerializedName("phone3")
 	private Object phone3;
-
-	@SerializedName("lotunitid")
-	private int lotunitid;
 
 	@SerializedName("source")
 	private String source;
@@ -39,9 +36,6 @@ public class ModelLOT{
 
 	@SerializedName("advance")
 	private String advance;
-
-	@SerializedName("lotunitname")
-	private String lotunitname;
 
 	@SerializedName("trucktype")
 	private String trucktype;
@@ -228,14 +222,6 @@ public class ModelLOT{
 		return phone3;
 	}
 
-	public void setLotunitid(int lotunitid){
-		this.lotunitid = lotunitid;
-	}
-
-	public int getLotunitid(){
-		return lotunitid;
-	}
-
 	public void setSource(String source){
 		this.source = source;
 	}
@@ -290,14 +276,6 @@ public class ModelLOT{
 
 	public String getAdvance(){
 		return advance;
-	}
-
-	public void setLotunitname(String lotunitname){
-		this.lotunitname = lotunitname;
-	}
-
-	public String getLotunitname(){
-		return lotunitname;
 	}
 
 	public void setTrucktype(String trucktype){

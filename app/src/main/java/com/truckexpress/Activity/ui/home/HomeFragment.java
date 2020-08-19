@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.truckexpress.Activity.ActivityAdd;
+import com.truckexpress.Activity.ActivityRoute;
 import com.truckexpress.Activity.BookingActivity;
 import com.truckexpress.Activity.EnquiresActivity;
 import com.truckexpress.Activity.MainActivity;
@@ -71,6 +73,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         binding.EnquiriesValue.setOnClickListener(this);
         binding.Booking.setOnClickListener(this);
         binding.BookingValue.setOnClickListener(this);
+        binding.routes.setOnClickListener(this);
+        binding.add.setOnClickListener(this);
 
 
         new DashBoard().execute();
@@ -186,6 +190,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.BookingValue:
                 startActivity(new Intent(getActivity(), BookingActivity.class));
+                break;
+            case R.id.routes:
+                startActivity(new Intent(getActivity(), ActivityRoute.class));
+                break;
+            case R.id.add:
+                startActivity(new Intent(getActivity(), ActivityAdd.class));
                 break;
         }
 

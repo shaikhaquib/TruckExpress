@@ -11,11 +11,11 @@ import com.truckexpress.R;
 public class Progress {
 
     Context activity;
-    Dialog dialog;
     //..we need the context else we can not create the dialog so get context in constructor
     public Progress(Context activity) {
         this.activity=activity;
     }
+    Dialog dialog;
 
     public void show() {
 
@@ -29,8 +29,8 @@ public class Progress {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             dialog.show();
     }
-
     //..also create a method which will hide the dialog when some work is done
+
     public void dismiss(){
         dialog.dismiss();
     }

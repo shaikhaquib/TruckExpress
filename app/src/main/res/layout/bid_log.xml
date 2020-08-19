@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/materialCardView"
+    app:rippleColor="@color/grey_20"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:clickable="true">
+
+    <RelativeLayout
+        android:id="@+id/CoorporatorView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/salesImageView"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="@drawable/reports_header_bk"
+            android:padding="8dp"
+            android:src="@drawable/ic_law"
+            android:tint="@color/whiteTextColor" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/salesImageView"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/rate"
+                style="@style/reportContentText"
+                android:text="Rate"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:textColor="#333" />
+
+            <TextView
+                android:id="@+id/truckCount"
+                style="@style/viewParent.headerText"
+                android:layout_height="wrap_content"
+                android:text="(Manage Payments)"
+                android:textColor="@color/grey_40"
+                android:textSize="16sp"
+
+                android:textStyle="normal" />
+            <TextView
+                android:id="@+id/bidBY"
+                style="@style/viewParent.headerText"
+                android:layout_height="wrap_content"
+                android:text="(Manage Payments)"
+                android:textColor="@color/grey_40"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/tranView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/tranImageView"
+            android:layout_alignParentRight="true"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="@drawable/reports_header_bk"
+            android:padding="8dp"
+            android:src="@drawable/ic_law"
+            android:tint="@color/whiteTextColor" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="right"
+            android:layout_toLeftOf="@id/tranImageView"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/transrate"
+                style="@style/reportContentText"
+                android:text="Rate"
+                android:textColor="#333"
+                android:textSize="16sp"
+                android:textStyle="normal"/>
+
+            <TextView
+                android:id="@+id/transtruckCount"
+                style="@style/viewParent.headerText"
+                android:layout_height="wrap_content"
+                android:text="(Manage Payments)"
+                android:textColor="@color/grey_40"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+            <TextView
+                android:id="@+id/transbidBY"
+                style="@style/viewParent.headerText"
+                android:layout_height="wrap_content"
+                android:text="(Manage Payments)"
+                android:textColor="@color/grey_40"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

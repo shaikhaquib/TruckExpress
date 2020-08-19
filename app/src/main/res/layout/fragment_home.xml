@@ -2,7 +2,6 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F8F8F8"
@@ -188,6 +187,7 @@
             app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
             <RelativeLayout
+                android:id="@+id/routes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp">
@@ -242,6 +242,7 @@
             app:layout_constraintTop_toBottomOf="@+id/materialCardView1">
 
             <RelativeLayout
+                android:id="@+id/add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp">

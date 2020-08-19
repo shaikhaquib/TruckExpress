@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ic_truck"
+                android:drawableLeft="@drawable/ic_weighing_machine"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/colorPrimary"
                 android:fontFamily="@font/gotham"
@@ -103,7 +103,7 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
                 app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
-                <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rate"
-                app:startIconDrawable="@drawable/ic_truck"
+                app:startIconDrawable="@drawable/ic_weighing_machine"
                 app:startIconTint="@color/colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -134,8 +134,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:hint="Number of Truck"
+                    android:hint="Enter Weight"
                     android:inputType="number"
+                    android:padding="12.5dp"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>

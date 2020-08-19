@@ -1,6 +1,8 @@
 package com.truckexpress.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
@@ -10,8 +12,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.truckexpress.Extras.AppExecutor;
 import com.truckexpress.Extras.Constants;
 import com.truckexpress.R;
+import com.truckexpress.Room.SessionManager;
 import com.truckexpress.Room.UserDatabase;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,7 +27,7 @@ import androidx.room.Room;
 
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     Toolbar toolbar;
@@ -76,5 +80,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void setToolbarTitle(String title){
         toolbar.setTitle(title);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.nav_logout){
+            new SessionManager(this).setLogin(false);
+            AppExecutor.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    userDatabase.dbAccess().deleteUser(USERINFO);
+                    startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                    finish();
+                }
+            });
+        }
+        return false;
     }
 }

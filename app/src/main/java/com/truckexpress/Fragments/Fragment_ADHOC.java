@@ -62,9 +62,9 @@ public class Fragment_ADHOC extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvLOT = view.findViewById(R.id.rvLOT);
         getActivity().registerReceiver(mNotificationReceiver, new IntentFilter("BOOKINGDATA"));
         mainActivity = (EnquiresActivity) getActivity();
+        rvLOT = view.findViewById(R.id.rvLOT);
         rvLOT.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvLOT.hasFixedSize();
         rvLOT.setAdapter(new RV_ADHOCAdapter(getActivity(),modelLOTS));

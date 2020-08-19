@@ -1,13 +1,16 @@
 package com.truckexpress.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.text.SpannableString;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,8 @@ import com.truckexpress.Extras.Constants;
 import com.truckexpress.Extras.Progress;
 import com.truckexpress.Models.ModelLOT;
 import com.truckexpress.R;
+import com.truckexpress.databinding.AddBidBinding;
+import com.truckexpress.databinding.AddBidLotBinding;
 import com.truckexpress.databinding.ItemLotBinding;
 
 import java.util.List;
@@ -30,12 +35,14 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
 
     List<ModelLOT> modelLOTS;
     Context context;
+    Progress progress;
 
 
 
     public RV_LotAdapter(Context context, List<ModelLOT> modelLOTS) {
         this.modelLOTS = modelLOTS;
         this.context = context;
+        progress = new Progress(context);
     }
 
     @NonNull
@@ -66,24 +73,47 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
             this.itemLotBinding = binding;
         }
         private void dataBind(final ModelLOT modelLOT) {
+
             itemLotBinding.bookingID.setText("Booking ID :" + modelLOT.getId());
             itemLotBinding.corporateName.setText(Constants.capitalize(modelLOT.getCompanyName()));
             itemLotBinding.pickUPdate.setText(modelLOT.getPickupdate());
-
-            if (modelLOT.getWeight().isEmpty() || modelLOT.getWeight() == null) {
-                itemLotBinding.weight.setText("No Data");
-                itemLotBinding.weight.setVisibility(View.INVISIBLE);
-            } else {
-                itemLotBinding.weight.setText(modelLOT.getWeight() + "Ton");
-            }
-
+            itemLotBinding.source.setText(modelLOT.getSource());
+            itemLotBinding.destination.setText(modelLOT.getDestination());
+            itemLotBinding.pickuplocation.setText(modelLOT.getPickupaddress());
+            itemLotBinding.dropLocation.setText(modelLOT.getDropaddress());
+            itemLotBinding.goodsType.setText(modelLOT.getGoodstype());
+            itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
+            itemLotBinding.totalfreight.setText(modelLOT.getTotalfreight());
+            itemLotBinding.expense.setText("₹ "+modelLOT.getTotalexpenses());
+            itemLotBinding.checkList.setText("Checklist : "+String.valueOf(modelLOT.getChecklistcount()));
             itemLotBinding.Amount.setText(modelLOT.getRate()+ " " + modelLOT.getUnitid());
+            itemLotBinding.weight.setText(modelLOT.getLotweight()+ " " + modelLOT.getLotunitname());
+
+
 
             if (!modelLOT.getTyre().isEmpty())
                 itemLotBinding.trckType.setText(modelLOT.getTrucktype() + "\n/" + modelLOT.getTyre() + " tyre");
             else
                 itemLotBinding.trckType.setText(""+modelLOT.getTrucktype());
 
+
+            if (modelLOT.getAcceptedbycorporate() == 1){
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#FFFFE974"));
+            }
+            if (modelLOT.getBiddingtype()==2){
+                itemLotBinding.bid.setVisibility(View.GONE);
+            }
+
+            if (modelLOT.getBiddingtype()==2){
+                itemLotBinding.bid.setVisibility(View.GONE);
+            }
+
+            itemLotBinding.Amount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new RV_ADHOCAdapter.BidHistory(progress, context).execute(String.valueOf(modelLOT.getBookingid()),String.valueOf(modelLOT.getCorporateid()));
+                }
+            });
             itemLotBinding.checkList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,27 +121,10 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
                 }
             });
 
-
-            itemLotBinding.source.setText(modelLOT.getSource());
-            itemLotBinding.destination.setText(modelLOT.getDestination());
-            itemLotBinding.pickuplocation.setText(modelLOT.getPickupaddress());
-            itemLotBinding.dropLocation.setText(modelLOT.getDropaddress());
-
-
-            itemLotBinding.goodsType.setText(modelLOT.getGoodstype());
-            itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
-            itemLotBinding.totalfreight.setText(modelLOT.getTotalfreight());
-            itemLotBinding.expense.setText("₹ "+modelLOT.getTotalexpenses());
-            itemLotBinding.checkList.setText("Checklist : "+String.valueOf(modelLOT.getChecklistcount()));
-
-            if (modelLOT.getAcceptedbycorporate() == 1){
-                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#00C853"));
-            }
-
             itemLotBinding.paymentmode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (modelLOT.getPaymentmode().equals("2")){
+                    if (modelLOT.getPaymentmode().equals("1")){
                         String msg = "Advance : "+modelLOT.getAdvance()+ " %"+"\n"+
                                 "Balance : "+modelLOT.getBalance();
                         AlertAutoLink(context,msg,"Payments Details");
@@ -128,7 +141,6 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
                 }
             });
 
-
             itemLotBinding.corporateName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -140,7 +152,18 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
                     AlertAutoLink(context,msg,"Corporate Details");
                 }
             });
-
+            itemLotBinding.bid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addBIDDialoge(modelLOT);
+                }
+            });
+            itemLotBinding.accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new RV_ADHOCAdapter.BidDetails(progress,modelLOT,context).execute(String.valueOf(modelLOT.getBookingid()),String.valueOf(modelLOT.getCorporateid()));
+                }
+            });
 
             itemLotBinding.Showmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -157,4 +180,44 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
         }
 
     }
+
+    private void addBIDDialoge(final ModelLOT modelLOT) {
+        final AddBidLotBinding bidBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout. add_bid_lot, null, false);
+
+        final Dialog dialog  = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(bidBinding.getRoot());
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+
+        bidBinding.closeDiloge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        bidBinding.bookingID.setText("Booking ID :"+modelLOT.getId());
+        bidBinding.noofTruck.setText(String.valueOf(+modelLOT.getLotweight())+""+modelLOT.getUnitname());
+        bidBinding.trckType.setText(modelLOT.getTrucktype() +" / "+ modelLOT.getTyre() + "tyre");
+        bidBinding.rate.setText(String.valueOf(modelLOT.getRate()).trim());
+        bidBinding.unit.setText(modelLOT.getUnitid());
+
+        bidBinding.saveBid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bidBinding.rate.getText().toString().isEmpty()){
+                    bidBinding.rate.setError("Field Required...");
+                    Alert(context,"Please set Rate");
+                }else if (bidBinding.edtNoofTruck.getText().toString().isEmpty()){
+                    bidBinding.edtNoofTruck.setError("Field Required...");
+                    Alert(context,"Please set Number of Truck");
+                }else {
+                    new RV_ADHOCAdapter.SaveBID(modelLOT, dialog,progress,context).execute(bidBinding.rate.getText().toString(),bidBinding.edtNoofTruck.getText().toString());
+                }
+            }
+        });
+    }
+
 }
