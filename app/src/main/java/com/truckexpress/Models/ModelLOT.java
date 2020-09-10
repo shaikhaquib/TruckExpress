@@ -118,6 +118,9 @@ public class ModelLOT{
 	@SerializedName("UIMessage")
 	private Object uIMessage;
 
+	@SerializedName("note")
+	private String note;
+
 	@SerializedName("nooftrucks")
 	private String nooftrucks;
 
@@ -498,6 +501,14 @@ public class ModelLOT{
 
 	public Object getUIMessage(){
 		return uIMessage;
+	}
+
+	public void setNote(String note){
+		this.note = note;
+	}
+
+	public String getNote(){
+		return note;
 	}
 
 	public void setNooftrucks(String nooftrucks){

@@ -50,8 +50,8 @@ public class SlideshowFragment extends Fragment {
     }
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.setBackgroundColor(ContextCompat.getColor(getContext(), COLOR_MAP[counter]));
+       /* view.setBackgroundColor(ContextCompat.getColor(getContext(), COLOR_MAP[counter]));
         TextView textViewCounter = view.findViewById(R.id.text_slideshow);
-        textViewCounter.setText("Fragment No " + (counter+1));
+        textViewCounter.setText("Fragment No " + (counter+1));*/
     }
 }

@@ -4,9 +4,10 @@
     android:layout_width="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="#1ABC9B"
     android:layout_height="wrap_content">
 
-    <com.airbnb.lottie.LottieAnimationView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/lottieAnimationView"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -14,10 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_speed="2"
-        app:lottie_scale="4"
-        app:lottie_fileName="truck.json"
-        app:lottie_loop="true" />
+        android:src="@drawable/traffic"
+         />
 
 </com.google.android.material.card.MaterialCardView>

@@ -67,8 +67,8 @@ public class Constants {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        dialog.show();
         dialog.getWindow().setAttributes(lp);
+        dialog.show();
 
     }
 

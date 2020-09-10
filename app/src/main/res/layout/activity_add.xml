@@ -1,67 +1,455 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout >
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Activity.ActivityAdd">
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/addDriver"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/whiteTextColor"
-        app:rippleColor="@color/grey_20"
-        android:clickable="true"
-        >
-
-        <RelativeLayout
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".Activity.ActivityAdd">
 
-            <ImageView
-                android:id="@+id/salesImageView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/reports_header_bk"
-                android:padding="8dp"
-                android:tint="@color/whiteTextColor"
-                android:src="@drawable/ic_taxi_driver" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addBooking"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/salesImageView"
-                android:orientation="vertical">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:rippleColor="@color/grey_20"
+                android:clickable="true">
 
-                <TextView
-                    style="@style/reportContentText"
-                    android:text="Add Driver"
-                    android:textColor="#333" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
 
-                <TextView
-                    style="@style/viewParent.headerText"
-                    android:text="(Manage Payments)"
-                    android:textSize="12dp"
-                    android:visibility="gone"
-                    android:textStyle="normal"
-                    android:textColor="@color/grey_40"/>
+                    <ImageView
+                        android:id="@+id/Bookingimg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/reports_header_bk"
+                        android:padding="8dp"
+                        app:tint="@color/whiteTextColor"
+                        android:src="@drawable/ic_hotel" />
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/Bookingimg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/reportContentText"
+                            android:text="Add Booking"
+                            android:textColor="#333" />
+
+                        <TextView
+                            style="@style/viewParent.headerText"
+                            android:text="(Manage Payments)"
+                            android:textSize="12dp"
+                            android:visibility="gone"
+                            android:textStyle="normal"
+                            android:textColor="@color/grey_40"/>
+
+                    </LinearLayout>
 
 
-        </RelativeLayout>
+                </RelativeLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addRoute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:rippleColor="@color/grey_20"
+                android:clickable="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/salesImageView1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/reports_header_bk"
+                        android:padding="8dp"
+                        app:tint="@color/whiteTextColor"
+                        android:src="@drawable/ic_location" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/salesImageView1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/reportContentText"
+                            android:text="Add Route"
+                            android:textColor="#333" />
+
+                        <TextView
+                            style="@style/viewParent.headerText"
+                            android:text="(Manage Payments)"
+                            android:textSize="12dp"
+                            android:visibility="gone"
+                            android:textStyle="normal"
+                            android:textColor="@color/grey_40"/>
+
+                    </LinearLayout>
 
 
-</LinearLayout>
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addDriver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:rippleColor="@color/grey_20"
+                android:clickable="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/salesImageView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/reports_header_bk"
+                        android:padding="8dp"
+                        app:tint="@color/whiteTextColor"
+                        android:src="@drawable/ic_taxi_driver" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/salesImageView"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/reportContentText"
+                            android:text="Add Driver"
+                            android:textColor="#333" />
+
+                        <TextView
+                            style="@style/viewParent.headerText"
+                            android:text="(Manage Payments)"
+                            android:textSize="12dp"
+                            android:visibility="gone"
+                            android:textStyle="normal"
+                            android:textColor="@color/grey_40"/>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addTruckDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:rippleColor="@color/grey_20"
+                android:clickable="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/truck"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/reports_header_bk"
+                        android:padding="8dp"
+                        app:tint="@color/whiteTextColor"
+                        android:src="@drawable/ic_truck" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/truck"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/reportContentText"
+                            android:text="Add Truck Details"
+                            android:textColor="#333" />
+
+                        <TextView
+                            style="@style/viewParent.headerText"
+                            android:text="(Manage Payments)"
+                            android:textSize="12dp"
+                            android:visibility="gone"
+                            android:textStyle="normal"
+                            android:textColor="@color/grey_40"/>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addGoodsDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:rippleColor="@color/grey_20"
+                android:clickable="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/reports_header_bk"
+                        android:padding="8dp"
+                        app:tint="@color/whiteTextColor"
+                        android:src="@drawable/ic_parcel" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/imageView"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/reportContentText"
+                            android:text="Add Goods Types"
+                            android:textColor="#333" />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addMoterOwner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:rippleColor="@color/grey_20"
+                android:clickable="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/reports_header_bk"
+                        android:padding="8dp"
+                        app:tint="@color/whiteTextColor"
+                        android:src="@drawable/ic_truck" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/imageView1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/reportContentText"
+                            android:text="Add Motor Owner"
+                            android:textColor="#333" />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addExpense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:rippleColor="@color/grey_20"
+                android:clickable="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/reports_header_bk"
+                        android:padding="8dp"
+                        app:tint="@color/whiteTextColor"
+                        android:src="@drawable/ic_bill" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/imageView2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/reportContentText"
+                            android:text="Add Expense"
+                            android:textColor="#333" />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addCheckList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:rippleColor="@color/grey_20"
+                android:clickable="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/reports_header_bk"
+                        android:padding="8dp"
+                        app:tint="@color/whiteTextColor"
+                        android:src="@drawable/ic_checklist" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/imageView3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/reportContentText"
+                            android:text="Add Checklist"
+                            android:textColor="#333" />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/whiteTextColor"
+                app:rippleColor="@color/grey_20"
+                android:clickable="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageView33"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/reports_header_bk"
+                        android:padding="8dp"
+                        app:tint="@color/whiteTextColor"
+                        android:src="@drawable/ic_company" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/imageView33"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/reportContentText"
+                            android:text="Add Company"
+                            android:textColor="#333" />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </LinearLayout>
+
+    </ScrollView>
 </layout>

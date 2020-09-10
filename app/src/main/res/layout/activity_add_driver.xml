@@ -20,14 +20,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="529dp"
                 android:text="Fill Driver Details"
                 android:textColor="#333"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/imageView6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/myDrivers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gotham"
+                android:text="My Drivers"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="@+id/textView" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout3"
@@ -88,6 +99,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number"
+                    android:inputType="number"
+                    android:maxLength="10"
                     android:padding="12.5dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -264,7 +277,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_file_upload"
-                android:tint="@color/grey_20"
+                app:tint="@color/grey_20"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView6"
                 app:layout_constraintEnd_toEndOf="@+id/imageView6"
                 app:layout_constraintStart_toStartOf="@+id/imageView6"
@@ -274,7 +287,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_file_upload"
-                android:tint="@color/grey_20"
+                app:tint="@color/grey_20"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView7"
                 app:layout_constraintEnd_toEndOf="@+id/imageView7"
                 app:layout_constraintStart_toStartOf="@+id/imageView7"
@@ -284,7 +297,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_file_upload"
-                android:tint="@color/grey_20"
+                app:tint="@color/grey_20"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView8"
                 app:layout_constraintEnd_toEndOf="@+id/imageView8"
                 app:layout_constraintStart_toStartOf="@+id/imageView8"
@@ -336,6 +349,7 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView6"
                 app:layout_constraintTop_toBottomOf="@+id/imageView6" />
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/uploadPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -345,6 +359,7 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView7"
                 app:layout_constraintTop_toBottomOf="@+id/imageView7" />
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/uploadLicense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -357,9 +372,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout12"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/whiteTextColor"
+                android:hint="Bank Name"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
@@ -367,14 +384,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/uploadDocumnet">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/BankName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bank Name"
-                    android:padding="12.5dp" />
+                    android:gravity="start"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout13"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -397,26 +416,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout14"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/BranchAdd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Branch Address"
-                    android:padding="12.5dp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout15"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
@@ -429,6 +428,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout14">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/BranchAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:hint="Branch Address"
+                    android:inputType="none"
+                    android:padding="12.5dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout14"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/Verify"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/IFSC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -436,7 +459,6 @@
                     android:padding="12.5dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout16"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
@@ -469,7 +491,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-
                 android:layout_marginEnd="16dp"
                 android:text="Submit"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -486,6 +507,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/submit" />
+            <Button
+                android:id="@+id/Verify"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Verify"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textInputLayout14"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout14" />
 
 
 

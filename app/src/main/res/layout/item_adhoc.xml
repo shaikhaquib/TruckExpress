@@ -45,17 +45,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:drawableLeft="@drawable/ic_company"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/colorPrimary"
                 android:fontFamily="@font/gotham"
-                android:textColor="@color/colorPrimary"
-                android:maxLength="15"
                 android:gravity="center"
+                android:maxLength="15"
                 android:text="Devatives"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pickUPdate" />
+                app:layout_constraintTop_toBottomOf="@+id/weight" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weight"
@@ -85,7 +85,7 @@
                 android:gravity="center"
                 android:text="Truck Type"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weight" />
+                app:layout_constraintTop_toBottomOf="@+id/pickUPdate" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/Amount"
@@ -101,7 +101,7 @@
                 android:text="1000"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/trckType" />
+                app:layout_constraintTop_toBottomOf="@+id/corporateName" />
 
             <ImageView
                 android:id="@+id/share"
@@ -111,7 +111,7 @@
                 android:background="@drawable/circle"
                 android:padding="8dp"
                 android:src="@drawable/ic_share"
-                android:tint="@color/whiteTextColor"
+                app:tint="@color/whiteTextColor"
                 app:layout_constraintBottom_toBottomOf="@+id/Amount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/trckType" />
@@ -240,6 +240,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/destination" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:drawableLeft="@drawable/ic_note"
+                    android:drawablePadding="4dp"
+                    android:drawableTint="@color/colorPrimary"
+                    android:fontFamily="@font/gotham"
+                    android:gravity="center"
+                    android:text="Note"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dropLocation" />
+
+
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/goodsType"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -252,6 +268,7 @@
                     android:gravity="center_vertical|start"
                     android:textSize="12sp"
                     app:fontFamily="@font/gotham"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -263,11 +280,13 @@
                     android:layout_marginTop="8dp"
                     android:drawableLeft="@drawable/ic_pos_terminal"
                     android:drawablePadding="4dp"
+                    android:textColor="@color/colorPrimary"
                     android:drawableTint="@color/colorPrimary"
                     android:fontFamily="@font/gotham"
                     android:gravity="center_vertical|start"
                     android:textSize="12sp"
                     app:fontFamily="@font/gotham"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
                     app:layout_constraintTop_toBottomOf="@+id/goodsType" />
 
@@ -277,13 +296,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:drawableLeft="@drawable/ic_product"
+                    android:drawableLeft="@drawable/ic_money"
                     android:drawablePadding="4dp"
                     android:drawableTint="@color/colorPrimary"
                     android:fontFamily="@font/gotham"
                     android:gravity="center_vertical|start"
                     android:textSize="12sp"
                     app:fontFamily="@font/gotham"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
                     app:layout_constraintTop_toBottomOf="@+id/paymentmode" />
 
@@ -296,10 +316,12 @@
                     android:drawableLeft="@drawable/ic_bill"
                     android:drawablePadding="4dp"
                     android:drawableTint="@color/colorPrimary"
+                    android:textColor="@color/colorPrimary"
                     android:fontFamily="@font/gotham"
                     android:gravity="center_vertical|start"
                     android:textSize="12sp"
                     app:fontFamily="@font/gotham"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
                     app:layout_constraintTop_toBottomOf="@+id/totalfreight" />
 
@@ -348,22 +370,22 @@
                     android:id="@+id/view2"
                     android:layout_width="0dp"
                     android:layout_height="0.5dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="24dp"
                     android:background="@color/blue_grey_100"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dropLocation" />
+                    app:layout_constraintTop_toBottomOf="@+id/note" />
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/accept"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="Accept"
                     app:layout_constraintEnd_toStartOf="@+id/bid"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+                    app:layout_constraintTop_toBottomOf="@+id/remove" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/bid"
@@ -381,9 +403,25 @@
                     android:layout_height="40dp"
                     android:text="MO BIDS"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/bid"
                     app:layout_constraintTop_toTopOf="@+id/bid" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:drawableLeft="@drawable/ic_baseline_delete_outline_24"
+                    android:text="Remove"
+                    android:gravity="center"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:drawablePadding="4dp"
+                    android:drawableTint="@color/colorPrimary"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

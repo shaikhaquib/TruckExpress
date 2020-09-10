@@ -1,38 +1,18 @@
 package com.truckexpress.Activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
-import android.widget.Switch;
-
-import com.google.gson.Gson;
-import com.truckexpress.Models.ArrayItem;
-import com.truckexpress.Models.ModelStateCity;
+import com.truckexpress.Activity.Map.MapsActivity;
 import com.truckexpress.R;
 import com.truckexpress.databinding.ActivityAddBinding;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class ActivityAdd extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,6 +28,14 @@ public class ActivityAdd extends AppCompatActivity implements View.OnClickListen
         actionBar.setElevation(0);
         actionBar.setDisplayHomeAsUpEnabled(true);
         activityAddBinding.addDriver.setOnClickListener(this);
+        activityAddBinding.addTruckDetails.setOnClickListener(this);
+        activityAddBinding.addGoodsDetails.setOnClickListener(this);
+        activityAddBinding.addMoterOwner.setOnClickListener(this);
+        activityAddBinding.addExpense.setOnClickListener(this);
+        activityAddBinding.addCheckList.setOnClickListener(this);
+        activityAddBinding.addCompany.setOnClickListener(this);
+        activityAddBinding.addRoute.setOnClickListener(this);
+        activityAddBinding.addBooking.setOnClickListener(this);
 
 
 
@@ -68,9 +56,33 @@ public class ActivityAdd extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         int id = v.getId();
 
-        switch (id){
+        switch (id) {
             case R.id.addDriver:
-                startActivity(new Intent(getApplicationContext(),AddDriver.class));
+                startActivity(new Intent(getApplicationContext(), AddDriver.class));
+                break;
+            case R.id.addTruckDetails:
+                startActivity(new Intent(getApplicationContext(), AddTruckDetails.class));
+                break;
+            case R.id.addGoodsDetails:
+                startActivity(new Intent(getApplicationContext(), AddGoodType.class));
+                break;
+            case R.id.addMoterOwner:
+                startActivity(new Intent(getApplicationContext(), AddMoterOwner.class));
+                break;
+            case R.id.addExpense:
+                startActivity(new Intent(getApplicationContext(), AddExpense.class));
+                break;
+            case R.id.addCheckList:
+                startActivity(new Intent(getApplicationContext(), AddCheckList.class));
+                break;
+            case R.id.addCompany:
+                startActivity(new Intent(getApplicationContext(), AddCompany.class));
+                break;
+            case R.id.addRoute:
+                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+                break;
+            case R.id.addBooking:
+                startActivity(new Intent(getApplicationContext(), AddBooking.class));
                 break;
         }
     }

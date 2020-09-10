@@ -1,10 +1,12 @@
 package com.truckexpress.Activity;
 
+import android.app.LauncherActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -16,6 +18,7 @@ import com.truckexpress.Room.SessionManager;
 import com.truckexpress.Room.UserDatabase;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,7 +30,7 @@ import androidx.room.Room;
 
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     Toolbar toolbar;
@@ -43,15 +46,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
+
+        Menu menu = navigationView.getMenu();
+        MenuItem logout = menu.findItem(R.id.nav_logout);
+        logout.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                new SessionManager(MainActivity.this).setLogin(false);
+                AppExecutor.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        userDatabase.dbAccess().deleteUser(USERINFO);
+                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                        finish();
+                    }
+                });
+
+
+                return true;
+            }
+        });
+
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_profile, R.id.nav_truck)
+                R.id.nav_home, R.id.nav_profile, R.id.nav_truck,R.id.nav_logout)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
 
        // setToolbarTitle(USERINFO.getFullname());
 
@@ -80,21 +104,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setToolbarTitle(String title){
         toolbar.setTitle(title);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.nav_logout){
-            new SessionManager(this).setLogin(false);
-            AppExecutor.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    userDatabase.dbAccess().deleteUser(USERINFO);
-                    startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-                    finish();
-                }
-            });
-        }
-        return false;
     }
 }

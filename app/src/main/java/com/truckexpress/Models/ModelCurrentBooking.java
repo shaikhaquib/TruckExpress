@@ -14,7 +14,7 @@ public class ModelCurrentBooking{
 	private int nooftrucks;
 
 	@SerializedName("expensesunloading")
-	private Object expensesunloading;
+	private String expensesunloading;
 
 	@SerializedName("tyerid")
 	private String tyerid;
@@ -23,7 +23,7 @@ public class ModelCurrentBooking{
 	private String destination;
 
 	@SerializedName("nooftruckdemand")
-	private Object nooftruckdemand;
+	private String nooftruckdemand;
 
 	@SerializedName("goodsname")
 	private String goodsname;
@@ -50,7 +50,7 @@ public class ModelCurrentBooking{
 	private int paymentmode;
 
 	@SerializedName("unloadingpoint")
-	private Object unloadingpoint;
+	private String unloadingpoint;
 
 	@SerializedName("balance")
 	private int balance;
@@ -65,7 +65,7 @@ public class ModelCurrentBooking{
 	private String trucktypename;
 
 	@SerializedName("waitingtime")
-	private Object waitingtime;
+	private String waitingtime;
 
 	@SerializedName("totalfreight")
 	private String totalfreight;
@@ -74,7 +74,7 @@ public class ModelCurrentBooking{
 	private String checklistname;
 
 	@SerializedName("truckname")
-	private Object truckname;
+	private String truckname;
 
 	@SerializedName("nooftyres")
 	private String nooftyres;
@@ -92,7 +92,7 @@ public class ModelCurrentBooking{
 	private String weight;
 
 	@SerializedName("statusname")
-	private Object statusname;
+	private String statusname;
 
 	@SerializedName("paymentname")
 	private String paymentname;
@@ -107,10 +107,10 @@ public class ModelCurrentBooking{
 	private String dropaddress;
 
 	@SerializedName("unloadingno")
-	private Object unloadingno;
+	private String unloadingno;
 
 	@SerializedName("weightunloading")
-	private Object weightunloading;
+	private String weightunloading;
 
 	@SerializedName("company_name")
 	private String companyName;
@@ -128,7 +128,7 @@ public class ModelCurrentBooking{
 	private int goodstype;
 
 	@SerializedName("status")
-	private Object status;
+	private String status;
 
 	public void setTruckid(int truckid){
 		this.truckid = truckid;
@@ -154,11 +154,11 @@ public class ModelCurrentBooking{
 		return nooftrucks;
 	}
 
-	public void setExpensesunloading(Object expensesunloading){
+	public void setExpensesunloading(String expensesunloading){
 		this.expensesunloading = expensesunloading;
 	}
 
-	public Object getExpensesunloading(){
+	public String getExpensesunloading(){
 		return expensesunloading;
 	}
 
@@ -178,11 +178,11 @@ public class ModelCurrentBooking{
 		return destination;
 	}
 
-	public void setNooftruckdemand(Object nooftruckdemand){
+	public void setNooftruckdemand(String nooftruckdemand){
 		this.nooftruckdemand = nooftruckdemand;
 	}
 
-	public Object getNooftruckdemand(){
+	public String getNooftruckdemand(){
 		return nooftruckdemand;
 	}
 
@@ -250,11 +250,11 @@ public class ModelCurrentBooking{
 		return paymentmode;
 	}
 
-	public void setUnloadingpoint(Object unloadingpoint){
+	public void setUnloadingpoint(String unloadingpoint){
 		this.unloadingpoint = unloadingpoint;
 	}
 
-	public Object getUnloadingpoint(){
+	public String getUnloadingpoint(){
 		return unloadingpoint;
 	}
 
@@ -290,11 +290,11 @@ public class ModelCurrentBooking{
 		return trucktypename;
 	}
 
-	public void setWaitingtime(Object waitingtime){
+	public void setWaitingtime(String waitingtime){
 		this.waitingtime = waitingtime;
 	}
 
-	public Object getWaitingtime(){
+	public String getWaitingtime(){
 		return waitingtime;
 	}
 
@@ -314,11 +314,11 @@ public class ModelCurrentBooking{
 		return checklistname;
 	}
 
-	public void setTruckname(Object truckname){
+	public void setTruckname(String truckname){
 		this.truckname = truckname;
 	}
 
-	public Object getTruckname(){
+	public String getTruckname(){
 		return truckname;
 	}
 
@@ -362,11 +362,11 @@ public class ModelCurrentBooking{
 		return weight;
 	}
 
-	public void setStatusname(Object statusname){
+	public void setStatusname(String statusname){
 		this.statusname = statusname;
 	}
 
-	public Object getStatusname(){
+	public String getStatusname(){
 		return statusname;
 	}
 
@@ -402,19 +402,19 @@ public class ModelCurrentBooking{
 		return dropaddress;
 	}
 
-	public void setUnloadingno(Object unloadingno){
+	public void setUnloadingno(String unloadingno){
 		this.unloadingno = unloadingno;
 	}
 
-	public Object getUnloadingno(){
+	public String getUnloadingno(){
 		return unloadingno;
 	}
 
-	public void setWeightunloading(Object weightunloading){
+	public void setWeightunloading(String weightunloading){
 		this.weightunloading = weightunloading;
 	}
 
-	public Object getWeightunloading(){
+	public String getWeightunloading(){
 		return weightunloading;
 	}
 
@@ -458,11 +458,11 @@ public class ModelCurrentBooking{
 		return goodstype;
 	}
 
-	public void setStatus(Object status){
+	public void setStatus(String status){
 		this.status = status;
 	}
 
-	public Object getStatus(){
+	public String getStatus(){
 		return status;
 	}
 }
