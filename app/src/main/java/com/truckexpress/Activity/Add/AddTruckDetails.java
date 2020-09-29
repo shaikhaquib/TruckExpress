@@ -1,19 +1,10 @@
-package com.truckexpress.Activity;
+package com.truckexpress.Activity.Add;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,25 +18,32 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.abdeveloper.library.MultiSelectDialog;
 import com.abdeveloper.library.MultiSelectModel;
+import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.truckexpress.Extras.MyItemDecoration;
 import com.truckexpress.Extras.Progress;
-import com.truckexpress.Models.ArrayItem;
-import com.truckexpress.Models.ModelCity;
-import com.truckexpress.Models.ModelCurrentBooking;
 import com.truckexpress.Models.ModelDriver;
-import com.truckexpress.Models.ModelState;
-import com.truckexpress.Models.ModelTruck;
 import com.truckexpress.Models.ModelTruckList;
 import com.truckexpress.Models.ModelTruckType;
 import com.truckexpress.Models.ModelTyre;
@@ -72,33 +70,35 @@ import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
-import static com.truckexpress.Network.API.CityLists;
+import static com.truckexpress.Extras.Constants.compressImage;
 import static com.truckexpress.Network.API.DriverList;
-import static com.truckexpress.Network.API.StateList;
 import static com.truckexpress.Network.API.TruckListByUserID;
 import static com.truckexpress.Network.API.TruckTypeList;
 import static com.truckexpress.Network.API.TyresList;
 import static com.truckexpress.Network.API.UploadImage;
-import static com.truckexpress.Network.API.UploadImageDriver;
 import static com.truckexpress.Network.API.WeightList;
 
 public class AddTruckDetails extends AppCompatActivity implements View.OnClickListener{
     ActivityAddTruckDetailsBinding activityAddTruckDetailsBinding;
     private static final String TAG = "AddTruckDetails";
     Progress progress;
-    List<ModelTruckType> truckTypeList= new ArrayList<>();
-    List<ModelTyre> modelTyres= new ArrayList<>();
-    List<ModelWeight> weightList= new ArrayList<>();
-    List<ModelDriver> modelDrivers= new ArrayList<>();
-    List<ModelTruckList> truckLists= new ArrayList<>();
+    List<ModelTruckType> truckTypeList = new ArrayList<>();
+    List<ModelTyre> modelTyres = new ArrayList<>();
+    List<ModelWeight> weightList = new ArrayList<>();
+    List<ModelDriver> modelDrivers = new ArrayList<>();
+    List<ModelTruckList> truckLists = new ArrayList<>();
     String rcBook, PAN, PUC;
     List<String> stringBuilder = new ArrayList<>();
     List<String> driversID = new ArrayList<>();
+    String truckType;
+    String strTruckWeight;
+    String tyreType;
     String stringIds;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityAddTruckDetailsBinding = DataBindingUtil.setContentView(this,R.layout.activity_add_truck_details);
+        activityAddTruckDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_truck_details);
         progress = new Progress(this);
 
         getTuckType();
@@ -113,6 +113,7 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getTyres(truckTypeList.get(position).getId());
+                truckType = "" + truckTypeList.get(position).getId();
                 activityAddTruckDetailsBinding.TruckTyre.clearListSelection();
                 truckTypeList.clear();
                 activityAddTruckDetailsBinding.TruckTyre.setText("");
@@ -121,10 +122,17 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
                 activityAddTruckDetailsBinding.TruckTyre.setText("");
             }
         });
+        activityAddTruckDetailsBinding.TruckWeight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                strTruckWeight = String.valueOf(weightList.get(position).getWeight());
+            }
+        });
         activityAddTruckDetailsBinding.TruckTyre.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getWeight(modelTyres.get(position).getId());
+                tyreType = String.valueOf(modelTyres.get(position).getId());
                 activityAddTruckDetailsBinding.TruckWeight.clearListSelection();
                 weightList.clear();
                 activityAddTruckDetailsBinding.TruckWeight.setText("");
@@ -406,23 +414,23 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
 
                 @Override
                 public void onProgress(long bytesWritten, long totalSize) {
-                    Log.i("xml","Progress : "+bytesWritten);
+                    Log.i("xml", "Progress : " + bytesWritten);
                 }
             });
         }
     }
-    private void getDriverList() {
-        {
-            final Progress progress = new Progress(this);
-            progress.show();
-            AsyncHttpClient client = new AsyncHttpClient();
-            client.setTimeout(20 * 1000);
 
-            StringEntity entity = null;
-            try {
-                JSONObject jsonParams = new JSONObject();
-                jsonParams.put("userid",USERINFO.getId());
-                entity = new StringEntity(jsonParams.toString());
+    private void getDriverList() {
+        final Progress progress = new Progress(this);
+        progress.show();
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(20 * 1000);
+
+        StringEntity entity = null;
+        try {
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("userid", USERINFO.getId());
+            entity = new StringEntity(jsonParams.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -469,36 +477,86 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
                     Log.i("xml","Progress : "+bytesWritten);
                 }
             });
-        }
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.RCBook:
-                    Intent intent1 = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                    intent1.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
-                    intent1.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                    intent1.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                    startActivityForResult(intent1, 1211);
+
+                Dexter.withContext(this)
+                        .withPermissions(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO
+                        ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        Intent intent1 = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                        intent1.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
+                        intent1.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                        intent1.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                        startActivityForResult(intent1, 1211);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(AddTruckDetails.this, "Storage Permission required to access media", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
                 break;
             case R.id.uploadPan:
-                Intent intent2 = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                    intent2.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
-                    intent2.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                    intent2.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                    startActivityForResult(intent2, 1213);
+                Dexter.withContext(this)
+                        .withPermissions(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO
+                        ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        Intent intent2 = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                        intent2.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
+                        intent2.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                        intent2.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                        startActivityForResult(intent2, 1213);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(AddTruckDetails.this, "Storage Permission required to access media", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
+
                 break;
             case R.id.uploadPUC:
-                    Intent intent3 = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                    intent3.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
-                    intent3.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                    intent3.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                    startActivityForResult(intent3, 1212);
+
+                Dexter.withContext(this)
+                        .withPermissions(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO
+                        ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        Intent intent3 = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                        intent3.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
+                        intent3.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                        intent3.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                        startActivityForResult(intent3, 1212);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(AddTruckDetails.this, "Storage Permission required to access media", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
                 break;
             case R.id.Permit:
-                String[] s = {"National","Other"};
+                String[] s = {"National", "Other"};
                 new MaterialAlertDialogBuilder(AddTruckDetails.this)
                         .setTitle("Select Permit")
                         .setItems(s, new DialogInterface.OnClickListener() {
@@ -587,7 +645,7 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
         rvLOT.addItemDecoration(new MyItemDecoration());
 
         TruckNo.setText("Truck No");
-        TruckTyre.setText("Truck Tyre");
+        TruckTyre.setVisibility(View.GONE);
         truckType.setText("Truck Type");
         materialTextView.setText("My Truck List");
 
@@ -611,12 +669,12 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-                ListHolder bidHolder = (ListHolder)holder;
+                ListHolder bidHolder = (ListHolder) holder;
                 ModelTruckList bidLog = truckLists.get(position);
 
-                bidHolder.type.setText(bidLog.getTrucktype());
-                bidHolder.number.setText(bidLog.getTyres());
-                bidHolder.availibility.setText(""+bidLog.getTruckname());
+                bidHolder.type.setText(bidLog.getTrucktype() + " /\n " + bidLog.getTyres() + " Tyre" + " / " + bidLog.getWeight() + " Ton");
+                bidHolder.number.setVisibility(View.GONE);
+                bidHolder.availibility.setText(bidLog.getTruckname());
                 bidHolder.availibility.setAllCaps(true);
 
             }
@@ -646,19 +704,19 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1211 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            activityAddTruckDetailsBinding.imageView6.setImageBitmap(selectedImage);
             rcBook = filePath;
+            compressImage(filePath);
+            Glide.with(this).load(filePath).into(activityAddTruckDetailsBinding.imageView6);
         }else if (requestCode == 1212 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            activityAddTruckDetailsBinding.imageView8.setImageBitmap(selectedImage);
+            compressImage(filePath);
+            Glide.with(this).load(filePath).into(activityAddTruckDetailsBinding.imageView8);
             PUC = filePath;
         }else if (requestCode == 1213 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            activityAddTruckDetailsBinding.imageView7.setImageBitmap(selectedImage);
             PAN = filePath;
+            compressImage(filePath);
+            Glide.with(this).load(filePath).into(activityAddTruckDetailsBinding.imageView7);
         }
     }
 
@@ -667,33 +725,18 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
         RequestParams params = new RequestParams();
 
 
-
-        for (int i = 0; i < truckTypeList.size(); i++) {
-            ModelTruckType modelTruckType = truckTypeList.get(i);
-            if (modelTruckType.getTrucktype().equals(activityAddTruckDetailsBinding.TruckTyre.getText().toString().trim())){
-                params.put("trucktype",   modelTruckType.getId()      );
-            }
-        }
-        for (int i = 0; i < modelTyres.size(); i++) {
-            ModelTyre tyre = modelTyres.get(i);
-            if (tyre.getNooftyres().equals(activityAddTruckDetailsBinding.TruckTyre.getText().toString().trim())){
-                params.put("tyertype",    tyre.getId());
-            }
-        }
-        for (int i = 0; i < weightList.size(); i++) {
-            ModelWeight modelWeight = weightList.get(i);
-            if (String.valueOf(modelWeight.getWeight()).equals(activityAddTruckDetailsBinding.TruckWeight.getText().toString().trim())){
-                params.put("weights",      modelWeight.getId());
-            }
-        }
-
-        params.put("permit",        activityAddTruckDetailsBinding.Permit.getText().toString());
-        params.put("trucknumber",        activityAddTruckDetailsBinding.TruckNo.getText().toString());
-        params.put("userid",        USERINFO.getId());
-        params.put("driverid",      stringIds);
+        params.put("tyertype", tyreType);
+        params.put("trucktype", truckType);
+        params.put("weights", strTruckWeight);
+        params.put("permit", activityAddTruckDetailsBinding.Permit.getText().toString());
+        params.put("trucknumber", activityAddTruckDetailsBinding.TruckNo.getText().toString());
+        params.put("userid", USERINFO.getId());
+        params.put("driverid", stringIds);
         params.put("Image1", new File(rcBook));
         params.put("Image2", new File(PAN));
         params.put("Image3", new File(PUC));
+
+        Log.d(TAG, "postFile: " + params.toString());
 
         AsyncHttpClient client = new AsyncHttpClient();
         progress.show();
@@ -703,7 +746,7 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String result = new String(responseBody);
                 progress.dismiss();
-                Log.d(TAG, "onSuccess: "+result);
+                Log.d(TAG, "onSuccess: " + result);
                 if (result.equals("\"Success\"")) {
                     //    Alert(AddTruckDetails.this, "We have added your request");
 
@@ -757,20 +800,21 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
             activityAddTruckDetailsBinding.TruckWeight.setError(activityAddTruckDetailsBinding.TruckWeight.getHint().toString()+" Field Requires");
             Alert(AddTruckDetails.this,activityAddTruckDetailsBinding.TruckWeight.getHint().toString()+" Field Requires");
             return false;
-        }else if (activityAddTruckDetailsBinding.TruckNo.getText().toString().isEmpty()){
-            activityAddTruckDetailsBinding.TruckNo.setError(activityAddTruckDetailsBinding.TruckNo.getHint().toString()+" Field Requires");
-            Alert(AddTruckDetails.this,activityAddTruckDetailsBinding.TruckNo.getHint().toString()+" Field Requires");
+        }else if (activityAddTruckDetailsBinding.TruckNo.getText().toString().isEmpty()) {
+            activityAddTruckDetailsBinding.TruckNo.setError(activityAddTruckDetailsBinding.TruckNo.getHint().toString() + " Field Requires");
+            Alert(AddTruckDetails.this, activityAddTruckDetailsBinding.TruckNo.getHint().toString() + " Field Requires");
             return false;
-        }else if (!matcher1.matches() && !activityAddTruckDetailsBinding.TruckNo.getText().toString().isEmpty()) {
+        } else if (!matcher1.matches() && !activityAddTruckDetailsBinding.TruckNo.getText().toString().toUpperCase().isEmpty()) {
             activityAddTruckDetailsBinding.TruckNo.setError("Please Enter Valid Truck no");
-            Alert(AddTruckDetails.this,"Please Enter Valid Truck no");
-        }else if (rcBook == null){
-            Alert(AddTruckDetails.this,"Please Select Document");
+            Alert(AddTruckDetails.this, "Please Enter Valid Truck no");
             return false;
-        }else if (PAN == null){
-            Alert(AddTruckDetails.this,"Please Select Photo");
+        } else if (rcBook == null) {
+            Alert(AddTruckDetails.this, "Please Select Document");
             return false;
-        }else if (PUC == null){
+        } else if (PAN == null) {
+            Alert(AddTruckDetails.this, "Please Select Photo");
+            return false;
+        } else if (PUC == null) {
             Alert(AddTruckDetails.this,"Please Select License");
             return false;
         }else if (activityAddTruckDetailsBinding.Permit.getText().toString().isEmpty()){

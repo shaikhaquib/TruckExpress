@@ -1,4 +1,4 @@
-package com.truckexpress.Activity;
+package com.truckexpress.Activity.Add;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,6 +39,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -209,7 +210,7 @@ public class AddCheckList extends AppCompatActivity {
                 checkList = params[0];
 
                 OutputStream os = conn.getOutputStream();
-                os.write(new JSONObject().put("userid",USERINFO.getId()).put("checklistname",params[0]).toString().getBytes("UTF-8"));
+                os.write(new JSONObject().put("userid", USERINFO.getId()).put("checklistname", params[0]).toString().getBytes(StandardCharsets.UTF_8));
                 os.close();
 
             } catch (IOException | JSONException e) {

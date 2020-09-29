@@ -1,18 +1,10 @@
-package com.truckexpress.Activity;
+package com.truckexpress.Activity.Add;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,15 +20,28 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.truckexpress.Extras.MyItemDecoration;
 import com.truckexpress.Extras.Progress;
-import com.truckexpress.Models.ModelDriver;
 import com.truckexpress.Models.ModelMotorOwner;
 import com.truckexpress.R;
 import com.truckexpress.databinding.ActivityAddMoterOwnerBinding;
@@ -58,6 +63,7 @@ import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
+import static com.truckexpress.Extras.Constants.compressImage;
 import static com.truckexpress.Network.API.BankList;
 import static com.truckexpress.Network.API.BranchName;
 import static com.truckexpress.Network.API.MoterOwnerList;
@@ -383,32 +389,80 @@ public class AddMoterOwner extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.uploadDocumnet:
-                    Intent intent1 = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                    intent1.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
-                    intent1.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                    intent1.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                    startActivityForResult(intent1, 1211);
-                
+
+                Dexter.withContext(this)
+                        .withPermissions(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO
+                        ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        Intent intent1 = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                        intent1.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
+                        intent1.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                        intent1.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                        startActivityForResult(intent1, 1211);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(AddMoterOwner.this, "Storage Permission required to access media", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
                 break;
             case R.id.uploadLicense:
-                    Intent intent2 = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                    intent2.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
-                    intent2.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                    intent2.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                    startActivityForResult(intent2, 1213);
-                
+                Dexter.withContext(this)
+                        .withPermissions(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO
+                        ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        Intent intent2 = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                        intent2.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
+                        intent2.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                        intent2.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                        startActivityForResult(intent2, 1213);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(AddMoterOwner.this, "Storage Permission required to access media", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
+
                 break;
             case R.id.uploadPhoto:
-                    Intent intent3 = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                    intent3.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
-                    intent3.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                    intent3.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                    startActivityForResult(intent3, 1212);
-                break;
+
+                Dexter.withContext(this)
+                        .withPermissions(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO
+                        ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        Intent intent3 = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                        intent3.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
+                        intent3.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                        intent3.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                        startActivityForResult(intent3, 1212);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(AddMoterOwner.this, "Storage Permission required to access media", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
             case R.id.submit:
-                if (isValidate()){
+                if (isValidate()) {
                     try {
                         postFile();
                     } catch (FileNotFoundException e) {
@@ -425,19 +479,19 @@ public class AddMoterOwner extends AppCompatActivity implements View.OnClickList
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1211 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            activityAddMoterOwnerBinding.imageView6.setImageBitmap(selectedImage);
             document = filePath;
+            compressImage(filePath);
+            Glide.with(this).load(filePath).into(activityAddMoterOwnerBinding.imageView6);
         }else if (requestCode == 1212 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            activityAddMoterOwnerBinding.imageView7.setImageBitmap(selectedImage);
+            compressImage(filePath);
+            Glide.with(this).load(filePath).into(activityAddMoterOwnerBinding.imageView7);
             photo = filePath;
         }else if (requestCode == 1213 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            activityAddMoterOwnerBinding.imageView8.setImageBitmap(selectedImage);
             license = filePath;
+            compressImage(filePath);
+            Glide.with(this).load(filePath).into(activityAddMoterOwnerBinding.imageView8);
         }
     }
     public void postFile() throws FileNotFoundException {
@@ -508,7 +562,6 @@ public class AddMoterOwner extends AppCompatActivity implements View.OnClickList
         });
     }
     private void getMotorOwner() {
-        {
             final Progress progress = new Progress(this);
             progress.show();
             AsyncHttpClient client = new AsyncHttpClient();
@@ -563,7 +616,6 @@ public class AddMoterOwner extends AppCompatActivity implements View.OnClickList
                 }
 
             });
-        }
     }
 
 }

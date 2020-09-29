@@ -2,16 +2,18 @@ package com.truckexpress.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ModelCurrentBooking{
+import java.io.Serializable;
 
-	@SerializedName("truckid")
-	private int truckid;
+public class ModelCurrentBooking implements Serializable {
 
-	@SerializedName("totalexpenses")
-	private int totalexpenses;
+    @SerializedName("truckid")
+    private int truckid;
 
-	@SerializedName("nooftrucks")
-	private int nooftrucks;
+    @SerializedName("totalexpenses")
+    private int totalexpenses;
+
+    @SerializedName("nooftrucks")
+    private int nooftrucks;
 
 	@SerializedName("expensesunloading")
 	private String expensesunloading;

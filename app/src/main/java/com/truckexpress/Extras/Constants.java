@@ -3,8 +3,11 @@ package com.truckexpress.Extras;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,16 +15,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.truckexpress.R;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -124,10 +128,7 @@ public class Constants {
     }
 
     public static boolean isValid(TextInputEditText et) {
-        if (et.getText().toString().isEmpty()){
-            return false;
-        }
-        return true;
+        return !et.getText().toString().isEmpty();
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -173,21 +174,33 @@ public class Constants {
     public static String sha256(String base) {
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
             StringBuffer hexString = new StringBuffer();
 
             for (int i = 0; i < hash.length; i++) {
                 String hex = Integer.toHexString(0xff & hash[i]);
-                if(hex.length() == 1) hexString.append('0');
+                if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
 
 
             return hexString.toString();
-        } catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
+    public static void compressImage(String filePath) {
+        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+        File file = new File(filePath);
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, compressionRatio, new FileOutputStream(file));
+        } catch (Throwable t) {
+            Log.e("ERROR", "Error compressing file." + t.toString());
+            t.printStackTrace();
+        }
+
+    }
 
 }

@@ -1,11 +1,5 @@
 package com.truckexpress.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -19,12 +13,16 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
-import com.truckexpress.Adapter.RV_ADHOCAdapter;
 import com.truckexpress.Extras.MyItemDecoration;
 import com.truckexpress.Extras.Progress;
-import com.truckexpress.Models.ModelLOT;
 import com.truckexpress.Models.ModelRoute;
 import com.truckexpress.R;
 
@@ -41,6 +39,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +47,6 @@ import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
 import static com.truckexpress.Extras.Constants.CONNECTION_TIMEOUT;
 import static com.truckexpress.Extras.Constants.READ_TIMEOUT;
-import static com.truckexpress.Network.API.BOOKINGLIST;
 import static com.truckexpress.Network.API.RouteList;
 import static com.truckexpress.Network.API.SaveRoutes;
 
@@ -188,7 +186,7 @@ public class ActivityRoute extends AppCompatActivity {
 
 
                 OutputStream os = conn.getOutputStream();
-                os.write(new JSONObject().put("userid",USERINFO.getId()).toString().getBytes("UTF-8"));
+                os.write(new JSONObject().put("userid", USERINFO.getId()).toString().getBytes(StandardCharsets.UTF_8));
                 os.close();
 
             } catch (IOException | JSONException e) {
@@ -237,7 +235,7 @@ public class ActivityRoute extends AppCompatActivity {
             if (!s.equals("unsuccessful")) {
 
 
-                Log.d(TAG, "onResponse: " + s.toString());
+                Log.d(TAG, "onResponse: " + s);
 
                 Object json = null;
                 try {
@@ -323,7 +321,7 @@ public class ActivityRoute extends AppCompatActivity {
 
 
                 OutputStream os = conn.getOutputStream();
-                os.write(new JSONObject().put("userid",USERINFO.getId()).put("source",params[1]).put("destination",params[0]).toString().getBytes("UTF-8"));
+                os.write(new JSONObject().put("userid", USERINFO.getId()).put("source", params[1]).put("destination", params[0]).toString().getBytes(StandardCharsets.UTF_8));
                 os.close();
 
             } catch (IOException | JSONException e) {

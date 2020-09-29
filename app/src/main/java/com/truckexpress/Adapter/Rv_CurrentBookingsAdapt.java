@@ -3,6 +3,7 @@ package com.truckexpress.Adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +30,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.truckexpress.Extras.Constants;
 import com.truckexpress.Extras.Progress;
+import com.truckexpress.Fragments.Frg_BookingDetails;
 import com.truckexpress.Models.ModelCurrentBooking;
 import com.truckexpress.Models.ModelTruck;
 import com.truckexpress.R;
@@ -124,135 +128,6 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
         return currentBookings.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        ItemCurrentBookingsBinding itemLotBinding;
-        public ViewHolder(ItemCurrentBookingsBinding binding) {
-            super(binding.getRoot());
-            this.itemLotBinding = binding;
-        }
-        private void bindDATA(final ModelCurrentBooking modelLOT) {
-            itemLotBinding.bookingID.setText("Booking ID :"+modelLOT.getBookingid());
-            itemLotBinding.corporateName.setText(Constants.capitalize(modelLOT.getCompanyName()));
-            itemLotBinding.pickUPdate.setText(modelLOT.getPickupdate());
-
-            if (modelLOT.getWeight().isEmpty() || modelLOT.getWeight()==null)
-            {
-                itemLotBinding.weight.setText("No Data");
-            }
-            else {
-                itemLotBinding.weight.setText(modelLOT.getWeight() + "Ton");
-            }
-
-            itemLotBinding.Amount.setText(modelLOT.getRate()+ " " + modelLOT.getUnitname());
-            itemLotBinding.trckType.setText(modelLOT.getTrucktypename() +"\n/"+ modelLOT.getNooftyres() + " tyre");
-            itemLotBinding.source.setText(modelLOT.getSource());
-            itemLotBinding.destination.setText(modelLOT.getDestination());
-            itemLotBinding.pickuplocation.setText(modelLOT.getPickupaddress());
-            itemLotBinding.dropLocation.setText(modelLOT.getDropaddress());
-
-            itemLotBinding.goodsType.setText(modelLOT.getGoodsname());
-            itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
-            itemLotBinding.totalfreight.setText(modelLOT.getRate());
-            itemLotBinding.expense.setText(String.valueOf(modelLOT.getTotalfreight()));
-            itemLotBinding.noofTruck.setText(String.valueOf("Number : "+modelLOT.getNooftrucks()));
-            itemLotBinding.checkList.setText("Checklist : "+String.valueOf(modelLOT.getChecklistname()));
-            itemLotBinding.expenseTotal.setText("Expense Amount : "+String.valueOf(modelLOT.getTotalexpenses()));
-            itemLotBinding.Assign.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getTrucks(modelLOT);
-                }
-            });
-
-
-            itemLotBinding.corporateName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                   String msg =  "Name : "+modelLOT.getName()+"\n"+
-                            "Mobile No : "+modelLOT.getCorporateContactPerson();
-                    AlertAutoLink(context,msg,"Corporate Details");
-                }
-            });
-
-            itemLotBinding.Showmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked){
-                        itemLotBinding.viewMore.setVisibility(View.VISIBLE);
-                        itemLotBinding.Showmore.setText("Show Less");
-                    }else {
-                        itemLotBinding.viewMore.setVisibility(View.GONE);
-                        itemLotBinding.Showmore.setText("Show More");
-                    }
-                }
-            });
-
-        }
-
-    }
-    private void getTrucks(ModelCurrentBooking currentBookings) {
-            progress.show();
-            AsyncHttpClient client = new AsyncHttpClient();
-            client.setTimeout(20 * 1000);
-            StringEntity entity = null;
-            try {
-                JSONObject jsonParams = new JSONObject();
-                jsonParams.put("userid", USERINFO.getId());
-                jsonParams.put("trucktypeid", currentBookings.getTrucktypeid());
-                jsonParams.put("tyerid", currentBookings.getTyerid());
-                jsonParams.put("truckweightid", currentBookings.getTruckweightid());
-                entity = new StringEntity(jsonParams.toString());
-
-                Log.d(TAG, "getTrucks: "+jsonParams.toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            client.post(context,TruckList,entity,"application/json" , new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
-                    progress.dismiss();
-                    String result = new String(responseBody);
-                    Log.d(TAG, "onSuccess: "+result);
-                    Object json = null;
-                    List<ModelTruck> modelTrucks = new ArrayList<>();
-
-                    try {
-                        json = new JSONTokener(result).nextValue();
-
-                        if (json instanceof JSONArray) {
-                            JSONArray jsonArray = new JSONArray(result);
-
-                            for (int y = 0; y < jsonArray.length(); y++) {
-                                JSONObject object = jsonArray.getJSONObject(y);
-                                Gson gson = new Gson();
-                                ModelTruck modelState = gson.fromJson(object.toString(), ModelTruck.class);
-                                modelTrucks.add(modelState);
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    displayBidHistory(modelTrucks, currentBookings,context);
-
-                }
-
-                @Override
-                public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
-                    Log.i("xml","Sending failed");
-                    progress.dismiss();
-                }
-
-                @Override
-                public void onProgress(long bytesWritten, long totalSize) {
-                    Log.i("xml","Progress : "+bytesWritten);
-                }
-            });
-        }
-
-
     private void displayBidHistory(List<ModelTruck> bidLogs,ModelCurrentBooking currentBookings ,Context context) {
         final Dialog dialog  = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -292,9 +167,9 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
                             object.put("bookingid",truckListJsonModel.getBookingID());
                             object.put("truckid",truckListJsonModel.getTruckId());
                             object.put("transpoterid",truckListJsonModel.getTransPorterID());
-                            object.put("trucknumber",truckListJsonModel.getTrucknumber());
-                            object.put("truckweight",truckListJsonModel.getTrucknumber());
-                            object.put("truckavailibilty",truckListJsonModel.getTruckavailibilty());
+                            object.put("trucknumber", truckListJsonModel.getTrucknumber());
+                            object.put("truckweight", truckListJsonModel.getTruckweight());
+                            object.put("truckavailibilty", truckListJsonModel.getTruckavailibilty());
                             jsonArray.put(object);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -397,6 +272,7 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
                 TextView type, number, availibility;
                 CheckBox checkBox;
                 Boolean isDateSelected = false;
+
                 public ListHolder(@NonNull View itemView) {
                     super(itemView);
                     type = itemView.findViewById(R.id.type);
@@ -408,9 +284,151 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
         });
     }
 
+    private void getTrucks(ModelCurrentBooking currentBookings) {
+        progress.show();
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(20 * 1000);
+        StringEntity entity = null;
+        try {
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("userid", USERINFO.getId());
+            jsonParams.put("trucktypeid", currentBookings.getTrucktypeid());
+            jsonParams.put("tyerid", currentBookings.getTyerid());
+            jsonParams.put("truckweightid", currentBookings.getTruckweightid());
+            entity = new StringEntity(jsonParams.toString());
+
+            Log.d(TAG, "getTrucks: " + jsonParams.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.post(context, TruckList, entity, "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                progress.dismiss();
+                String result = new String(responseBody);
+                Log.d(TAG, "onSuccess: " + result);
+                Object json = null;
+                List<ModelTruck> modelTrucks = new ArrayList<>();
+
+                try {
+                    json = new JSONTokener(result).nextValue();
+
+                    if (json instanceof JSONArray) {
+                        JSONArray jsonArray = new JSONArray(result);
+
+                        for (int y = 0; y < jsonArray.length(); y++) {
+                            JSONObject object = jsonArray.getJSONObject(y);
+                            Gson gson = new Gson();
+                            ModelTruck modelState = gson.fromJson(object.toString(), ModelTruck.class);
+                            modelTrucks.add(modelState);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                displayBidHistory(modelTrucks, currentBookings, context);
+
+            }
+
+            @Override
+            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.i("xml", "Sending failed");
+                progress.dismiss();
+            }
+
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+                Log.i("xml", "Progress : " + bytesWritten);
+            }
+        });
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        ItemCurrentBookingsBinding itemLotBinding;
+
+        public ViewHolder(ItemCurrentBookingsBinding binding) {
+            super(binding.getRoot());
+            this.itemLotBinding = binding;
+        }
+
+        private void bindDATA(final ModelCurrentBooking modelLOT) {
+            itemLotBinding.bookingID.setText("Booking ID :" + modelLOT.getBookingid());
+            itemLotBinding.corporateName.setText(Constants.capitalize(modelLOT.getCompanyName()));
+            itemLotBinding.pickUPdate.setText(modelLOT.getPickupdate());
+
+            if (modelLOT.getWeight().isEmpty() || modelLOT.getWeight() == null) {
+                itemLotBinding.weight.setText("No Data");
+            } else {
+                itemLotBinding.weight.setText(modelLOT.getWeight() + "Ton");
+            }
+
+            itemLotBinding.Amount.setText(modelLOT.getRate() + " " + modelLOT.getUnitname());
+            itemLotBinding.trckType.setText(modelLOT.getTrucktypename() + "\n/" + modelLOT.getNooftyres() + " tyre");
+            itemLotBinding.source.setText(modelLOT.getSource());
+            itemLotBinding.destination.setText(modelLOT.getDestination());
+            itemLotBinding.pickuplocation.setText(modelLOT.getPickupaddress());
+            itemLotBinding.dropLocation.setText(modelLOT.getDropaddress());
+
+            itemLotBinding.goodsType.setText(modelLOT.getGoodsname());
+            itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
+            itemLotBinding.totalfreight.setText(modelLOT.getRate());
+            itemLotBinding.expense.setText(String.valueOf(modelLOT.getTotalfreight()));
+            itemLotBinding.noofTruck.setText("Number : " + modelLOT.getNooftrucks());
+            itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistname());
+            itemLotBinding.expenseTotal.setText("Expense Amount : " + modelLOT.getTotalexpenses());
+            itemLotBinding.Assign.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getTrucks(modelLOT);
+                }
+            });
+            itemLotBinding.details.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Frg_BookingDetails newFragment = new Frg_BookingDetails();
+                    Bundle args = new Bundle();
+                    args.putSerializable("itemBooking", modelLOT);
+                    newFragment.setArguments(args);
+                    FragmentTransaction transaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    transaction.add(android.R.id.content, newFragment).addToBackStack(null).commit();
+
+                }
+            });
+
+
+            itemLotBinding.corporateName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String msg = "Name : " + modelLOT.getName() + "\n" +
+                            "Mobile No : " + modelLOT.getCorporateContactPerson();
+                    AlertAutoLink(context, msg, "Corporate Details");
+                }
+            });
+
+            itemLotBinding.Showmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        itemLotBinding.viewMore.setVisibility(View.VISIBLE);
+                        itemLotBinding.Showmore.setText("Show Less");
+                    } else {
+                        itemLotBinding.viewMore.setVisibility(View.GONE);
+                        itemLotBinding.Showmore.setText("Show More");
+                    }
+                }
+            });
+
+        }
+
+    }
+
     private void manualTruckForm(int bookingid) {
-        final ManualTruckBinding manualTruckBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout. manual_truck, null, false);
-        final Dialog dialog  = new Dialog(context);
+        final ManualTruckBinding manualTruckBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.manual_truck, null, false);
+        final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(manualTruckBinding.getRoot());

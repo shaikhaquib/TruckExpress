@@ -2,16 +2,18 @@ package com.truckexpress.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ModelLOT{
+import java.io.Serializable;
 
-	@SerializedName("tyre_id")
-	private int tyreId;
+public class ModelLOT implements Serializable {
 
-	@SerializedName("totalexpenses")
-	private int totalexpenses;
+    @SerializedName("tyre_id")
+    private int tyreId;
 
-	@SerializedName("phone2")
-	private Object phone2;
+    @SerializedName("totalexpenses")
+    private int totalexpenses;
+
+    @SerializedName("phone2")
+    private Object phone2;
 
 	@SerializedName("phone3")
 	private Object phone3;

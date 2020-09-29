@@ -24,7 +24,7 @@
             android:background="@drawable/reports_header_bk"
             android:padding="8dp"
             android:src="@drawable/ic_law"
-            android:tint="@color/whiteTextColor" />
+            app:tint="@color/whiteTextColor" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
             android:background="@drawable/reports_header_bk"
             android:padding="8dp"
             android:src="@drawable/ic_law"
-            android:tint="@color/whiteTextColor" />
+            app:tint="@color/whiteTextColor" />
 
         <LinearLayout
             android:layout_width="wrap_content"

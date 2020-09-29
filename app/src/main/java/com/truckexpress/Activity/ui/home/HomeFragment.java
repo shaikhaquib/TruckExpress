@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.truckexpress.Activity.ActivityAdd;
+import com.truckexpress.Activity.ActivityPayment;
 import com.truckexpress.Activity.ActivityRoute;
 import com.truckexpress.Activity.BookingActivity;
 import com.truckexpress.Activity.EnquiresActivity;
@@ -35,6 +36,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import static androidx.databinding.DataBindingUtil.inflate;
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
@@ -75,13 +77,44 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         binding.BookingValue.setOnClickListener(this);
         binding.routes.setOnClickListener(this);
         binding.add.setOnClickListener(this);
+        binding.Payments.setOnClickListener(this);
 
 
         new DashBoard().execute();
 
         return binding.getRoot();
     }
-    public class DashBoard extends AsyncTask<String , Void ,String> {
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.Enquiries:
+                startActivity(new Intent(getActivity(), EnquiresActivity.class));
+                break;
+            case R.id.EnquiriesValue:
+                startActivity(new Intent(getActivity(), EnquiresActivity.class));
+                break;
+            case R.id.Booking:
+                startActivity(new Intent(getActivity(), BookingActivity.class));
+                break;
+            case R.id.BookingValue:
+                startActivity(new Intent(getActivity(), BookingActivity.class));
+                break;
+            case R.id.routes:
+                startActivity(new Intent(getActivity(), ActivityRoute.class));
+                break;
+            case R.id.add:
+                startActivity(new Intent(getActivity(), ActivityAdd.class));
+                break;
+            case R.id.Payments:
+                startActivity(new Intent(getActivity(), ActivityPayment.class));
+                break;
+        }
+
+    }
+
+    public class DashBoard extends AsyncTask<String, Void, String> {
         String server_response;
         String Json;
         HttpURLConnection conn;
@@ -114,7 +147,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         "}";
 
                 OutputStream os = conn.getOutputStream();
-                os.write(s.getBytes("UTF-8"));
+                os.write(s.getBytes(StandardCharsets.UTF_8));
                 os.close();
 
             } catch (IOException e) {
@@ -173,31 +206,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
 
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.Enquiries:
-                startActivity(new Intent(getActivity(), EnquiresActivity.class));
-                break;
-            case R.id.EnquiriesValue:
-                startActivity(new Intent(getActivity(), EnquiresActivity.class));
-                break;
-            case R.id.Booking:
-                startActivity(new Intent(getActivity(), BookingActivity.class));
-                break;
-            case R.id.BookingValue:
-                startActivity(new Intent(getActivity(), BookingActivity.class));
-                break;
-            case R.id.routes:
-                startActivity(new Intent(getActivity(), ActivityRoute.class));
-                break;
-            case R.id.add:
-                startActivity(new Intent(getActivity(), ActivityAdd.class));
-                break;
-        }
-
     }
 }

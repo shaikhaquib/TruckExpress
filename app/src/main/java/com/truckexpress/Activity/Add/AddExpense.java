@@ -1,11 +1,4 @@
-package com.truckexpress.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.truckexpress.Activity.Add;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,12 +12,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.truckexpress.Extras.MyItemDecoration;
 import com.truckexpress.Extras.Progress;
-import com.truckexpress.Models.ModelChecklist;
 import com.truckexpress.Models.ModelExpense;
 import com.truckexpress.Models.ModelUnit;
 import com.truckexpress.Network.API;
@@ -45,6 +44,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +54,7 @@ import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
 import static com.truckexpress.Extras.Constants.CONNECTION_TIMEOUT;
 import static com.truckexpress.Extras.Constants.READ_TIMEOUT;
-import static com.truckexpress.Network.API.ChecklistInsert;
-import static com.truckexpress.Network.API.ExpanseInsert;
 import static com.truckexpress.Network.API.Expenselistuser;
-import static com.truckexpress.Network.API.GoodsTypeList;
 import static com.truckexpress.Network.API.UnitsList;
 
 public class AddExpense extends AppCompatActivity {
@@ -298,7 +295,7 @@ public class AddExpense extends AppCompatActivity {
                 checkList = params[0];
 
                 OutputStream os = conn.getOutputStream();
-                os.write(new JSONObject().put("userid",USERINFO.getId()).put("name",params[0]).put("rate",params[1]).put("unitid",UnitID).toString().getBytes("UTF-8"));
+                os.write(new JSONObject().put("userid", USERINFO.getId()).put("name", params[0]).put("rate", params[1]).put("unitid", UnitID).toString().getBytes(StandardCharsets.UTF_8));
                 os.close();
 
             } catch (IOException | JSONException e) {

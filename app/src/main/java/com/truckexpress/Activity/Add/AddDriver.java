@@ -1,12 +1,4 @@
-package com.truckexpress.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.truckexpress.Activity.Add;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,8 +6,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,31 +19,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.truckexpress.Extras.MyItemDecoration;
 import com.truckexpress.Extras.Progress;
-import com.truckexpress.Models.ArrayItem;
 import com.truckexpress.Models.ModelCity;
 import com.truckexpress.Models.ModelDriver;
-import com.truckexpress.Models.ModelGoodType;
-import com.truckexpress.Models.ModelLOT;
 import com.truckexpress.Models.ModelState;
-import com.truckexpress.Models.ModelStateCity;
-import com.truckexpress.Models.ModelTruckList;
 import com.truckexpress.Models.Modellunguage;
 import com.truckexpress.R;
 import com.truckexpress.databinding.ActivityAddDriverBinding;
@@ -65,14 +60,9 @@ import org.json.JSONTokener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -80,14 +70,13 @@ import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
+import static com.truckexpress.Extras.Constants.compressImage;
 import static com.truckexpress.Network.API.BankList;
 import static com.truckexpress.Network.API.BranchName;
 import static com.truckexpress.Network.API.CityLists;
 import static com.truckexpress.Network.API.DriverList;
-import static com.truckexpress.Network.API.GoodsTypefullList;
 import static com.truckexpress.Network.API.LunguageList;
 import static com.truckexpress.Network.API.StateList;
-import static com.truckexpress.Network.API.UploadImage;
 import static com.truckexpress.Network.API.UploadImageDriver;
 
 public class AddDriver extends AppCompatActivity implements View.OnClickListener {
@@ -533,42 +522,86 @@ public class AddDriver extends AppCompatActivity implements View.OnClickListener
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                activityAddDriverBinding.Language.setText(TextUtils.join(",",stringBuilder.toArray()));
-                                laguageId = TextUtils.join(",",languageID.toArray());
+                                activityAddDriverBinding.Language.setText(TextUtils.join(",", stringBuilder.toArray()));
+                                laguageId = TextUtils.join(",", languageID.toArray());
                                 stringBuilder.clear();
                                 languageID.clear();
                             }
                         }).show();
                 break;
             case R.id.uploadDocumnet:
-                if (checkPermission()) {
-                    Intent intent1 = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                    intent1.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
-                    intent1.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                    intent1.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                    startActivityForResult(intent1, 1211);
-                }
+
+                Dexter.withContext(this)
+                        .withPermissions(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO
+                        ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        Intent intent1 = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                        intent1.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
+                        intent1.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                        intent1.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                        startActivityForResult(intent1, 1211);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(getApplicationContext(), "Storage Permission required to access media", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
                 break;
             case R.id.uploadLicense:
-                if (checkPermission()) {
-                    Intent intent2 = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                    intent2.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
-                    intent2.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                    intent2.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                    startActivityForResult(intent2, 1213);
-                }
+                Dexter.withContext(this)
+                        .withPermissions(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO
+                        ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        Intent intent2 = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                        intent2.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
+                        intent2.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                        intent2.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                        startActivityForResult(intent2, 1213);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(getApplicationContext(), "Storage Permission required to access media", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
+
                 break;
             case R.id.uploadPhoto:
-                if (checkPermission()) {
-                    Intent intent3 = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                    intent3.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
-                    intent3.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
-                    intent3.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
-                    startActivityForResult(intent3, 1212);
-                }
-                break;
+
+                Dexter.withContext(this)
+                        .withPermissions(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO
+                        ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        Intent intent3 = new Intent(getApplicationContext(), ImageSelectActivity.class);
+                        intent3.putExtra(ImageSelectActivity.FLAG_COMPRESS, false);//default is true
+                        intent3.putExtra(ImageSelectActivity.FLAG_CAMERA, true);//default is true
+                        intent3.putExtra(ImageSelectActivity.FLAG_GALLERY, true);//default is true
+                        startActivityForResult(intent3, 1212);
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(getApplicationContext(), "Storage Permission required to access media", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
+
             case R.id.submit:
-                if (isValidate()){
+                if (isValidate()) {
                     try {
                         postFile();
                     } catch (FileNotFoundException e) {
@@ -667,19 +700,19 @@ public class AddDriver extends AppCompatActivity implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1211 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            activityAddDriverBinding.imageView6.setImageBitmap(selectedImage);
             document = filePath;
+            compressImage(filePath);
+            Glide.with(this).load(filePath).into(activityAddDriverBinding.imageView6);
         }else if (requestCode == 1212 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            activityAddDriverBinding.imageView7.setImageBitmap(selectedImage);
+            compressImage(filePath);
+            Glide.with(this).load(filePath).into(activityAddDriverBinding.imageView7);
             photo = filePath;
         }else if (requestCode == 1213 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-            activityAddDriverBinding.imageView8.setImageBitmap(selectedImage);
             license = filePath;
+            compressImage(filePath);
+            Glide.with(this).load(filePath).into(activityAddDriverBinding.imageView8);
         }
     }
 

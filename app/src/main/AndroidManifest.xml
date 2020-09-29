@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Network.AppController"
@@ -21,8 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activity.AddBooking"></activity>
-        <activity android:name=".Activity.AddCompany" />
+        <activity android:name=".Activity.Payment.AdavancePayments"></activity>
+        <activity android:name=".Activity.ActivityPayment" />
+        <activity android:name=".Activity.Add.AddBooking" />
+        <activity android:name=".Activity.Add.AddCompany" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -38,12 +41,12 @@
         <activity
             android:name=".Activity.Map.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".Activity.AddCheckList" />
-        <activity android:name=".Activity.AddExpense" />
-        <activity android:name=".Activity.AddMoterOwner" />
-        <activity android:name=".Activity.AddGoodType" />
-        <activity android:name=".Activity.AddTruckDetails" />
-        <activity android:name=".Activity.AddDriver" />
+        <activity android:name=".Activity.Add.AddCheckList" />
+        <activity android:name=".Activity.Add.AddExpense" />
+        <activity android:name=".Activity.Add.AddMoterOwner" />
+        <activity android:name=".Activity.Add.AddGoodType" />
+        <activity android:name=".Activity.Add.AddTruckDetails" />
+        <activity android:name=".Activity.Add.AddDriver" />
         <activity android:name=".Activity.ActivityAdd" />
         <activity android:name=".Activity.ActivityRoute" />
         <activity android:name=".Activity.BookingActivity">

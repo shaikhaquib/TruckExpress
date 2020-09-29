@@ -10,6 +10,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.truckexpress.Activity.Add.AddBooking;
+import com.truckexpress.Activity.Add.AddCheckList;
+import com.truckexpress.Activity.Add.AddCompany;
+import com.truckexpress.Activity.Add.AddDriver;
+import com.truckexpress.Activity.Add.AddExpense;
+import com.truckexpress.Activity.Add.AddGoodType;
+import com.truckexpress.Activity.Add.AddMoterOwner;
+import com.truckexpress.Activity.Add.AddTruckDetails;
 import com.truckexpress.Activity.Map.MapsActivity;
 import com.truckexpress.R;
 import com.truckexpress.databinding.ActivityAddBinding;

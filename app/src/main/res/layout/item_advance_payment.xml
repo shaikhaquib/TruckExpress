@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/pickUPdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:drawableLeft="@drawable/ic_company"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/gotham"
+                android:gravity="center"
+                android:maxLength="15"
+                android:text="Devatives"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/bookingID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/gotham"
+                android:text="Booking ID : 00005"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/corporateName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_advance"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/gotham"
+                android:gravity="center"
+                android:maxLength="15"
+                android:text=" Advance : 100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/trckType" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/trckType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_charges"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/gotham"
+                android:gravity="center"
+                android:text=" Freight : 50"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pickUPdate" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/Amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_weighing_machine"
+                android:drawablePadding="2dp"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/gotham"
+                android:gravity="center"
+                android:text="Weight Lifted : 10 Ton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/corporateName" />
+
+
+            <ImageButton
+                android:id="@+id/materialButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_baseline_remove_red_eye_24"
+                android:text="View"
+                android:tint="@color/colorPrimary"
+                app:iconSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/materialButton2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Amount" />
+
+            <ImageButton
+                android:id="@+id/materialButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_outline_attachment_24"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/materialButton1"
+                app:layout_constraintStart_toEndOf="@+id/materialButton"
+                app:layout_constraintTop_toTopOf="@+id/materialButton" />
+
+
+            <ImageButton
+                android:id="@+id/materialButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_baseline_edit_24"
+                android:tint="@color/colorPrimary"
+                app:iconSize="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/materialButton3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/materialButton2"
+                app:layout_constraintTop_toTopOf="@+id/materialButton" />
+
+            <ImageButton
+                android:id="@+id/materialButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_baseline_send_24"
+                android:text="Generate"
+                android:tint="@color/colorPrimary"
+                app:iconSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/materialButton1"
+                app:layout_constraintTop_toTopOf="@+id/materialButton" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

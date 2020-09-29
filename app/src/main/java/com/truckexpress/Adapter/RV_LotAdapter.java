@@ -4,9 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.CountDownTimer;
-import android.text.SpannableString;
-import android.text.util.Linkify;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +18,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.truckexpress.Extras.Constants;
 import com.truckexpress.Extras.Progress;
+import com.truckexpress.Fragments.Frg_Share;
 import com.truckexpress.Models.ModelLOT;
 import com.truckexpress.R;
-import com.truckexpress.databinding.AddBidBinding;
 import com.truckexpress.databinding.AddBidLotBinding;
 import com.truckexpress.databinding.ItemLotBinding;
 
@@ -40,7 +39,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -122,12 +120,106 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
         return modelLOTS.size();
     }
 
+    private void addBIDDialoge(final ModelLOT modelLOT) {
+        final AddBidLotBinding bidBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.add_bid_lot, null, false);
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(bidBinding.getRoot());
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+
+        bidBinding.closeDiloge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        bidBinding.bookingID.setText("Booking ID :" + modelLOT.getId());
+        bidBinding.noofTruck.setText(+modelLOT.getLotweight() + "" + modelLOT.getUnitname());
+        bidBinding.trckType.setText(modelLOT.getTrucktype() + " / " + modelLOT.getTyre() + "tyre");
+        bidBinding.rate.setText(String.valueOf(modelLOT.getRate()).trim());
+        bidBinding.unit.setText(modelLOT.getUnitid());
+
+        bidBinding.saveBid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bidBinding.rate.getText().toString().isEmpty()) {
+                    bidBinding.rate.setError("Field Required...");
+                    Alert(context, "Please set Rate");
+                } else if (bidBinding.edtNoofTruck.getText().toString().isEmpty()) {
+                    bidBinding.edtNoofTruck.setError("Field Required...");
+                    Alert(context, "Please set Number of Truck");
+                } else if (Integer.parseInt(modelLOT.getNooftrucks()) < Integer.parseInt(bidBinding.edtNoofTruck.getText().toString().trim())) {
+                    bidBinding.edtNoofTruck.setError("Please Enter Valid data ...");
+                    Alert(context, "Please Enter Valid data ...");
+                } else {
+                    new RV_ADHOCAdapter.SaveBID(modelLOT, dialog, progress, context).execute(bidBinding.rate.getText().toString(), bidBinding.edtNoofTruck.getText().toString());
+                }
+            }
+        });
+    }
+
+    private void removeTruck(Dialog dialog, int position, String bookingId, String Remark) {
+        progress.show();
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(20 * 1000);
+        StringEntity entity = null;
+        try {
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("userid", USERINFO.getId());
+            jsonParams.put("bookingid", bookingId);
+            jsonParams.put("reason", Remark);
+            jsonParams.put("createdby", "0");
+            entity = new StringEntity(jsonParams.toString());
+
+            Log.d(TAG, "getTrucks: " + jsonParams.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.post(context, BookingReasonInsert, entity, "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                progress.dismiss();
+                String result = new String(responseBody);
+                Log.d(TAG, "onSuccess: " + result);
+                Object json = null;
+                if (result.equals("\"success\"")) {
+                    dialog.dismiss();
+                    Toast.makeText(context, "Booking Removed Successfully", Toast.LENGTH_SHORT).show();
+                    modelLOTS.remove(position);
+                    notifyDataSetChanged();
+                } else {
+                    Alert(context, "Some thing went wrong..");
+                }
+
+            }
+
+            @Override
+            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.i("xml", "Sending failed");
+                progress.dismiss();
+            }
+
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+                Log.i("xml", "Progress : " + bytesWritten);
+            }
+        });
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         ItemLotBinding itemLotBinding;
+
         public ViewHolder(ItemLotBinding binding) {
             super(binding.getRoot());
             this.itemLotBinding = binding;
         }
+
         private void dataBind(final ModelLOT modelLOT) {
 
             itemLotBinding.bookingID.setText("Booking ID :" + modelLOT.getId());
@@ -140,9 +232,9 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
             itemLotBinding.goodsType.setText(modelLOT.getGoodstype()+" "+modelLOT.getShortageallowance());
             itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
             itemLotBinding.totalfreight.setText("₹ "+modelLOT.getTotalfreight());
-            itemLotBinding.expense.setText("₹ "+modelLOT.getTotalexpenses());
-            itemLotBinding.checkList.setText("Checklist : "+String.valueOf(modelLOT.getChecklistcount()));
-            itemLotBinding.Amount.setText(modelLOT.getRate()+ " " + modelLOT.getUnitid());
+            itemLotBinding.expense.setText("₹ " + modelLOT.getTotalexpenses());
+            itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistcount());
+            itemLotBinding.Amount.setText(modelLOT.getRate() + " " + modelLOT.getUnitid());
             itemLotBinding.weight.setText(modelLOT.getLotweight()+ " " + modelLOT.getLotunitname());
 
             itemLotBinding.note.setOnClickListener(new View.OnClickListener() {
@@ -286,99 +378,31 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
                 }
             });
 
+            itemLotBinding.share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle args = new Bundle();
+                    args.putSerializable("itemBooking", modelLOT);
+                    Frg_Share newFragment = new Frg_Share();
+                    FragmentTransaction transaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+                    newFragment.setArguments(args);
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    transaction.add(android.R.id.content, newFragment).addToBackStack(null).commit();
+/*
+                    newFragment.setOnCallbackResult(new AnswerFragment.CallbackResult() {
+                        @Override
+                        public void sendResult(int requestCode, Object obj) {
+                            if (requestCode == 9003) {
+                            }
+                        }
+                    });
+*/
+                }
+            });
+
+
         }
 
-    }
-    private void removeTruck(Dialog dialog,int position, String bookingId, String Remark) {
-        progress.show();
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.setTimeout(20 * 1000);
-        StringEntity entity = null;
-        try {
-            JSONObject jsonParams = new JSONObject();
-            jsonParams.put("userid", USERINFO.getId());
-            jsonParams.put("bookingid",bookingId);
-            jsonParams.put("reason",Remark);
-            jsonParams.put("createdby","0");
-            entity = new StringEntity(jsonParams.toString());
-
-            Log.d(TAG, "getTrucks: "+jsonParams.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        client.post(context,BookingReasonInsert,entity,"application/json" , new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
-                progress.dismiss();
-                String result = new String(responseBody);
-                Log.d(TAG, "onSuccess: "+result);
-                Object json = null;
-                if (result.equals("\"success\"")) {
-                    dialog.dismiss();
-                    Toast.makeText(context, "Booking Removed Successfully", Toast.LENGTH_SHORT).show();
-                    modelLOTS.remove(position);
-                    notifyDataSetChanged();
-                } else {
-                    Alert(context, "Some thing went wrong..");
-                }
-
-            }
-
-            @Override
-            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.i("xml","Sending failed");
-                progress.dismiss();
-            }
-
-            @Override
-            public void onProgress(long bytesWritten, long totalSize) {
-                Log.i("xml","Progress : "+bytesWritten);
-            }
-        });
-    }
-
-    private void addBIDDialoge(final ModelLOT modelLOT) {
-        final AddBidLotBinding bidBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout. add_bid_lot, null, false);
-
-        final Dialog dialog  = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(bidBinding.getRoot());
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.show();
-
-        bidBinding.closeDiloge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        bidBinding.bookingID.setText("Booking ID :"+modelLOT.getId());
-        bidBinding.noofTruck.setText(String.valueOf(+modelLOT.getLotweight())+""+modelLOT.getUnitname());
-        bidBinding.trckType.setText(modelLOT.getTrucktype() +" / "+ modelLOT.getTyre() + "tyre");
-        bidBinding.rate.setText(String.valueOf(modelLOT.getRate()).trim());
-        bidBinding.unit.setText(modelLOT.getUnitid());
-
-        bidBinding.saveBid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (bidBinding.rate.getText().toString().isEmpty()){
-                    bidBinding.rate.setError("Field Required...");
-                    Alert(context,"Please set Rate");
-                }else if (bidBinding.edtNoofTruck.getText().toString().isEmpty()){
-                    bidBinding.edtNoofTruck.setError("Field Required...");
-                    Alert(context,"Please set Number of Truck");
-                }else if (Integer.parseInt(modelLOT.getNooftrucks())<Integer.parseInt(bidBinding.edtNoofTruck.getText().toString().trim())){
-                    bidBinding.edtNoofTruck.setError("Please Enter Valid data ...");
-                    Alert(context,"Please Enter Valid data ...");
-                }else {
-                    new RV_ADHOCAdapter.SaveBID(modelLOT, dialog,progress,context).execute(bidBinding.rate.getText().toString(),bidBinding.edtNoofTruck.getText().toString());
-                }
-            }
-        });
     }
 
 }

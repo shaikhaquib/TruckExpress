@@ -13,6 +13,7 @@
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:weightSum="2"
+        android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,8 +26,7 @@
             android:gravity="center"
             android:text="Source"
             android:textColor="@color/whiteTextColor"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -36,8 +36,7 @@
             android:gravity="center"
             android:text="Destination"
             android:textColor="@color/whiteTextColor"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -46,6 +45,8 @@
         android:id="@+id/rvRoute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

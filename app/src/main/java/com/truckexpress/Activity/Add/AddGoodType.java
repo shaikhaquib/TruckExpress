@@ -1,11 +1,4 @@
-package com.truckexpress.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.truckexpress.Activity.Add;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,17 +11,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.truckexpress.Extras.MyItemDecoration;
 import com.truckexpress.Extras.Progress;
-import com.truckexpress.Models.ModelCity;
-import com.truckexpress.Models.ModelExpense;
 import com.truckexpress.Models.ModelGoodType;
 import com.truckexpress.Models.ModelGoods;
-import com.truckexpress.Models.ModelState;
 import com.truckexpress.Models.ModelUnit;
 import com.truckexpress.R;
 import com.truckexpress.databinding.ActivityAddGoodTypeBinding;
@@ -47,6 +43,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,11 +53,8 @@ import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
 import static com.truckexpress.Extras.Constants.CONNECTION_TIMEOUT;
 import static com.truckexpress.Extras.Constants.READ_TIMEOUT;
-import static com.truckexpress.Network.API.CityLists;
-import static com.truckexpress.Network.API.ExpanseInsert;
 import static com.truckexpress.Network.API.GoodsTypeList;
 import static com.truckexpress.Network.API.GoodsTypefullList;
-import static com.truckexpress.Network.API.StateList;
 import static com.truckexpress.Network.API.Transportersgoodtype;
 import static com.truckexpress.Network.API.UnitsList;
 
@@ -376,8 +370,8 @@ public class AddGoodType extends AppCompatActivity {
                         .put("units",UnitID)
                         .put("hsncode",params[3]);
                 OutputStream os = conn.getOutputStream();
-                Log.d(TAG, "doInBackground: "+object.toString());
-                os.write(object.toString().getBytes("UTF-8"));
+                Log.d(TAG, "doInBackground: " + object.toString());
+                os.write(object.toString().getBytes(StandardCharsets.UTF_8));
                 os.close();
 
             } catch (IOException | JSONException e) {

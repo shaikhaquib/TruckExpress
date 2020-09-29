@@ -12,7 +12,7 @@
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout8"
             app:layout_constraintStart_toEndOf="@+id/textInputLayout8"
-            tools:context=".Activity.AddMoterOwner">
+            tools:context=".Activity.Add.AddMoterOwner">
 
             <TextView
                 android:id="@+id/textView"

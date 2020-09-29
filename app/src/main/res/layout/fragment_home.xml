@@ -119,7 +119,7 @@
 
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView"
+            android:id="@+id/Payments"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -143,7 +143,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/reports_header_bk"
                     android:padding="8dp"
-                    android:tint="@color/whiteTextColor"
+                    app:tint="@color/whiteTextColor"
                     android:src="@drawable/ic_pay" />
 
                 <LinearLayout
@@ -184,7 +184,7 @@
             android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+            app:layout_constraintTop_toBottomOf="@+id/Payments">
 
             <RelativeLayout
                 android:id="@+id/routes"
@@ -198,7 +198,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/reports_header_bk"
                     android:padding="8dp"
-                    android:tint="@color/whiteTextColor"
+                    app:tint="@color/whiteTextColor"
                     android:src="@drawable/ic_location"  />
 
                 <LinearLayout
@@ -253,7 +253,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/reports_header_bk"
                     android:padding="8dp"
-                    android:tint="@color/whiteTextColor"
+                    app:tint="@color/whiteTextColor"
                     android:src="@drawable/ic_plus"  />
 
                 <LinearLayout
@@ -308,7 +308,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/reports_header_bk"
                     android:padding="8dp"
-                    android:tint="@color/whiteTextColor"
+                    app:tint="@color/whiteTextColor"
                     android:src="@drawable/ic_seo_report"  />
 
                 <LinearLayout
@@ -362,7 +362,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/reports_header_bk"
                     android:padding="8dp"
-                    android:tint="@color/whiteTextColor"
+                    app:tint="@color/whiteTextColor"
                     android:src="@drawable/ic_delivery"  />
 
                 <LinearLayout

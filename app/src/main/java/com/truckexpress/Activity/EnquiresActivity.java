@@ -3,17 +3,15 @@ package com.truckexpress.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.truckexpress.Adapter.ViewPagerAdapter;
 import com.truckexpress.Extras.Progress;
@@ -36,6 +34,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +79,7 @@ public class EnquiresActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(fragment_adHoc, "ADHOC");
         adapter.addFragment(fragment_lot, "LOT");
-        adapter.addFragment(fragment_contract, "Contract");
+        //    adapter.addFragment(fragment_contract, "Contract");
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(1);
 
@@ -127,7 +126,7 @@ public class EnquiresActivity extends AppCompatActivity {
 
 
                 OutputStream os = conn.getOutputStream();
-                os.write(new JSONObject().put("userid",USERINFO.getId()).toString().getBytes("UTF-8"));
+                os.write(new JSONObject().put("userid", USERINFO.getId()).toString().getBytes(StandardCharsets.UTF_8));
                 os.close();
 
             } catch (IOException | JSONException e) {
@@ -176,7 +175,7 @@ public class EnquiresActivity extends AppCompatActivity {
             if (!s.equals("unsuccessful")) {
 
 
-                Log.d(TAG, "onResponse: " + s.toString());
+                Log.d(TAG, "onResponse: " + s);
 
                 Object json = null;
                 try {
