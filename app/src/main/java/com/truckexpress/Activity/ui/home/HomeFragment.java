@@ -134,7 +134,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 e.printStackTrace();
             }
             try {
-                conn = (HttpURLConnection)url.openConnection();
+                conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(READ_TIMEOUT);
                 conn.setConnectTimeout(CONNECTION_TIMEOUT);
                 conn.setRequestMethod("POST");
@@ -142,15 +142,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
 
-                String s = "{\n" +
-                        "   \"userid\": 5\n" +
-                        "}";
+                JSONObject object = new JSONObject();
+                object.put("userid", USERINFO.getId());
 
                 OutputStream os = conn.getOutputStream();
-                os.write(s.getBytes(StandardCharsets.UTF_8));
+                os.write(object.toString().getBytes(StandardCharsets.UTF_8));
                 os.close();
 
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
             try {

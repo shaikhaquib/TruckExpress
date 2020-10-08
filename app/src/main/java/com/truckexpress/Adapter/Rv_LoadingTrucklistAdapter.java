@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -47,6 +49,7 @@ import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
 import static com.truckexpress.Network.API.addArrival;
 import static com.truckexpress.Network.API.apploading;
+import static com.truckexpress.Network.API.canceltruckassigned;
 
 public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingTrucklistAdapter.ViewHolder> {
 
@@ -77,7 +80,25 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
             viewHolder.btnloading.setText("Arrival");
         } else {
             viewHolder.btnloading.setText("Loading");
+            viewHolder.cancelAssignedTruck.setVisibility(View.GONE);
         }
+
+        viewHolder.cancelAssignedTruck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
+                dialogBuilder.setTitle("Alert");
+                dialogBuilder.setMessage("Do you want to unassigned selected Truck");
+                dialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        removeTruck(position);
+                    }
+                }).setNeutralButton("Cancel", null);
+                dialogBuilder.show();
+            }
+        });
+
 
         viewHolder.btnloading.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -384,9 +405,64 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
         return loadingTrucklists.size();
     }
 
+    private void removeTruck(int pos) {
+        ModelLoadingTrucklist trcukList = loadingTrucklists.get(pos);
+        final Progress progress = new Progress(context);
+        progress.show();
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(20 * 1000);
+
+        StringEntity entity = null;
+        try {
+
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("bookingid", trcukList.getBookingid());
+            jsonParams.put("transpoterid", USERINFO.getId());
+            jsonParams.put("trucknumber", trcukList.getTruckname());
+            jsonParams.put("truckid", trcukList.getTruckid());
+
+            entity = new StringEntity(jsonParams.toString());
+
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        client.post(context, canceltruckassigned, entity, "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                progress.dismiss();
+                String result = new String(responseBody);
+                Log.d(TAG, "onSuccess: " + result);
+
+                if (result.equals("\"success\"")) {
+                    Toast.makeText(context, "Truck Removed Successfully", Toast.LENGTH_SHORT).show();
+                    loadingTrucklists.remove(pos);
+                    notifyItemRemoved(pos);
+                } else {
+                    Alert(context, result);
+                }
+
+                Object json = null;
+
+            }
+
+            @Override
+            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
+                String result = new String(bytes);
+                Log.d(TAG, "onSuccess: " + result);
+                progress.dismiss();
+            }
+
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+                Log.i("xml", "Progress : " + bytesWritten);
+            }
+        });
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView truckNumber, status;
+        TextView truckNumber, status, cancelAssignedTruck;
         MaterialButton btnloading;
 
         public ViewHolder(@NonNull View itemView) {
@@ -394,6 +470,7 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
             truckNumber = itemView.findViewById(R.id.truckNumber);
             status = itemView.findViewById(R.id.status);
             btnloading = itemView.findViewById(R.id.btnloading);
+            cancelAssignedTruck = itemView.findViewById(R.id.cancelAssignedTruck);
         }
     }
 

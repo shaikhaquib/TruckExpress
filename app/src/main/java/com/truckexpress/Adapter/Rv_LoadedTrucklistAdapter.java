@@ -61,6 +61,8 @@ public class Rv_LoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadedTru
         Rv_LoadedTrucklistAdapter.ViewHolder viewHolder = (Rv_LoadedTrucklistAdapter.ViewHolder) holder;
         viewHolder.truckNumber.setText("Vehicle Number : " + trucklist.getTruckname().toUpperCase());
         viewHolder.status.setText("Status : " + trucklist.getStatusname());
+        viewHolder.cancelAssignedTruck.setVisibility(View.GONE);
+
 
         viewHolder.btnloading.setText("Un Loading");
 
@@ -187,7 +189,7 @@ public class Rv_LoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadedTru
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView truckNumber, status;
+        TextView truckNumber, status, cancelAssignedTruck;
         MaterialButton btnloading;
 
         public ViewHolder(@NonNull View itemView) {
@@ -195,6 +197,7 @@ public class Rv_LoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadedTru
             truckNumber = itemView.findViewById(R.id.truckNumber);
             status = itemView.findViewById(R.id.status);
             btnloading = itemView.findViewById(R.id.btnloading);
+            cancelAssignedTruck = itemView.findViewById(R.id.cancelAssignedTruck);
         }
     }
 

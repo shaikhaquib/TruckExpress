@@ -51,5 +51,7 @@ public class API {
    public static String addArrival = "http://truckexpress.live/api/Bidding/savetruckarrival";
    public static String apploading = "http://truckexpress.live/api/Bidding/saveloading";
    public static String saveunloading = "http://truckexpress.live/api/Bidding/saveunloading";
+   public static String canceltruckassigned = "http://truckexpress.live/api/Bidding/canceltruckassigned";
+   public static String truckcount = "http://truckexpress.live/api/Booking/truckcount";
 
 }

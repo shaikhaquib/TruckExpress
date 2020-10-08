@@ -198,6 +198,8 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                 }
             }
         });
+
+
     }
     private static void acceptBIDDialoge(final ModelBidDetails modelLOT, final ModelLOT lot, Context context,int flag,MaterialTextView materialTextView) {
         final AccepAlertBinding bidBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout. accep_alert, null, false);
@@ -929,7 +931,7 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
             itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
             itemLotBinding.totalfreight.setText("₹ " + modelLOT.getTotalfreight());
             itemLotBinding.expense.setText("₹ " + modelLOT.getTotalexpenses());
-            itemLotBinding.noofTruck.setText("Number : " + modelLOT.getBookingnooftruck());
+            itemLotBinding.noofTruck.setText("Number : " + modelLOT.getNooftrucks());
             itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistcount());
 
             itemLotBinding.remove.setOnClickListener(new View.OnClickListener() {
@@ -986,11 +988,33 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                 }
             });
 
+            Log.d(TAG, "bindDATA: " + modelLOT.getBookingid());
+            Log.d(TAG, "bindDATA: " + modelLOT.getBidcount());
+            Log.d(TAG, "bindDATA: " + modelLOT.getBiddingtype());
+            Log.d(TAG, "bindDATA: " + modelLOT.getAcceptedbycorporate());
+
             if (modelLOT.getWeight().isEmpty() || modelLOT.getWeight() == null) {
                 itemLotBinding.weight.setText("No Data");
             } else {
                 itemLotBinding.weight.setText(modelLOT.getWeight() + "Ton");
             }
+
+            if (modelLOT.getBidcount() == 0) {
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#F44336"));
+                itemLotBinding.bid.setFocusable(false);
+                itemLotBinding.bid.setClickable(false);
+
+                itemLotBinding.accept.setFocusable(false);
+                itemLotBinding.accept.setClickable(false);
+
+                itemLotBinding.Amount.setFocusable(false);
+                itemLotBinding.Amount.setClickable(false);
+
+            } else if (modelLOT.getBidcount() >= 2) {
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#2196F3"));
+            }
+
+
             if (modelLOT.getAcceptedbycorporate() == 1) {
                 itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#FFFFE974"));
             }
@@ -1089,14 +1113,16 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                     addBIDDialoge(modelLOT);
                 }
             });
+
             itemLotBinding.accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     new BidDetails(progress, modelLOT, context, 1, itemLotBinding.bookingID).execute(String.valueOf(modelLOT.getBookingid()), String.valueOf(modelLOT.getCorporateid()));
                 }
             });
-        }
 
+
+        }
     }
 
     public static void displayExpense(Context context, String id) {

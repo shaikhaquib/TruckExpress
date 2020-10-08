@@ -6,119 +6,149 @@ import java.io.Serializable;
 
 public class ModelCurrentBooking implements Serializable {
 
-    @SerializedName("truckid")
-    private int truckid;
-
     @SerializedName("totalexpenses")
     private int totalexpenses;
 
-    @SerializedName("nooftrucks")
-    private int nooftrucks;
+    @SerializedName("expensesunloading")
+    private String expensesunloading;
 
-	@SerializedName("expensesunloading")
-	private String expensesunloading;
+    @SerializedName("lotunitid")
+    private int lotunitid;
 
-	@SerializedName("tyerid")
-	private String tyerid;
+    @SerializedName("source")
+    private String source;
 
-	@SerializedName("destination")
-	private String destination;
+    @SerializedName("userid")
+    private int userid;
 
-	@SerializedName("nooftruckdemand")
-	private String nooftruckdemand;
+    @SerializedName("bookingid")
+    private int bookingid;
 
-	@SerializedName("goodsname")
-	private String goodsname;
+    @SerializedName("lotunitname")
+    private String lotunitname;
 
-	@SerializedName("source")
-	private String source;
+    @SerializedName("paymentmode")
+    private int paymentmode;
 
-	@SerializedName("userid")
-	private int userid;
+    @SerializedName("balance")
+    private int balance;
 
-	@SerializedName("pickupaddress")
-	private String pickupaddress;
+    @SerializedName("shrotageallowance")
+    private String shrotageallowance;
 
-	@SerializedName("bookingid")
-	private int bookingid;
+    @SerializedName("unitname")
+    private String unitname;
 
-	@SerializedName("trucktypeid")
-	private String trucktypeid;
+    @SerializedName("trucktypename")
+    private String trucktypename;
 
-	@SerializedName("transporterid")
-	private int transporterid;
+    @SerializedName("totalfreight")
+    private String totalfreight;
 
-	@SerializedName("paymentmode")
-	private int paymentmode;
+    @SerializedName("bookingtype")
+    private String bookingtype;
 
-	@SerializedName("unloadingpoint")
-	private String unloadingpoint;
+    @SerializedName("nooftyres")
+    private String nooftyres;
 
-	@SerializedName("balance")
-	private int balance;
+    @SerializedName("pickupdate")
+    private String pickupdate;
 
-	@SerializedName("rate")
-	private String rate;
-
-	@SerializedName("unitname")
-	private String unitname;
-
-	@SerializedName("trucktypename")
-	private String trucktypename;
-
-	@SerializedName("waitingtime")
-	private String waitingtime;
-
-	@SerializedName("totalfreight")
-	private String totalfreight;
-
-	@SerializedName("checklistname")
-	private String checklistname;
-
-	@SerializedName("truckname")
-	private String truckname;
-
-	@SerializedName("nooftyres")
-	private String nooftyres;
-
-	@SerializedName("corporate_contact_person")
-	private String corporateContactPerson;
-
-	@SerializedName("pickupdate")
-	private String pickupdate;
-
-	@SerializedName("customer_phone")
-	private String customerPhone;
+    @SerializedName("customer_phone")
+    private String customerPhone;
 
 	@SerializedName("weight")
 	private String weight;
 
-	@SerializedName("statusname")
-	private String statusname;
+    @SerializedName("statusname")
+    private String statusname;
 
-	@SerializedName("paymentname")
-	private String paymentname;
+    @SerializedName("paymentname")
+    private String paymentname;
 
-	@SerializedName("checklist")
-	private String checklist;
+    @SerializedName("latestbidid")
+    private int latestbidid;
 
-	@SerializedName("latestbidid")
-	private int latestbidid;
+    @SerializedName("lotweight")
+    private int lotweight;
 
-	@SerializedName("dropaddress")
-	private String dropaddress;
+    @SerializedName("company_name")
+    private String companyName;
 
-	@SerializedName("unloadingno")
-	private String unloadingno;
+    @SerializedName("name")
+    private String name;
 
-	@SerializedName("weightunloading")
-	private String weightunloading;
+    @SerializedName("goodstype")
+    private int goodstype;
 
-	@SerializedName("company_name")
-	private String companyName;
+    @SerializedName("status")
+    private String status;
 
-	@SerializedName("name")
-	private String name;
+    @SerializedName("truckid")
+    private int truckid;
+
+    @SerializedName("nooftrucks")
+    private int nooftrucks;
+
+    @SerializedName("tyerid")
+    private String tyerid;
+
+    @SerializedName("bookingtypename")
+    private String bookingtypename;
+
+    @SerializedName("destination")
+    private String destination;
+
+    @SerializedName("nooftruckdemand")
+    private String nooftruckdemand;
+
+    @SerializedName("goodsname")
+    private String goodsname;
+
+    @SerializedName("pickupaddress")
+    private String pickupaddress;
+
+    @SerializedName("trucktypeid")
+    private String trucktypeid;
+
+    @SerializedName("checklistcount")
+    private int checklistcount;
+
+    @SerializedName("transporterid")
+    private int transporterid;
+
+    @SerializedName("unloadingpoint")
+    private String unloadingpoint;
+
+    @SerializedName("rate")
+    private String rate;
+
+    @SerializedName("waitingtime")
+    private String waitingtime;
+
+    @SerializedName("checklistname")
+    private String checklistname;
+
+    @SerializedName("truckname")
+    private String truckname;
+
+    @SerializedName("corporate_contact_person")
+    private String corporateContactPerson;
+
+    @SerializedName("checklist")
+    private String checklist;
+
+    @SerializedName("corporateid")
+    private int corporateid;
+
+    @SerializedName("dropaddress")
+    private String dropaddress;
+
+    @SerializedName("unloadingno")
+    private String unloadingno;
+
+    @SerializedName("weightunloading")
+    private String weightunloading;
 
 	@SerializedName("unitid")
 	private int unitid;
@@ -126,83 +156,37 @@ public class ModelCurrentBooking implements Serializable {
 	@SerializedName("truckweightid")
 	private String truckweightid;
 
-	@SerializedName("goodstype")
-	private int goodstype;
-
-	@SerializedName("status")
-	private String status;
-
-	public void setTruckid(int truckid){
-		this.truckid = truckid;
-	}
-
-	public int getTruckid(){
-		return truckid;
-	}
-
 	public void setTotalexpenses(int totalexpenses){
 		this.totalexpenses = totalexpenses;
 	}
 
 	public int getTotalexpenses(){
 		return totalexpenses;
-	}
+    }
 
-	public void setNooftrucks(int nooftrucks){
-		this.nooftrucks = nooftrucks;
-	}
+    public void setExpensesunloading(String expensesunloading) {
+        this.expensesunloading = expensesunloading;
+    }
 
-	public int getNooftrucks(){
-		return nooftrucks;
-	}
+    public String getExpensesunloading() {
+        return expensesunloading;
+    }
 
-	public void setExpensesunloading(String expensesunloading){
-		this.expensesunloading = expensesunloading;
-	}
+    public int getLotunitid() {
+        return lotunitid;
+    }
 
-	public String getExpensesunloading(){
-		return expensesunloading;
-	}
+    public void setLotunitid(int lotunitid) {
+        this.lotunitid = lotunitid;
+    }
 
-	public void setTyerid(String tyerid){
-		this.tyerid = tyerid;
-	}
+    public void setSource(String source) {
+        this.source = source;
+    }
 
-	public String getTyerid(){
-		return tyerid;
-	}
-
-	public void setDestination(String destination){
-		this.destination = destination;
-	}
-
-	public String getDestination(){
-		return destination;
-	}
-
-	public void setNooftruckdemand(String nooftruckdemand){
-		this.nooftruckdemand = nooftruckdemand;
-	}
-
-	public String getNooftruckdemand(){
-		return nooftruckdemand;
-	}
-
-	public void setGoodsname(String goodsname){
-		this.goodsname = goodsname;
-	}
-
-	public String getGoodsname(){
-		return goodsname;
-	}
-
-	public void setSource(String source){
-		this.source = source;
-	}
-
-	public String getSource(){
-		return source;
-	}
+    public String getSource() {
+        return source;
+    }
 
 	public void setUserid(int userid){
 		this.userid = userid;
@@ -210,79 +194,55 @@ public class ModelCurrentBooking implements Serializable {
 
 	public int getUserid(){
 		return userid;
-	}
+    }
 
-	public void setPickupaddress(String pickupaddress){
-		this.pickupaddress = pickupaddress;
-	}
+    public void setBookingid(int bookingid) {
+        this.bookingid = bookingid;
+    }
 
-	public String getPickupaddress(){
-		return pickupaddress;
-	}
+    public int getBookingid() {
+        return bookingid;
+    }
 
-	public void setBookingid(int bookingid){
-		this.bookingid = bookingid;
-	}
+    public String getLotunitname() {
+        return lotunitname;
+    }
 
-	public int getBookingid(){
-		return bookingid;
-	}
+    public void setLotunitname(String lotunitname) {
+        this.lotunitname = lotunitname;
+    }
 
-	public void setTrucktypeid(String trucktypeid){
-		this.trucktypeid = trucktypeid;
-	}
+    public void setPaymentmode(int paymentmode) {
+        this.paymentmode = paymentmode;
+    }
 
-	public String getTrucktypeid(){
-		return trucktypeid;
-	}
+    public int getPaymentmode() {
+        return paymentmode;
+    }
 
-	public void setTransporterid(int transporterid){
-		this.transporterid = transporterid;
-	}
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
 
-	public int getTransporterid(){
-		return transporterid;
-	}
+    public int getBalance() {
+        return balance;
+    }
 
-	public void setPaymentmode(int paymentmode){
-		this.paymentmode = paymentmode;
-	}
+    public String getShrotageallowance() {
+        return shrotageallowance;
+    }
 
-	public int getPaymentmode(){
-		return paymentmode;
-	}
+    public void setShrotageallowance(String shrotageallowance) {
+        this.shrotageallowance = shrotageallowance;
+    }
 
-	public void setUnloadingpoint(String unloadingpoint){
-		this.unloadingpoint = unloadingpoint;
-	}
+    public void setUnitname(String unitname) {
+        this.unitname = unitname;
+    }
 
-	public String getUnloadingpoint(){
-		return unloadingpoint;
-	}
-
-	public void setBalance(int balance){
-		this.balance = balance;
-	}
-
-	public int getBalance(){
-		return balance;
-	}
-
-	public void setRate(String rate){
-		this.rate = rate;
-	}
-
-	public String getRate(){
-		return rate;
-	}
-
-	public void setUnitname(String unitname){
-		this.unitname = unitname;
-	}
-
-	public String getUnitname(){
-		return unitname;
-	}
+    public String getUnitname() {
+        return unitname;
+    }
 
 	public void setTrucktypename(String trucktypename){
 		this.trucktypename = trucktypename;
@@ -290,55 +250,31 @@ public class ModelCurrentBooking implements Serializable {
 
 	public String getTrucktypename(){
 		return trucktypename;
-	}
+    }
 
-	public void setWaitingtime(String waitingtime){
-		this.waitingtime = waitingtime;
-	}
+    public void setTotalfreight(String totalfreight) {
+        this.totalfreight = totalfreight;
+    }
 
-	public String getWaitingtime(){
-		return waitingtime;
-	}
+    public String getTotalfreight() {
+        return totalfreight;
+    }
 
-	public void setTotalfreight(String totalfreight){
-		this.totalfreight = totalfreight;
-	}
+    public String getBookingtype() {
+        return bookingtype;
+    }
 
-	public String getTotalfreight(){
-		return totalfreight;
-	}
+    public void setBookingtype(String bookingtype) {
+        this.bookingtype = bookingtype;
+    }
 
-	public void setChecklistname(String checklistname){
-		this.checklistname = checklistname;
-	}
+    public void setNooftyres(String nooftyres) {
+        this.nooftyres = nooftyres;
+    }
 
-	public String getChecklistname(){
-		return checklistname;
-	}
-
-	public void setTruckname(String truckname){
-		this.truckname = truckname;
-	}
-
-	public String getTruckname(){
-		return truckname;
-	}
-
-	public void setNooftyres(String nooftyres){
-		this.nooftyres = nooftyres;
-	}
-
-	public String getNooftyres(){
-		return nooftyres;
-	}
-
-	public void setCorporateContactPerson(String corporateContactPerson){
-		this.corporateContactPerson = corporateContactPerson;
-	}
-
-	public String getCorporateContactPerson(){
-		return corporateContactPerson;
-	}
+    public String getNooftyres() {
+        return nooftyres;
+    }
 
 	public void setPickupdate(String pickupdate){
 		this.pickupdate = pickupdate;
@@ -378,33 +314,217 @@ public class ModelCurrentBooking implements Serializable {
 
 	public String getPaymentname(){
 		return paymentname;
-	}
+    }
 
-	public void setChecklist(String checklist){
-		this.checklist = checklist;
-	}
+    public void setLatestbidid(int latestbidid) {
+        this.latestbidid = latestbidid;
+    }
 
-	public String getChecklist(){
-		return checklist;
-	}
+    public int getLatestbidid() {
+        return latestbidid;
+    }
 
-	public void setLatestbidid(int latestbidid){
-		this.latestbidid = latestbidid;
-	}
+    public int getLotweight() {
+        return lotweight;
+    }
 
-	public int getLatestbidid(){
-		return latestbidid;
-	}
+    public void setLotweight(int lotweight) {
+        this.lotweight = lotweight;
+    }
 
-	public void setDropaddress(String dropaddress){
-		this.dropaddress = dropaddress;
-	}
+    public String getCompanyName() {
+        return companyName;
+    }
 
-	public String getDropaddress(){
-		return dropaddress;
-	}
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
-	public void setUnloadingno(String unloadingno){
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getGoodstype() {
+        return goodstype;
+    }
+
+    public void setGoodstype(int goodstype) {
+        this.goodstype = goodstype;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getTruckid() {
+        return truckid;
+    }
+
+    public void setTruckid(int truckid) {
+        this.truckid = truckid;
+    }
+
+    public int getNooftrucks() {
+        return nooftrucks;
+    }
+
+    public void setNooftrucks(int nooftrucks) {
+        this.nooftrucks = nooftrucks;
+    }
+
+    public String getTyerid() {
+        return tyerid;
+    }
+
+    public void setTyerid(String tyerid) {
+        this.tyerid = tyerid;
+    }
+
+    public String getBookingtypename() {
+        return bookingtypename;
+    }
+
+    public void setBookingtypename(String bookingtypename) {
+        this.bookingtypename = bookingtypename;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getNooftruckdemand() {
+        return nooftruckdemand;
+    }
+
+    public void setNooftruckdemand(String nooftruckdemand) {
+        this.nooftruckdemand = nooftruckdemand;
+    }
+
+    public String getGoodsname() {
+        return goodsname;
+    }
+
+    public void setGoodsname(String goodsname) {
+        this.goodsname = goodsname;
+    }
+
+    public String getPickupaddress() {
+        return pickupaddress;
+    }
+
+    public void setPickupaddress(String pickupaddress) {
+        this.pickupaddress = pickupaddress;
+    }
+
+    public String getTrucktypeid() {
+        return trucktypeid;
+    }
+
+    public void setTrucktypeid(String trucktypeid) {
+        this.trucktypeid = trucktypeid;
+    }
+
+    public int getChecklistcount() {
+        return checklistcount;
+    }
+
+    public void setChecklistcount(int checklistcount) {
+        this.checklistcount = checklistcount;
+    }
+
+    public int getTransporterid() {
+        return transporterid;
+    }
+
+    public void setTransporterid(int transporterid) {
+        this.transporterid = transporterid;
+    }
+
+    public String getUnloadingpoint() {
+        return unloadingpoint;
+    }
+
+    public void setUnloadingpoint(String unloadingpoint) {
+        this.unloadingpoint = unloadingpoint;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getWaitingtime() {
+        return waitingtime;
+    }
+
+    public void setWaitingtime(String waitingtime) {
+        this.waitingtime = waitingtime;
+    }
+
+    public String getChecklistname() {
+        return checklistname;
+    }
+
+    public void setChecklistname(String checklistname) {
+        this.checklistname = checklistname;
+    }
+
+    public String getTruckname() {
+        return truckname;
+    }
+
+    public void setTruckname(String truckname) {
+        this.truckname = truckname;
+    }
+
+    public String getCorporateContactPerson() {
+        return corporateContactPerson;
+    }
+
+    public void setCorporateContactPerson(String corporateContactPerson) {
+        this.corporateContactPerson = corporateContactPerson;
+    }
+
+    public String getChecklist() {
+        return checklist;
+    }
+
+    public void setChecklist(String checklist) {
+        this.checklist = checklist;
+    }
+
+    public int getCorporateid() {
+        return corporateid;
+    }
+
+    public void setCorporateid(int corporateid) {
+        this.corporateid = corporateid;
+    }
+
+    public void setDropaddress(String dropaddress) {
+        this.dropaddress = dropaddress;
+    }
+
+    public String getDropaddress() {
+        return dropaddress;
+    }
+
+    public void setUnloadingno(String unloadingno) {
 		this.unloadingno = unloadingno;
 	}
 
@@ -418,22 +538,6 @@ public class ModelCurrentBooking implements Serializable {
 
 	public String getWeightunloading(){
 		return weightunloading;
-	}
-
-	public void setCompanyName(String companyName){
-		this.companyName = companyName;
-	}
-
-	public String getCompanyName(){
-		return companyName;
-	}
-
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public String getName(){
-		return name;
 	}
 
 	public void setUnitid(int unitid){
@@ -450,21 +554,5 @@ public class ModelCurrentBooking implements Serializable {
 
 	public String getTruckweightid(){
 		return truckweightid;
-	}
-
-	public void setGoodstype(int goodstype){
-		this.goodstype = goodstype;
-	}
-
-	public int getGoodstype(){
-		return goodstype;
-	}
-
-	public void setStatus(String status){
-		this.status = status;
-	}
-
-	public String getStatus(){
-		return status;
 	}
 }

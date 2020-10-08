@@ -258,17 +258,38 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
             if (!modelLOT.getTyre().isEmpty())
                 itemLotBinding.trckType.setText(modelLOT.getTrucktype() + "\n/" + modelLOT.getTyre() + " tyre");
             else
-                itemLotBinding.trckType.setText(""+modelLOT.getTrucktype());
+                itemLotBinding.trckType.setText("" + modelLOT.getTrucktype());
 
 
-            if (modelLOT.getAcceptedbycorporate() == 1){
+            if (modelLOT.getBidcount() == 0) {
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#F44336"));
+                itemLotBinding.bid.setFocusable(false);
+                itemLotBinding.bid.setClickable(false);
+
+                itemLotBinding.accept.setFocusable(false);
+                itemLotBinding.accept.setClickable(false);
+
+                itemLotBinding.Amount.setFocusable(false);
+                itemLotBinding.Amount.setClickable(false);
+
+            } else if (modelLOT.getBidcount() >= 2) {
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#2196F3"));
+            }
+
+
+            if (modelLOT.getAcceptedbycorporate() == 1) {
                 itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#FFFFE974"));
             }
-            if (modelLOT.getBiddingtype()==2){
+            if (modelLOT.getBiddingtype() == 2) {
+                itemLotBinding.bid.setVisibility(View.GONE);
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#E66AA2"));
+            }
+
+            if (modelLOT.getBiddingtype() == 2) {
                 itemLotBinding.bid.setVisibility(View.GONE);
             }
 
-            if (modelLOT.getBiddingtype()==2){
+            if (modelLOT.getBiddingtype() == 2) {
                 itemLotBinding.bid.setVisibility(View.GONE);
             }
 

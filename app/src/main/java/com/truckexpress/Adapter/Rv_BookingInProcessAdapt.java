@@ -25,6 +25,8 @@ import com.truckexpress.databinding.ItemCurrentBookingsBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.truckexpress.Adapter.RV_ADHOCAdapter.displayExpense;
+import static com.truckexpress.Adapter.Rv_CurrentBookingsAdapt.truckCount;
 import static com.truckexpress.Extras.Constants.AlertAutoLink;
 
 public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInProcessAdapt.ViewHolder> implements Filterable {
@@ -125,6 +127,25 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
             itemLotBinding.pickuplocation.setText(modelLOT.getPickupaddress());
             itemLotBinding.dropLocation.setText(modelLOT.getDropaddress());
 
+            itemLotBinding.expenseTotal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    displayExpense(context, String.valueOf(modelLOT.getBookingid()));
+                }
+            });
+            itemLotBinding.Amount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new RV_ADHOCAdapter.BidHistory(progress, context).execute(String.valueOf(modelLOT.getBookingid()), String.valueOf(modelLOT.getCorporateid()));
+                }
+            });
+            itemLotBinding.checkList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new RV_ADHOCAdapter.GetChecklist(new Progress(context), context).execute(String.valueOf(modelLOT.getBookingid()));
+                }
+            });
+
             itemLotBinding.goodsType.setText(modelLOT.getGoodsname());
             itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
             itemLotBinding.totalfreight.setText(modelLOT.getRate());
@@ -155,6 +176,12 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
                     String msg = "Name : " + modelLOT.getName() + "\n" +
                             "Mobile No : " + modelLOT.getCorporateContactPerson();
                     AlertAutoLink(context, msg, "Corporate Details");
+                }
+            });
+            itemLotBinding.noofTruck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    truckCount(context, modelLOT.getBookingid(), modelLOT.getNooftrucks(), new Progress(context));
                 }
             });
 

@@ -54,6 +54,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/status" />
 
+            <TextView
+                android:id="@+id/cancelAssignedTruck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:drawableLeft="@drawable/ic_baseline_delete_outline_24"
+                android:drawableTint="#DD2C00"
+                android:gravity="center"
+                android:text="Cancel Assigned Truck"
+                android:textAllCaps="false"
+                android:textColor="#DD2C00"
+                app:layout_constraintBottom_toBottomOf="@+id/btnloading"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnloading" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

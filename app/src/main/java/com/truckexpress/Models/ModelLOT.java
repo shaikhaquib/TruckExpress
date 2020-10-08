@@ -15,14 +15,14 @@ public class ModelLOT implements Serializable {
     @SerializedName("phone2")
     private Object phone2;
 
-	@SerializedName("phone3")
-	private Object phone3;
+    @SerializedName("phone3")
+    private Object phone3;
 
-	@SerializedName("lotunitid")
-	private int lotunitid;
+    @SerializedName("lotunitid")
+    private int lotunitid;
 
-	@SerializedName("source")
-	private String source;
+    @SerializedName("source")
+    private String source;
 
 	@SerializedName("bookingrate")
 	private double bookingrate;
@@ -156,23 +156,26 @@ public class ModelLOT implements Serializable {
 	@SerializedName("customername")
 	private String customername;
 
-	@SerializedName("unit_id")
-	private int unitId;
+    @SerializedName("unit_id")
+    private int unitId;
 
-	@SerializedName("selectbookingtype")
-	private int selectbookingtype;
+    @SerializedName("selectbookingtype")
+    private int selectbookingtype;
 
-	@SerializedName("email")
-	private Object email;
+    @SerializedName("email")
+    private Object email;
 
-	@SerializedName("checklistname")
-	private String checklistname;
+    @SerializedName("bidcount")
+    private int bidcount;
 
-	@SerializedName("address")
-	private Object address;
+    @SerializedName("checklistname")
+    private String checklistname;
 
-	@SerializedName("noofdays")
-	private int noofdays;
+    @SerializedName("address")
+    private Object address;
+
+    @SerializedName("noofdays")
+    private int noofdays;
 
 	@SerializedName("bidstatus")
 	private int bidstatus;
@@ -615,25 +618,33 @@ public class ModelLOT implements Serializable {
 
 	public int getSelectbookingtype(){
 		return selectbookingtype;
-	}
+    }
 
-	public void setEmail(Object email){
-		this.email = email;
-	}
+    public void setEmail(Object email) {
+        this.email = email;
+    }
 
-	public Object getEmail(){
-		return email;
-	}
+    public Object getEmail() {
+        return email;
+    }
 
-	public void setChecklistname(String checklistname){
-		this.checklistname = checklistname;
-	}
+    public int getBidcount() {
+        return bidcount;
+    }
 
-	public String getChecklistname(){
-		return checklistname;
-	}
+    public void setBidcount(int bidcount) {
+        this.bidcount = bidcount;
+    }
 
-	public void setAddress(Object address){
+    public void setChecklistname(String checklistname) {
+        this.checklistname = checklistname;
+    }
+
+    public String getChecklistname() {
+        return checklistname;
+    }
+
+    public void setAddress(Object address) {
 		this.address = address;
 	}
 
