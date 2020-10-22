@@ -56,6 +56,7 @@ public class BookingActivity extends AppCompatActivity {
     Fragment_Trip_Completed fragment_trip_completed = new Fragment_Trip_Completed();
     ActionBar actionBar;
     public List<ModelCurrentBooking> currentBookings = new ArrayList<>();
+    public List<ModelCurrentBooking> tripInProcess = new ArrayList<>();
     public List<ModelLOT> modelADHOC = new ArrayList<>();
     private static final String TAG = "BookingActivity";
     Progress progress;
@@ -295,7 +296,6 @@ public class BookingActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progress.dismiss();
-
             if (!s.equals("unsuccessful")) {
 
 
@@ -314,7 +314,7 @@ public class BookingActivity extends AppCompatActivity {
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 Gson gson = new Gson();
                                 ModelCurrentBooking modelLOT = gson.fromJson(object.toString(), ModelCurrentBooking.class);
-                                currentBookings.add(modelLOT);
+                                tripInProcess.add(modelLOT);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -323,7 +323,7 @@ public class BookingActivity extends AppCompatActivity {
                         JSONObject object = new JSONObject(s);
                         Gson gson = new Gson();
                         ModelCurrentBooking modelLOT = gson.fromJson(object.toString(), ModelCurrentBooking.class);
-                        currentBookings.add(modelLOT);
+                        tripInProcess.add(modelLOT);
 
                     } else {
                         Alert(BookingActivity.this, s);

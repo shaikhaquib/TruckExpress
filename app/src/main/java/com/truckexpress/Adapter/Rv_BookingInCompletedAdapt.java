@@ -3,7 +3,6 @@ package com.truckexpress.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,41 +16,32 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.truckexpress.Extras.Constants;
 import com.truckexpress.Extras.Progress;
-import com.truckexpress.Fragments.Frg_LoadedTrucks;
+import com.truckexpress.Fragments.Frg_UnLoadedTrucks;
 import com.truckexpress.Models.ModelCurrentBooking;
 import com.truckexpress.R;
 import com.truckexpress.databinding.ItemCurrentBookingsBinding;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.entity.StringEntity;
-
-import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Adapter.RV_ADHOCAdapter.displayExpense;
+import static com.truckexpress.Adapter.Rv_CurrentBookingsAdapt.sumWeight;
+import static com.truckexpress.Adapter.Rv_CurrentBookingsAdapt.truckCount;
 import static com.truckexpress.Extras.Constants.AlertAutoLink;
-import static com.truckexpress.Network.API.sumweight;
 
-public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInProcessAdapt.ViewHolder> implements Filterable {
+public class Rv_BookingInCompletedAdapt extends RecyclerView.Adapter<Rv_BookingInCompletedAdapt.ViewHolder> implements Filterable {
 
     private static final String TAG = "Rv_CurrentBookingsAdapt";
     List<ModelCurrentBooking> currentBookings;
     Context context;
     Progress progress;
-    List<TruckListJsonModel> truckListJsonModels = new ArrayList<>();
+    List<Rv_BookingInCompletedAdapt.TruckListJsonModel> truckListJsonModels = new ArrayList<>();
     List<ModelCurrentBooking> tempList;
 
 
-    public Rv_BookingInProcessAdapt(Context context, List<ModelCurrentBooking> currentBookings) {
+    public Rv_BookingInCompletedAdapt(Context context, List<ModelCurrentBooking> currentBookings) {
         this.currentBookings = currentBookings;
         this.tempList = this.currentBookings;
         this.context = context;
@@ -60,14 +50,14 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder viewHolder = new ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_current_bookings, parent, false));
+    public Rv_BookingInCompletedAdapt.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Rv_BookingInCompletedAdapt.ViewHolder viewHolder = new Rv_BookingInCompletedAdapt.ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_current_bookings, parent, false));
         viewHolder.setIsRecyclable(false);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final Rv_BookingInCompletedAdapt.ViewHolder holder, int position) {
         final ModelCurrentBooking modelLOT = currentBookings.get(position);
         holder.bindDATA(modelLOT);
     }
@@ -185,12 +175,12 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
             itemLotBinding.expense.setText(String.valueOf(modelLOT.getTotalfreight()));
             itemLotBinding.noofTruck.setText("Number : " + modelLOT.getNooftrucks());
             itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistname());
-            itemLotBinding.expenseTotal.setText("Expense : " + modelLOT.getTotalexpenses());
+            itemLotBinding.expenseTotal.setText("Expense  : " + modelLOT.getTotalexpenses());
             itemLotBinding.Assign.setVisibility(View.GONE);
             itemLotBinding.details.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Frg_LoadedTrucks newFragment = new Frg_LoadedTrucks();
+                    Frg_UnLoadedTrucks newFragment = new Frg_UnLoadedTrucks();
                     Bundle args = new Bundle();
                     args.putSerializable("itemBooking", modelLOT);
                     newFragment.setArguments(args);
@@ -225,10 +215,14 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
             itemLotBinding.noofTruck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sumWeight(context, progress, modelLOT);
-
+                    if (modelLOT.getBookingtype().equals("1")) {
+                        sumWeight(context, progress, modelLOT);
+                    } else {
+                        truckCount(context, modelLOT.getBookingid(), modelLOT, new Progress(context), 1, null);
+                    }
                 }
             });
+
 
             itemLotBinding.Showmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -243,68 +237,6 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
                 }
             });
 
-        }
-
-        public void sumWeight(Context context, Progress progress, ModelCurrentBooking currentBooking) {
-            if (progress != null)
-                progress.show();
-            AsyncHttpClient client = new AsyncHttpClient();
-            client.setTimeout(20 * 1000);
-
-            StringEntity entity = null;
-            try {
-                JSONObject jsonParams = new JSONObject();
-                jsonParams.put("bookingid", currentBooking.getBookingid());
-                jsonParams.put("userid", USERINFO.getId());
-                entity = new StringEntity(jsonParams.toString());
-            } catch (UnsupportedEncodingException | JSONException e) {
-                e.printStackTrace();
-            }
-
-            client.post(context, sumweight, entity, "application/json", new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
-                    if (progress != null)
-                        progress.dismiss();
-                    String result = new String(responseBody);
-                    Log.d(TAG, "onSuccess: " + result);
-
-
-                    try {
-
-                        String weightMsg = null;
-                        JSONObject object = new JSONArray(result).getJSONObject(0);
-                        if (currentBooking.getBookingtype().equals("1")) {
-                            int assigned = object.getInt("totalweight");
-                            int pending = currentBooking.getLotweight() - assigned;
-
-                            weightMsg = "Loaded Weight : " + assigned + " " + currentBooking.getUnitname() + "\nPending Weight : " + pending + " " + currentBooking.getUnitname();
-                        } else {
-                            int assigned = object.getInt("count");
-                            int pending = currentBooking.getNooftrucks() - assigned;
-                            weightMsg = "Loaded Trucks : " + assigned + "\nPending Trucks : " + pending;
-                        }
-
-                        AlertAutoLink(context, weightMsg, "Booking Details");
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
-                    Log.i("xml", "Sending failed");
-                    if (progress != null)
-                        progress.dismiss();
-                }
-
-                @Override
-                public void onProgress(long bytesWritten, long totalSize) {
-                    Log.i("xml", "Progress : " + bytesWritten);
-                }
-            });
         }
 
 

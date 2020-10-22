@@ -2,6 +2,7 @@ package com.truckexpress.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,6 +57,7 @@ import static com.truckexpress.Extras.Constants.AlertAutoLink;
 import static com.truckexpress.Network.API.SaveManualTruck;
 import static com.truckexpress.Network.API.TruckAssignedsave;
 import static com.truckexpress.Network.API.TruckList;
+import static com.truckexpress.Network.API.sumweight;
 import static com.truckexpress.Network.API.truckcount;
 
 public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBookingsAdapt.ViewHolder> implements Filterable {
@@ -65,7 +67,7 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
     Progress progress;
     private static final String TAG = "Rv_CurrentBookingsAdapt";
     List<TruckListJsonModel> truckListJsonModels = new ArrayList<>();
-    List<ModelCurrentBooking> tempList ;
+    List<ModelCurrentBooking> tempList;
 
 
     public Rv_CurrentBookingsAdapt(Context context, List<ModelCurrentBooking> currentBookings) {
@@ -75,12 +77,61 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
         progress = new Progress(context);
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder viewHolder =  new ViewHolder((ItemCurrentBookingsBinding) DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_current_bookings,parent,false));
-        viewHolder.setIsRecyclable(false);
-        return viewHolder;
+    public static void truckCount(Context context, int id, ModelCurrentBooking currentBooking, Progress progress, int flag, TextView textView) {
+        if (progress != null)
+            progress.show();
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(20 * 1000);
+
+        StringEntity entity = null;
+        try {
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("bookingid", id);
+            entity = new StringEntity(jsonParams.toString());
+        } catch (UnsupportedEncodingException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        client.post(context, truckcount, entity, "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                if (progress != null)
+                    progress.dismiss();
+                String result = new String(responseBody);
+                Log.d(TAG, "onSuccess: " + result);
+
+                try {
+                    JSONObject object = new JSONArray(result).getJSONObject(0);
+                    int assigned = object.getInt("count");
+                    int pending = currentBooking.getNooftrucks() - assigned;
+                    String msg = "Assigned Trucks : " + assigned + "\nPending Trucks : " + pending;
+                    if (flag == 1) {
+                        AlertAutoLink(context, msg, "Truck Counts");
+                    } else {
+                        if (assigned > 0) {
+                            textView.setBackgroundColor(Color.parseColor("#57BB8A"));
+                        } else if (pending == 0) {
+                            textView.setBackgroundColor(Color.parseColor("#00BCD4"));
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.i("xml", "Sending failed");
+                if (progress != null)
+                    progress.dismiss();
+            }
+
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+                Log.i("xml", "Progress : " + bytesWritten);
+            }
+        });
     }
 
     @Override
@@ -286,6 +337,65 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
         });
     }
 
+    public static void sumWeight(Context context, Progress progress, ModelCurrentBooking currentBooking) {
+        if (progress != null)
+            progress.show();
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(20 * 1000);
+
+        StringEntity entity = null;
+        try {
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("bookingid", currentBooking.getBookingid());
+            jsonParams.put("userid", USERINFO.getId());
+            entity = new StringEntity(jsonParams.toString());
+        } catch (UnsupportedEncodingException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        client.post(context, sumweight, entity, "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                if (progress != null)
+                    progress.dismiss();
+                String result = new String(responseBody);
+                Log.d(TAG, "onSuccess: " + result);
+
+                try {
+                    JSONObject object = new JSONArray(result).getJSONObject(0);
+                    int assigned = object.getInt("totalweight");
+                    int pending = currentBooking.getLotweight() - assigned;
+                    String weightMsg = "Assigned Weight : " + assigned + " " + currentBooking.getUnitname() + "\nPending Weight : " + pending + " " + currentBooking.getUnitname();
+                    AlertAutoLink(context, weightMsg, "Booking Details");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.i("xml", "Sending failed");
+                if (progress != null)
+                    progress.dismiss();
+            }
+
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+                Log.i("xml", "Progress : " + bytesWritten);
+            }
+        });
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ViewHolder viewHolder = new ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_current_bookings, parent, false));
+        viewHolder.setIsRecyclable(false);
+        return viewHolder;
+    }
+
     private void getTrucks(ModelCurrentBooking currentBookings) {
         progress.show();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -325,59 +435,15 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
                             Gson gson = new Gson();
                             ModelTruck modelState = gson.fromJson(object.toString(), ModelTruck.class);
                             modelTrucks.add(modelState);
+                            if (modelState.getUIMessage().equals("No data found")) {
+                                Toast.makeText(context, "No Truck available for specified Truck Type", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 displayBidHistory(modelTrucks, currentBookings, context);
-
-            }
-
-            @Override
-            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.i("xml", "Sending failed");
-                progress.dismiss();
-            }
-
-            @Override
-            public void onProgress(long bytesWritten, long totalSize) {
-                Log.i("xml", "Progress : " + bytesWritten);
-            }
-        });
-    }
-
-    public static void truckCount(Context context, int id, int count, Progress progress) {
-        progress.show();
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.setTimeout(20 * 1000);
-
-        StringEntity entity = null;
-        try {
-            JSONObject jsonParams = new JSONObject();
-            jsonParams.put("bookingid", id);
-            entity = new StringEntity(jsonParams.toString());
-        } catch (UnsupportedEncodingException | JSONException e) {
-            e.printStackTrace();
-        }
-
-        client.post(context, truckcount, entity, "application/json", new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
-                progress.dismiss();
-                String result = new String(responseBody);
-                Log.d(TAG, "onSuccess: " + result);
-
-                try {
-                    JSONObject object = new JSONArray(result).getJSONObject(0);
-                    int assigned = object.getInt("count");
-                    int pending = count - assigned;
-                    String msg = "Assigned Trucks : " + assigned + "\nPending Trucks : " + pending;
-                    AlertAutoLink(context, msg, "Truck Counts");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
             }
 
@@ -633,7 +699,9 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
         private void bindDATA(final ModelCurrentBooking modelLOT) {
             itemLotBinding.bookingID.setText("Booking ID :" + modelLOT.getBookingid());
             itemLotBinding.corporateName.setText(Constants.capitalize(modelLOT.getCompanyName()));
-            itemLotBinding.pickUPdate.setText(modelLOT.getPickupdate());
+
+            truckCount(context, modelLOT.getBookingid(), modelLOT, null, 0, itemLotBinding.bookingID);
+
 
             if (modelLOT.getWeight().isEmpty() || modelLOT.getWeight() == null) {
                 itemLotBinding.weight.setText("No Data");
@@ -650,11 +718,31 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
 
             itemLotBinding.goodsType.setText(modelLOT.getGoodsname() + " " + modelLOT.getShrotageallowance());
             itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
-            itemLotBinding.totalfreight.setText(modelLOT.getRate());
+            itemLotBinding.totalfreight.setVisibility(View.GONE);
             itemLotBinding.expense.setText(String.valueOf(modelLOT.getTotalfreight()));
-            itemLotBinding.noofTruck.setText("Number : " + modelLOT.getNooftrucks());
             itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistcount());
-            itemLotBinding.expenseTotal.setText("Expense Amount : " + modelLOT.getTotalexpenses());
+            itemLotBinding.expenseTotal.setText("Expense : " + modelLOT.getTotalexpenses());
+
+
+            itemLotBinding.paymentmode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (modelLOT.getPaymentmode() == 1) {
+                        String msg = "Advance : " + modelLOT.getAdvance() + " %" + "\n" +
+                                "Balance : " + modelLOT.getBalance();
+                        AlertAutoLink(context, msg, "Payments Details");
+                    } else if (modelLOT.getPaymentmode() == 4) {
+                        String msg = "Advance : " + modelLOT.getAdvance() + " %" + "\n" +
+                                "Balance : " + modelLOT.getBalance() + "\n" +
+                                "No Of Days : " + modelLOT.getNoofdays();
+                        AlertAutoLink(context, msg, "Payments Details");
+                    } else if (modelLOT.getPaymentmode() == 3) {
+                        String msg =
+                                "No Of Days : " + modelLOT.getNoofdays();
+                        AlertAutoLink(context, msg, "Payments Details");
+                    }
+                }
+            });
 
             itemLotBinding.expenseTotal.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -695,10 +783,26 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
                 }
             });
 
+            if (modelLOT.getBookingtype().equals("1")) {
+                itemLotBinding.weight.setVisibility(View.GONE);
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#bbe1fa"));
+                itemLotBinding.noofTruck.setText("Weight : " + modelLOT.getNooftrucks());
+                itemLotBinding.noofTruck.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_weighing_machine, 0, 0, 0);
+                itemLotBinding.pickUPdate.setText(modelLOT.getPickupdate() + " to " + modelLOT.getTodate());
+
+            } else {
+                itemLotBinding.noofTruck.setText("Number : " + modelLOT.getNooftrucks());
+                itemLotBinding.pickUPdate.setText(modelLOT.getPickupdate());
+            }
+
             itemLotBinding.noofTruck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    truckCount(context, modelLOT.getBookingid(), modelLOT.getNooftrucks(), new Progress(context));
+                    if (modelLOT.getBookingtype().equals("1")) {
+                        sumWeight(context, progress, modelLOT);
+                    } else {
+                        truckCount(context, modelLOT.getBookingid(), modelLOT, new Progress(context), 1, null);
+                    }
                 }
             });
 
@@ -706,8 +810,7 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
             itemLotBinding.corporateName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    String msg = "Name : " + modelLOT.getName() + "\n" +
+                    String msg = "Name : " + modelLOT.getName() + "\n" + "Email : " + modelLOT.getCorporateContactEmail() + "\n" +
                             "Mobile No : " + modelLOT.getCorporateContactPerson();
                     AlertAutoLink(context, msg, "Corporate Details");
                 }

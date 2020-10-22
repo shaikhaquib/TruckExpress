@@ -101,7 +101,7 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder viewHolder =  new ViewHolder((ItemAdhocBinding) DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_adhoc,parent,false));
+        ViewHolder viewHolder = new ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_adhoc, parent, false));
         viewHolder.setIsRecyclable(false);
         return viewHolder;
     }
@@ -757,8 +757,8 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                 public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
                     BIDHolder bidHolder = (BIDHolder)holder;
                     BIDLog bidLog = bidLogs.get(position);
-                    bidHolder.title.setText("Rate :"+bidLog.getRate());
-                    bidHolder.desc.setText("No of Trucks :"+bidLog.getNooftrucks());
+                    bidHolder.title.setText("Rate : ₹" + bidLog.getRate() + " " + bidLog.getUnitname());
+                    bidHolder.desc.setText("No of Trucks :" + bidLog.getNooftrucks());
 
                     if (bidLog.getAcceptedbycorporate() == 1 && bidLog.getAcceptedbytransporter() ==1){
                         bidHolder.materialCardView.setCardBackgroundColor(Color.parseColor("#76E8D9"));
@@ -770,14 +770,13 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
 
                         bidHolder.tranView.setVisibility(View.VISIBLE);
                         bidHolder.CoorporatorView.setVisibility(View.GONE);
-                        bidHolder.Transtitle.setText("Rate :"+bidLog.getRate());
-                        bidHolder.Transdesc.setText("No of Trucks :"+bidLog.getNooftrucks());
+                        bidHolder.Transtitle.setText("Rate : ₹" + bidLog.getRate() + " " + bidLog.getUnitname());
+                        bidHolder.Transdesc.setText("No of Trucks :" + bidLog.getNooftrucks());
                         bidHolder.TransbidBY.setText("Bid :Transporter");
 
-                    }
-                    else if (bidLog.getMsg().equals("Corporate"))
+                    } else if (bidLog.getMsg().equals("Corporate")) {
                         bidHolder.bidBY.setText("Bid :Corporate");
-                    else if (bidLog.getMsg().equals("Accept"))
+                    } else if (bidLog.getMsg().equals("Accept"))
                         bidHolder.bidBY.setText("Bid :Accepted");
 
                 }
@@ -888,7 +887,11 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
             progress.dismiss();
 
             if (s.equals("\"success\"")) {
-                Alert(context, "We have registered your request");
+                if (modelLOT.getAcceptedbycorporate() == 1) {
+                    Alert(context, "CONGRATULATION!!! YOUR BID HAS BEEN ACCEPTED.");
+                } else {
+                    Alert(context, "We have registered your request");
+                }
                 materialTextView.setBackgroundColor(Color.parseColor("#FFFFE974"));
             } else {
                 Alert(context, "Some thing went wrong..");
@@ -930,7 +933,7 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
             itemLotBinding.goodsType.setText(modelLOT.getGoodstype() + " " + modelLOT.getShortageallowance());
             itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
             itemLotBinding.totalfreight.setText("₹ " + modelLOT.getTotalfreight());
-            itemLotBinding.expense.setText("₹ " + modelLOT.getTotalexpenses());
+            itemLotBinding.expense.setText("₹ " + modelLOT.getTotalexpenses() + "(Per Truck)");
             itemLotBinding.noofTruck.setText("Number : " + modelLOT.getNooftrucks());
             itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistcount());
 
@@ -1011,7 +1014,7 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                 itemLotBinding.Amount.setClickable(false);
 
             } else if (modelLOT.getBidcount() >= 2) {
-                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#2196F3"));
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#40E0D0"));
             }
 
 
@@ -1022,7 +1025,7 @@ public class RV_ADHOCAdapter extends RecyclerView.Adapter<RV_ADHOCAdapter.ViewHo
                 itemLotBinding.bid.setVisibility(View.GONE);
                 itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#E66AA2"));
             }
-
+//40E0D0
             itemLotBinding.Amount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

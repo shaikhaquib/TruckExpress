@@ -67,7 +67,7 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder viewHolder =  new ViewHolder((ItemLotBinding) DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_lot,parent,false));
+        ViewHolder viewHolder = new ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_lot, parent, false));
         viewHolder.setIsRecyclable(false);
         return viewHolder;
     }
@@ -138,7 +138,7 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
         });
 
         bidBinding.bookingID.setText("Booking ID :" + modelLOT.getId());
-        bidBinding.noofTruck.setText(+modelLOT.getLotweight() + "" + modelLOT.getUnitname());
+        bidBinding.noofTruck.setText(+modelLOT.getLotweight() + " " + modelLOT.getLotunitname());
         bidBinding.trckType.setText(modelLOT.getTrucktype() + " / " + modelLOT.getTyre() + "tyre");
         bidBinding.rate.setText(String.valueOf(modelLOT.getRate()).trim());
         bidBinding.unit.setText(modelLOT.getUnitid());
@@ -152,7 +152,7 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
                 } else if (bidBinding.edtNoofTruck.getText().toString().isEmpty()) {
                     bidBinding.edtNoofTruck.setError("Field Required...");
                     Alert(context, "Please set Number of Truck");
-                } else if (Integer.parseInt(modelLOT.getNooftrucks()) < Integer.parseInt(bidBinding.edtNoofTruck.getText().toString().trim())) {
+                } else if (modelLOT.getLotweight() < Integer.parseInt(bidBinding.edtNoofTruck.getText().toString().trim())) {
                     bidBinding.edtNoofTruck.setError("Please Enter Valid data ...");
                     Alert(context, "Please Enter Valid data ...");
                 } else {
@@ -224,7 +224,7 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
 
             itemLotBinding.bookingID.setText("Booking ID :" + modelLOT.getId());
             itemLotBinding.corporateName.setText(Constants.capitalize(modelLOT.getCompanyName()));
-            itemLotBinding.pickUPdate.setText(modelLOT.getPickupdate());
+            itemLotBinding.pickUPdate.setText(modelLOT.getPickupdate() + " to\n" + modelLOT.getTodate());
             itemLotBinding.source.setText(modelLOT.getSource());
             itemLotBinding.destination.setText(modelLOT.getDestination());
             itemLotBinding.pickuplocation.setText(modelLOT.getPickupaddress());
@@ -235,7 +235,7 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
             itemLotBinding.expense.setText("₹ " + modelLOT.getTotalexpenses());
             itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistcount());
             itemLotBinding.Amount.setText(modelLOT.getRate() + " " + modelLOT.getUnitid());
-            itemLotBinding.weight.setText(modelLOT.getLotweight()+ " " + modelLOT.getLotunitname());
+            itemLotBinding.weight.setText(modelLOT.getNooftrucks() + " " + modelLOT.getLotunitname());
 
             itemLotBinding.note.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -273,7 +273,7 @@ public class RV_LotAdapter extends RecyclerView.Adapter<RV_LotAdapter.ViewHolder
                 itemLotBinding.Amount.setClickable(false);
 
             } else if (modelLOT.getBidcount() >= 2) {
-                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#2196F3"));
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#40E0D0"));
             }
 
 

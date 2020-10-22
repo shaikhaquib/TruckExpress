@@ -47,6 +47,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
+import static com.truckexpress.Extras.Constants.AlertAutoLink;
 import static com.truckexpress.Network.API.addArrival;
 import static com.truckexpress.Network.API.apploading;
 import static com.truckexpress.Network.API.canceltruckassigned;
@@ -73,7 +74,7 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ModelLoadingTrucklist trucklist = loadingTrucklists.get(position);
-        ViewHolder viewHolder = (ViewHolder) holder;
+        ViewHolder viewHolder = holder;
         viewHolder.truckNumber.setText("Vehicle Number : " + trucklist.getTruckname().toUpperCase());
         viewHolder.status.setText("Status : " + trucklist.getStatusname());
         if (trucklist.getPageloadingStatus() == 0) {
@@ -108,6 +109,15 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
                 } else {
                     loading(trucklist);
                 }
+            }
+        });
+
+        viewHolder.truckNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = "Truck Number : " + trucklist.getTruckname().toUpperCase() + "\n" + "Driver Name : " + trucklist.getFullname() + "\n" +
+                        "Driver Phone : " + trucklist.getPhone1();
+                AlertAutoLink(context, msg, "Truck Details");
             }
         });
     }

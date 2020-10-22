@@ -41,8 +41,8 @@ public class Fragment_TripIn_Process extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "onReceive: ");
-            if (mainActivity.currentBookings.size() > 0) {
-                currentBookings.addAll(mainActivity.currentBookings);
+            if (mainActivity.tripInProcess.size() > 0) {
+                currentBookings.addAll(mainActivity.tripInProcess);
                 rvLOT.getAdapter().notifyDataSetChanged();
             }
 

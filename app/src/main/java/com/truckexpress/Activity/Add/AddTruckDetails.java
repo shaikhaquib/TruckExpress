@@ -125,7 +125,7 @@ public class AddTruckDetails extends AppCompatActivity implements View.OnClickLi
         activityAddTruckDetailsBinding.TruckWeight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                strTruckWeight = String.valueOf(weightList.get(position).getWeight());
+                strTruckWeight = String.valueOf(weightList.get(position).getId());
             }
         });
         activityAddTruckDetailsBinding.TruckTyre.setOnItemClickListener(new AdapterView.OnItemClickListener() {

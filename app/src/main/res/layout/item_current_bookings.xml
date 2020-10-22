@@ -16,15 +16,16 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/pickUPdate"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="08 Aug 2020"
-                android:fontFamily="@font/gotham"
-                android:gravity="center"
+                android:drawableLeft="@drawable/ic_calendar"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/colorPrimary"
-                android:drawableLeft="@drawable/ic_calendar"
+                android:fontFamily="@font/gotham"
+                android:gravity="center_vertical"
+                android:text="08 Aug 2020"
+                app:layout_constraintEnd_toStartOf="@+id/bookingID"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="7dp"
                 android:drawableLeft="@drawable/ic_company"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/colorPrimary"
@@ -55,7 +56,7 @@
                 android:text="Devatives"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weight" />
+                app:layout_constraintTop_toBottomOf="@+id/trckType" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weight"
@@ -239,6 +240,7 @@
                     android:gravity="center_vertical|start"
                     android:textSize="12sp"
                     app:fontFamily="@font/gotham"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -253,8 +255,10 @@
                     android:drawableTint="@color/colorPrimary"
                     android:fontFamily="@font/gotham"
                     android:gravity="center_vertical|start"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
                     app:fontFamily="@font/gotham"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
                     app:layout_constraintTop_toBottomOf="@+id/goodsType" />
 
@@ -271,6 +275,7 @@
                     android:gravity="center_vertical|start"
                     android:textSize="12sp"
                     app:fontFamily="@font/gotham"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
                     app:layout_constraintTop_toBottomOf="@+id/paymentmode" />
 
@@ -287,6 +292,7 @@
                     android:gravity="center_vertical|start"
                     android:textSize="12sp"
                     app:fontFamily="@font/gotham"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
                     app:layout_constraintTop_toBottomOf="@+id/totalfreight" />
 
@@ -294,8 +300,7 @@
                     android:id="@+id/checkList"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
                     android:drawableLeft="@drawable/ic_checklist"
@@ -308,13 +313,14 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:fontFamily="@font/gotham"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dropLocation" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/expense"
+                    app:layout_constraintTop_toBottomOf="@+id/expense" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/expenseTotal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
@@ -328,7 +334,8 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:fontFamily="@font/gotham"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/view2"
+                    app:layout_constraintStart_toStartOf="@+id/checkList"
                     app:layout_constraintTop_toBottomOf="@+id/checkList" />
 
 
@@ -336,11 +343,11 @@
                     android:id="@+id/view2"
                     android:layout_width="0dp"
                     android:layout_height="0.5dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:background="@color/blue_grey_100"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/expenseTotal" />
+                    app:layout_constraintTop_toBottomOf="@+id/dropLocation" />
 
 
                 <com.google.android.material.button.MaterialButton
@@ -378,6 +385,7 @@
                 android:drawableLeft="@drawable/ic_truck"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
                 android:fontFamily="@font/gotham"
                 android:gravity="center_vertical|start"
                 android:text="Number : "

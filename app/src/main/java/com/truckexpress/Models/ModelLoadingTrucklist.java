@@ -1,39 +1,109 @@
 package com.truckexpress.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ModelLoadingTrucklist {
+
+    @SerializedName("truckid")
     private int truckid;
+
+    @SerializedName("tyre_id")
     private int tyreId;
+
+    @SerializedName("nooftrucks")
     private String nooftrucks;
+
+    @SerializedName("freight")
     private String freight;
+
+    @SerializedName("noofbags")
     private String noofbags;
+
+    @SerializedName("userid")
     private int userid;
+
+    @SerializedName("bookingid")
     private int bookingid;
+
+    @SerializedName("truckdeparture")
     private String truckdeparture;
+
+    @SerializedName("tyre")
     private String tyre;
+
+    @SerializedName("trucktypeid")
     private int trucktypeid;
+
+    @SerializedName("phone1")
     private String phone1;
+
+    @SerializedName("transporterid")
     private int transporterid;
+
+    @SerializedName("trucktype")
     private int trucktype;
+
+    @SerializedName("rate")
     private String rate;
+
+    @SerializedName("unitname")
     private String unitname;
+
+    @SerializedName("trucktypename")
     private String trucktypename;
+
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("Ln_no")
     private String lnNo;
+
+    @SerializedName("loadingno")
     private int loadingno;
+
+    @SerializedName("bookingtype")
     private String bookingtype;
+
+    @SerializedName("truckacailabilitytime")
     private String truckacailabilitytime;
+
+    @SerializedName("truckname")
     private String truckname;
+
+    @SerializedName("truckdeparturetime")
     private String truckdeparturetime;
+
+    @SerializedName("weight")
     private String weight;
+
+    @SerializedName("statusname")
     private String statusname;
+
+    @SerializedName("truckavailabilitydate")
     private String truckavailabilitydate;
+
+    @SerializedName("truckweight_id")
     private int truckweightId;
+
+    @SerializedName("unit")
     private int unit;
+
+    @SerializedName("pageloadingStatus")
     private int pageloadingStatus;
+
+    @SerializedName("unitid")
     private String unitid;
+
+    @SerializedName("amountpaid")
     private String amountpaid;
+
+    @SerializedName("fullname")
     private String fullname;
+
+    @SerializedName("loadedweight")
     private String loadedweight;
+
+    @SerializedName("status")
     private String status;
 
     public int getTruckid() {

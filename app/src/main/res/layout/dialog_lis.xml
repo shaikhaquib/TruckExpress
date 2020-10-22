@@ -30,8 +30,10 @@
                 android:text="Bid Log"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/view2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
 
             <View
@@ -40,8 +42,9 @@
                 android:layout_height="0.5dp"
                 android:layout_marginTop="16dp"
                 android:background="@color/blue_grey_100"
+                app:layout_constraintBottom_toTopOf="@+id/list"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
 
@@ -61,8 +64,8 @@
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />

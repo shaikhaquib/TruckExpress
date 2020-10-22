@@ -19,12 +19,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="08 Aug 2020"
-                android:fontFamily="@font/gotham"
-                android:gravity="center"
+                android:drawableLeft="@drawable/ic_calendar"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/colorPrimary"
-                android:drawableLeft="@drawable/ic_calendar"
+                android:fontFamily="@font/gotham"
+                android:gravity="center"
+                android:text="08 Aug 2020"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="8dp"
                 android:drawableLeft="@drawable/ic_truck"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/colorPrimary"
@@ -71,7 +71,7 @@
                 android:gravity="center"
                 android:text="Truck Type"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/pickUPdate" />
+                app:layout_constraintTop_toBottomOf="@+id/pickUPdate" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/Amount"
@@ -126,7 +126,7 @@
                 android:id="@+id/viewMore"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Showmore">

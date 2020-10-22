@@ -24,14 +24,14 @@ public class ModelLOT implements Serializable {
     @SerializedName("source")
     private String source;
 
-	@SerializedName("bookingrate")
-	private double bookingrate;
+    @SerializedName("bookingrate")
+    private double bookingrate;
 
-	@SerializedName("userid")
-	private int userid;
+    @SerializedName("userid")
+    private int userid;
 
-	@SerializedName("ammountpaid")
-	private String ammountpaid;
+    @SerializedName("ammountpaid")
+    private String ammountpaid;
 
 	@SerializedName("bookingid")
 	private int bookingid;
@@ -48,23 +48,26 @@ public class ModelLOT implements Serializable {
 	@SerializedName("trucktype")
 	private String trucktype;
 
-	@SerializedName("paymentmode")
-	private String paymentmode;
+    @SerializedName("paymentmode")
+    private String paymentmode;
 
-	@SerializedName("balance")
-	private String balance;
+    @SerializedName("balance")
+    private String balance;
 
-	@SerializedName("tlname")
-	private Object tlname;
+    @SerializedName("tlname")
+    private Object tlname;
 
-	@SerializedName("unitname")
-	private String unitname;
+    @SerializedName("todate")
+    private String todate;
 
-	@SerializedName("corporate_contact_persone_email")
-	private String corporateContactPersoneEmail;
+    @SerializedName("unitname")
+    private String unitname;
 
-	@SerializedName("id")
-	private int id;
+    @SerializedName("corporate_contact_persone_email")
+    private String corporateContactPersoneEmail;
+
+    @SerializedName("id")
+    private int id;
 
 	@SerializedName("totalfreight")
 	private String totalfreight;
@@ -147,14 +150,14 @@ public class ModelLOT implements Serializable {
 	@SerializedName("bookingnooftruck")
 	private int bookingnooftruck;
 
-	@SerializedName("rate")
-	private String rate;
+    @SerializedName("rate")
+    private String rate;
 
-	@SerializedName("biddingtype")
-	private int biddingtype;
+    @SerializedName("biddingtype")
+    private int biddingtype;
 
-	@SerializedName("customername")
-	private String customername;
+    @SerializedName("customername")
+    private String customername;
 
     @SerializedName("unit_id")
     private int unitId;
@@ -177,14 +180,14 @@ public class ModelLOT implements Serializable {
     @SerializedName("noofdays")
     private int noofdays;
 
-	@SerializedName("bidstatus")
-	private int bidstatus;
+    @SerializedName("bidstatus")
+    private int bidstatus;
 
-	@SerializedName("corporate_contact_person")
-	private String corporateContactPerson;
+    @SerializedName("corporate_contact_person")
+    private String corporateContactPerson;
 
-	@SerializedName("expensesid")
-	private String expensesid;
+    @SerializedName("expensesid")
+    private String expensesid;
 
 	@SerializedName("biddingtypename")
 	private String biddingtypename;
@@ -330,25 +333,33 @@ public class ModelLOT implements Serializable {
 
 	public String getBalance(){
 		return balance;
-	}
+    }
 
-	public void setTlname(Object tlname){
-		this.tlname = tlname;
-	}
+    public void setTlname(Object tlname) {
+        this.tlname = tlname;
+    }
 
-	public Object getTlname(){
-		return tlname;
-	}
+    public Object getTlname() {
+        return tlname;
+    }
 
-	public void setUnitname(String unitname){
-		this.unitname = unitname;
-	}
+    public String getTodate() {
+        return todate;
+    }
 
-	public String getUnitname(){
-		return unitname;
-	}
+    public void setTodate(String todate) {
+        this.todate = todate;
+    }
 
-	public void setCorporateContactPersoneEmail(String corporateContactPersoneEmail){
+    public void setUnitname(String unitname) {
+        this.unitname = unitname;
+    }
+
+    public String getUnitname() {
+        return unitname;
+    }
+
+    public void setCorporateContactPersoneEmail(String corporateContactPersoneEmail) {
 		this.corporateContactPersoneEmail = corporateContactPersoneEmail;
 	}
 
@@ -610,22 +621,22 @@ public class ModelLOT implements Serializable {
 
 	public int getUnitId(){
 		return unitId;
-	}
-
-	public void setSelectbookingtype(int selectbookingtype){
-		this.selectbookingtype = selectbookingtype;
-	}
-
-	public int getSelectbookingtype(){
-		return selectbookingtype;
     }
 
-    public void setEmail(Object email) {
-        this.email = email;
+    public void setSelectbookingtype(int selectbookingtype) {
+        this.selectbookingtype = selectbookingtype;
+    }
+
+    public int getSelectbookingtype() {
+        return selectbookingtype;
     }
 
     public Object getEmail() {
         return email;
+    }
+
+    public void setEmail(Object email) {
+        this.email = email;
     }
 
     public int getBidcount() {
@@ -636,25 +647,25 @@ public class ModelLOT implements Serializable {
         this.bidcount = bidcount;
     }
 
-    public void setChecklistname(String checklistname) {
-        this.checklistname = checklistname;
-    }
-
     public String getChecklistname() {
         return checklistname;
     }
 
+    public void setChecklistname(String checklistname) {
+        this.checklistname = checklistname;
+    }
+
     public void setAddress(Object address) {
-		this.address = address;
-	}
+        this.address = address;
+    }
 
-	public Object getAddress(){
-		return address;
-	}
+    public Object getAddress() {
+        return address;
+    }
 
-	public void setNoofdays(int noofdays){
-		this.noofdays = noofdays;
-	}
+    public void setNoofdays(int noofdays) {
+        this.noofdays = noofdays;
+    }
 
 	public int getNoofdays(){
 		return noofdays;
