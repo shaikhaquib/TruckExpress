@@ -17,9 +17,4 @@
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_gallery" />
 
-    <fragment
-        android:id="@+id/nav_truck"
-        android:name="com.truckexpress.Activity.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_truck"
-        tools:layout="@layout/fragment_slideshow" />
 </navigation>

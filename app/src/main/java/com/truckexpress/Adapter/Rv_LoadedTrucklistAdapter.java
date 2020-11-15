@@ -34,6 +34,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
+import static com.truckexpress.Extras.Constants.AlertAutoLink;
 import static com.truckexpress.Network.API.saveunloading;
 
 public class Rv_LoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadedTrucklistAdapter.ViewHolder> {
@@ -58,11 +59,19 @@ public class Rv_LoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadedTru
     @Override
     public void onBindViewHolder(@NonNull Rv_LoadedTrucklistAdapter.ViewHolder holder, int position) {
         ModelLoadedTrcukList trucklist = loadingTrucklists.get(position);
-        Rv_LoadedTrucklistAdapter.ViewHolder viewHolder = (Rv_LoadedTrucklistAdapter.ViewHolder) holder;
+        Rv_LoadedTrucklistAdapter.ViewHolder viewHolder = holder;
         viewHolder.truckNumber.setText("Vehicle Number : " + trucklist.getTruckname().toUpperCase());
         viewHolder.status.setText("Status : " + trucklist.getStatusname());
         viewHolder.cancelAssignedTruck.setVisibility(View.GONE);
 
+        viewHolder.truckNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = "Truck Number : " + trucklist.getTruckname().toUpperCase() + "\n" + "Driver Name : " + trucklist.getFullname() + "\n" +
+                        "Driver Phone : " + trucklist.getPhone1();
+                AlertAutoLink(context, msg, "Truck Details");
+            }
+        });
 
         viewHolder.btnloading.setText("Un Loading");
 

@@ -47,6 +47,8 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -77,7 +79,7 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
         progress = new Progress(context);
     }
 
-    public static void truckCount(Context context, int id, ModelCurrentBooking currentBooking, Progress progress, int flag, TextView textView) {
+    public static void truckCount(Context context, int id, ModelCurrentBooking currentBooking, Progress progress, int flag, ItemCurrentBookingsBinding itemCurrentBookingsBinding) {
         if (progress != null)
             progress.show();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -109,9 +111,10 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
                         AlertAutoLink(context, msg, "Truck Counts");
                     } else {
                         if (assigned > 0) {
-                            textView.setBackgroundColor(Color.parseColor("#57BB8A"));
+                            itemCurrentBookingsBinding.bookingID.setBackgroundColor(Color.parseColor("#57BB8A"));
                         } else if (pending == 0) {
-                            textView.setBackgroundColor(Color.parseColor("#00BCD4"));
+                            itemCurrentBookingsBinding.bookingID.setBackgroundColor(Color.parseColor("#00BCD4"));
+                            itemCurrentBookingsBinding.Assign.setVisibility(View.GONE);
                         }
                     }
                 } catch (JSONException e) {
@@ -196,6 +199,11 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         dialog.show();
         dialog.getWindow().setAttributes(lp);
+
+
+        if (bidLogs.isEmpty()) {
+            dialog.findViewById(R.id.submit).setVisibility(View.GONE);
+        }
 
         dialog.findViewById(R.id.manualTruck).setVisibility(View.VISIBLE);
         dialog.findViewById(R.id.manualTruck).setOnClickListener(new View.OnClickListener() {
@@ -436,7 +444,8 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
                             ModelTruck modelState = gson.fromJson(object.toString(), ModelTruck.class);
                             modelTrucks.add(modelState);
                             if (modelState.getUIMessage().equals("No data found")) {
-                                Toast.makeText(context, "No Truck available for specified Truck Type", Toast.LENGTH_SHORT).show();
+                                modelTrucks.clear();
+                                Toast.makeText(context, "No Truck available for specified Truck Type", Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -516,28 +525,37 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
         manualTruckBinding.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (manualTruckBinding.truckOwnerName.getText().toString().isEmpty()){
-                    manualTruckBinding.truckOwnerName.setError(manualTruckBinding.truckOwnerName.getHint().toString()+" Field Requires");
-                    Alert(context,manualTruckBinding.truckOwnerName.getHint().toString()+" Field Requires");
-                }else if (manualTruckBinding.TruckNumber.getText().toString().isEmpty()){
-                    manualTruckBinding.TruckNumber.setError(manualTruckBinding.TruckNumber.getHint().toString()+" Field Requires");
-                    Alert(context,manualTruckBinding.TruckNumber.getHint().toString()+" Field Requires");
-                }else if (manualTruckBinding.TruckWeight.getText().toString().isEmpty()){
-                    manualTruckBinding.TruckWeight.setError(manualTruckBinding.TruckWeight.getHint().toString()+" Field Requires");
-                    Alert(context,manualTruckBinding.TruckWeight.getHint().toString()+" Field Requires");
-                }else if (manualTruckBinding.DriverName.getText().toString().isEmpty()){
-                    manualTruckBinding.DriverName.setError(manualTruckBinding.DriverName.getHint().toString()+" Field Requires");
-                    Alert(context,manualTruckBinding.DriverName.getHint().toString()+" Field Requires");
-                }else if (manualTruckBinding.DriverMobile.getText().toString().isEmpty()){
-                    manualTruckBinding.DriverMobile.setError(manualTruckBinding.DriverMobile.getHint().toString()+" Field Requires");
-                    Alert(context,manualTruckBinding.DriverMobile.getHint().toString()+" Field Requires");
-                }else if (manualTruckBinding.truckavailibilty.getText().toString().isEmpty()){
-                    manualTruckBinding.truckavailibilty.setError(manualTruckBinding.truckavailibilty.getHint().toString()+" Field Requires");
-                    Alert(context,manualTruckBinding.truckavailibilty.getHint().toString()+" Field Requires");
-                }else {
-                    AddManual(dialog,bookingid,manualTruckBinding.truckOwnerName.getText().toString(),manualTruckBinding.TruckNumber.getText().toString(),
-                            manualTruckBinding.TruckWeight.getText().toString(),manualTruckBinding.DriverName.getText().toString(),
-                            manualTruckBinding.DriverMobile.getText().toString(),manualTruckBinding.truckavailibilty.getText().toString());
+
+                Pattern pattern1 = Pattern.compile("^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$");
+                Matcher matcher1 = pattern1.matcher(manualTruckBinding.TruckNumber.getText().toString());
+                if (manualTruckBinding.truckOwnerName.getText().toString().isEmpty()) {
+                    manualTruckBinding.truckOwnerName.setError(manualTruckBinding.truckOwnerName.getHint().toString() + " Field Requires");
+                    Alert(context, manualTruckBinding.truckOwnerName.getHint().toString() + " Field Requires");
+                } else if (manualTruckBinding.TruckNumber.getText().toString().isEmpty()) {
+                    manualTruckBinding.TruckNumber.setError(manualTruckBinding.TruckNumber.getHint().toString() + " Field Requires");
+                    Alert(context, manualTruckBinding.TruckNumber.getHint().toString() + " Field Requires");
+                } else if (!matcher1.matches() && !manualTruckBinding.TruckNumber.getText().toString().toUpperCase().isEmpty()) {
+                    manualTruckBinding.TruckNumber.setError("Please Enter Valid Truck no");
+                    Alert(context, "Please Enter Valid Truck no");
+                } else if (manualTruckBinding.TruckWeight.getText().toString().isEmpty()) {
+                    manualTruckBinding.TruckWeight.setError(manualTruckBinding.TruckWeight.getHint().toString() + " Field Requires");
+                    Alert(context, manualTruckBinding.TruckWeight.getHint().toString() + " Field Requires");
+                } else if (manualTruckBinding.DriverName.getText().toString().isEmpty()) {
+                    manualTruckBinding.DriverName.setError(manualTruckBinding.DriverName.getHint().toString() + " Field Requires");
+                    Alert(context, manualTruckBinding.DriverName.getHint().toString() + " Field Requires");
+                } else if (manualTruckBinding.DriverMobile.getText().toString().isEmpty()) {
+                    manualTruckBinding.DriverMobile.setError(manualTruckBinding.DriverMobile.getHint().toString() + " Field Requires");
+                    Alert(context, manualTruckBinding.DriverMobile.getHint().toString() + " Field Requires");
+                } else if (manualTruckBinding.DriverMobile.getText().toString().length() < 10) {
+                    manualTruckBinding.DriverMobile.setError("Please Enter Valid Phone no");
+                    Alert(context, "Please Enter Valid Phone no");
+                } else if (manualTruckBinding.truckavailibilty.getText().toString().isEmpty()) {
+                    manualTruckBinding.truckavailibilty.setError(manualTruckBinding.truckavailibilty.getHint().toString() + " Field Requires");
+                    Alert(context, manualTruckBinding.truckavailibilty.getHint().toString() + " Field Requires");
+                } else {
+                    AddManual(dialog, bookingid, manualTruckBinding.truckOwnerName.getText().toString(), manualTruckBinding.TruckNumber.getText().toString(),
+                            manualTruckBinding.TruckWeight.getText().toString(), manualTruckBinding.DriverName.getText().toString(),
+                            manualTruckBinding.DriverMobile.getText().toString(), manualTruckBinding.truckavailibilty.getText().toString());
                 }
             }
         });
@@ -700,8 +718,19 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
             itemLotBinding.bookingID.setText("Booking ID :" + modelLOT.getBookingid());
             itemLotBinding.corporateName.setText(Constants.capitalize(modelLOT.getCompanyName()));
 
-            truckCount(context, modelLOT.getBookingid(), modelLOT, null, 0, itemLotBinding.bookingID);
 
+            // Do something after 5s = 5000ms
+            //        new TruckCountForDetails(context, modelLOT.getBookingid(), modelLOT, null, 0, itemLotBinding).execute();
+
+            int assigned = modelLOT.getCount();
+            int pending = modelLOT.getNooftrucks() - assigned;
+            if (assigned > 0) {
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#57BB8A"));
+            }
+            if (pending == 0) {
+                itemLotBinding.bookingID.setBackgroundColor(Color.parseColor("#00BCD4"));
+                itemLotBinding.Assign.setVisibility(View.GONE);
+            }
 
             if (modelLOT.getWeight().isEmpty() || modelLOT.getWeight() == null) {
                 itemLotBinding.weight.setText("No Data");

@@ -169,12 +169,12 @@ public class Rv_BookingInCompletedAdapt extends RecyclerView.Adapter<Rv_BookingI
             });
 
 
-            itemLotBinding.goodsType.setText(modelLOT.getGoodsname());
+            itemLotBinding.goodsType.setText(modelLOT.getGoodsname() + " " + modelLOT.getShrotageallowance());
             itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
             itemLotBinding.totalfreight.setVisibility(View.GONE);
             itemLotBinding.expense.setText(String.valueOf(modelLOT.getTotalfreight()));
             itemLotBinding.noofTruck.setText("Number : " + modelLOT.getNooftrucks());
-            itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistname());
+            itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistcount());
             itemLotBinding.expenseTotal.setText("Expense  : " + modelLOT.getTotalexpenses());
             itemLotBinding.Assign.setVisibility(View.GONE);
             itemLotBinding.details.setOnClickListener(new View.OnClickListener() {

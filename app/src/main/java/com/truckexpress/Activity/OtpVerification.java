@@ -1,19 +1,14 @@
 package com.truckexpress.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import com.google.gson.Gson;
 import com.truckexpress.Extras.AppExecutor;
 import com.truckexpress.Extras.Constants;
@@ -37,6 +32,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import static com.truckexpress.Extras.Constants.Alert;
 import static com.truckexpress.Extras.Constants.CONNECTION_TIMEOUT;
@@ -111,7 +107,7 @@ public class OtpVerification extends AppCompatActivity {
 
 
                 OutputStream os = conn.getOutputStream();
-                os.write(object.toString().getBytes("UTF-8"));
+                os.write(object.toString().getBytes(StandardCharsets.UTF_8));
                 os.close();
 
             } catch (IOException | JSONException e) {
@@ -193,5 +189,6 @@ public class OtpVerification extends AppCompatActivity {
 
         }
     }
+
 
 }

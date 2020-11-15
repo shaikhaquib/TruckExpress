@@ -11,10 +11,10 @@ public class ModelLoadedTrcukList {
     private int tyreId;
 
     @SerializedName("nooftrucks")
-    private String nooftrucks;
+    private Object nooftrucks;
 
     @SerializedName("freight")
-    private String freight;
+    private Object freight;
 
     @SerializedName("noofbags")
     private String noofbags;
@@ -29,13 +29,13 @@ public class ModelLoadedTrcukList {
     private String truckdeparture;
 
     @SerializedName("tyre")
-    private String tyre;
+    private Object tyre;
 
     @SerializedName("trucktypeid")
     private int trucktypeid;
 
     @SerializedName("phone1")
-    private String phone1;
+    private Object phone1;
 
     @SerializedName("transporterid")
     private int transporterid;
@@ -56,13 +56,13 @@ public class ModelLoadedTrcukList {
     private int id;
 
     @SerializedName("Ln_no")
-    private String lnNo;
+    private Object lnNo;
 
     @SerializedName("loadingno")
     private int loadingno;
 
     @SerializedName("bookingtype")
-    private String bookingtype;
+    private Object bookingtype;
 
     @SerializedName("truckacailabilitytime")
     private String truckacailabilitytime;
@@ -92,13 +92,13 @@ public class ModelLoadedTrcukList {
     private int pageloadingStatus;
 
     @SerializedName("unitid")
-    private String unitid;
+    private Object unitid;
 
     @SerializedName("amountpaid")
     private String amountpaid;
 
     @SerializedName("fullname")
-    private String fullname;
+    private Object fullname;
 
     @SerializedName("loadedweight")
     private String loadedweight;
@@ -122,19 +122,19 @@ public class ModelLoadedTrcukList {
         this.tyreId = tyreId;
     }
 
-    public String getNooftrucks() {
+    public Object getNooftrucks() {
         return nooftrucks;
     }
 
-    public void setNooftrucks(String nooftrucks) {
+    public void setNooftrucks(Object nooftrucks) {
         this.nooftrucks = nooftrucks;
     }
 
-    public String getFreight() {
+    public Object getFreight() {
         return freight;
     }
 
-    public void setFreight(String freight) {
+    public void setFreight(Object freight) {
         this.freight = freight;
     }
 
@@ -170,11 +170,11 @@ public class ModelLoadedTrcukList {
         this.truckdeparture = truckdeparture;
     }
 
-    public String getTyre() {
+    public Object getTyre() {
         return tyre;
     }
 
-    public void setTyre(String tyre) {
+    public void setTyre(Object tyre) {
         this.tyre = tyre;
     }
 
@@ -186,11 +186,11 @@ public class ModelLoadedTrcukList {
         this.trucktypeid = trucktypeid;
     }
 
-    public String getPhone1() {
+    public Object getPhone1() {
         return phone1;
     }
 
-    public void setPhone1(String phone1) {
+    public void setPhone1(Object phone1) {
         this.phone1 = phone1;
     }
 
@@ -242,11 +242,11 @@ public class ModelLoadedTrcukList {
         this.id = id;
     }
 
-    public String getLnNo() {
+    public Object getLnNo() {
         return lnNo;
     }
 
-    public void setLnNo(String lnNo) {
+    public void setLnNo(Object lnNo) {
         this.lnNo = lnNo;
     }
 
@@ -258,11 +258,11 @@ public class ModelLoadedTrcukList {
         this.loadingno = loadingno;
     }
 
-    public String getBookingtype() {
+    public Object getBookingtype() {
         return bookingtype;
     }
 
-    public void setBookingtype(String bookingtype) {
+    public void setBookingtype(Object bookingtype) {
         this.bookingtype = bookingtype;
     }
 
@@ -338,11 +338,11 @@ public class ModelLoadedTrcukList {
         this.pageloadingStatus = pageloadingStatus;
     }
 
-    public String getUnitid() {
+    public Object getUnitid() {
         return unitid;
     }
 
-    public void setUnitid(String unitid) {
+    public void setUnitid(Object unitid) {
         this.unitid = unitid;
     }
 
@@ -354,11 +354,11 @@ public class ModelLoadedTrcukList {
         this.amountpaid = amountpaid;
     }
 
-    public String getFullname() {
+    public Object getFullname() {
         return fullname;
     }
 
-    public void setFullname(String fullname) {
+    public void setFullname(Object fullname) {
         this.fullname = fullname;
     }
 

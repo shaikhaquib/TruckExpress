@@ -34,6 +34,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Extras.Constants.Alert;
+import static com.truckexpress.Extras.Constants.AlertAutoLink;
 import static com.truckexpress.Network.API.saveunloading;
 
 public class Rv_UnLoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_UnLoadedTrucklistAdapter.ViewHolder> {
@@ -63,6 +64,14 @@ public class Rv_UnLoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_UnLoade
         viewHolder.status.setText("Status : " + trucklist.getStatusname());
         viewHolder.cancelAssignedTruck.setVisibility(View.GONE);
 
+        viewHolder.truckNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = "Truck Number : " + trucklist.getTruckname().toUpperCase() + "\n" + "Driver Name : " + trucklist.getFullname() + "\n" +
+                        "Driver Phone : " + trucklist.getPhone1();
+                AlertAutoLink(context, msg, "Truck Details");
+            }
+        });
 
         viewHolder.btnloading.setText("Un Loading");
 

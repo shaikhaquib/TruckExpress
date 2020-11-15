@@ -183,7 +183,8 @@ public class Fragment_Trip_Completed extends Fragment {
 
 
             if (!s.equals("unsuccessful")) {
-
+                TripInCompleted.clear();
+                rv_currentBookingsAdapt.notifyDataSetChanged();
 
                 Log.d(TAG, "onResponse: " + s);
 

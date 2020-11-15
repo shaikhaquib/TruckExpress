@@ -39,7 +39,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import static com.truckexpress.Activity.SplashScreen.USERINFO;
 import static com.truckexpress.Adapter.RV_ADHOCAdapter.displayExpense;
 import static com.truckexpress.Extras.Constants.AlertAutoLink;
-import static com.truckexpress.Network.API.sumweight;
+import static com.truckexpress.Network.API.loadedcountandsumtruck;
 
 public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInProcessAdapt.ViewHolder> implements Filterable {
 
@@ -179,12 +179,12 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
             });
 
 
-            itemLotBinding.goodsType.setText(modelLOT.getGoodsname());
+            itemLotBinding.goodsType.setText(modelLOT.getGoodsname() + " " + modelLOT.getShrotageallowance());
             itemLotBinding.paymentmode.setText(modelLOT.getPaymentname());
             itemLotBinding.totalfreight.setVisibility(View.GONE);
             itemLotBinding.expense.setText(String.valueOf(modelLOT.getTotalfreight()));
             itemLotBinding.noofTruck.setText("Number : " + modelLOT.getNooftrucks());
-            itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistname());
+            itemLotBinding.checkList.setText("Checklist : " + modelLOT.getChecklistcount());
             itemLotBinding.expenseTotal.setText("Expense : " + modelLOT.getTotalexpenses());
             itemLotBinding.Assign.setVisibility(View.GONE);
             itemLotBinding.details.setOnClickListener(new View.OnClickListener() {
@@ -226,7 +226,6 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
                 @Override
                 public void onClick(View v) {
                     sumWeight(context, progress, modelLOT);
-
                 }
             });
 
@@ -261,7 +260,7 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
                 e.printStackTrace();
             }
 
-            client.post(context, sumweight, entity, "application/json", new AsyncHttpResponseHandler() {
+            client.post(context, loadedcountandsumtruck, entity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
                     if (progress != null)
@@ -277,7 +276,6 @@ public class Rv_BookingInProcessAdapt extends RecyclerView.Adapter<Rv_BookingInP
                         if (currentBooking.getBookingtype().equals("1")) {
                             int assigned = object.getInt("totalweight");
                             int pending = currentBooking.getLotweight() - assigned;
-
                             weightMsg = "Loaded Weight : " + assigned + " " + currentBooking.getUnitname() + "\nPending Weight : " + pending + " " + currentBooking.getUnitname();
                         } else {
                             int assigned = object.getInt("count");
