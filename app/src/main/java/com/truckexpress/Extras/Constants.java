@@ -203,4 +203,14 @@ public class Constants {
 
     }
 
+    public static double calculateFreight(int unit, double rate, double weight) {
+        if (unit == 2) {
+            return rate * weight * 1000;
+        } else if (unit == 3) {
+            return rate * weight * 10;
+        } else {
+            return rate * weight;
+        }
+    }
+
 }

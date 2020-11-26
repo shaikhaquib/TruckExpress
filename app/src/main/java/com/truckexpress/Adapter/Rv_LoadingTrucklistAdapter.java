@@ -28,7 +28,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.truckexpress.Extras.Constants;
 import com.truckexpress.Extras.Progress;
+import com.truckexpress.Models.ModelCurrentBooking;
 import com.truckexpress.Models.ModelLoadingTrucklist;
 import com.truckexpress.R;
 import com.truckexpress.databinding.LoadingVeiwBinding;
@@ -58,11 +60,13 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
     List<ModelLoadingTrucklist> loadingTrucklists;
     Context context;
     Progress progress;
+    ModelCurrentBooking booking;
 
-    public Rv_LoadingTrucklistAdapter(Context context, List<ModelLoadingTrucklist> modelLOTS) {
+    public Rv_LoadingTrucklistAdapter(Context context, List<ModelLoadingTrucklist> modelLOTS, ModelCurrentBooking booking) {
         this.loadingTrucklists = modelLOTS;
         this.context = context;
         progress = new Progress(context);
+        this.booking = booking;
     }
 
     @NonNull
@@ -371,6 +375,15 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
             jsonParams.put("noofbags", noofbags);
             jsonParams.put("departuretime", time);
             jsonParams.put("departuredate", date);
+
+            jsonParams.put("rateunitid", booking.getUnitid());
+            jsonParams.put("advance", booking.getAdvance());
+            jsonParams.put("balance", booking.getBalance());
+            if (booking.getRate() != null)
+                jsonParams.put("freight", Constants.calculateFreight(booking.getUnitid(), Double.parseDouble(booking.getRate()), Double.parseDouble(trucklist.getWeight())));
+            else
+                jsonParams.put("freight", Constants.calculateFreight(booking.getUnitid(), 0, Double.parseDouble(trucklist.getWeight())));
+
 
             entity = new StringEntity(jsonParams.toString());
 

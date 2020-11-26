@@ -210,7 +210,7 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                manualTruckForm(currentBookings.getBookingid());
+                manualTruckForm(currentBookings.getBookingid(), currentBookings);
             }
         });
 
@@ -225,12 +225,20 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
                         try {
                             JSONObject object = new JSONObject();
                             TruckListJsonModel truckListJsonModel = truckListJsonModels.get(i);
-                            object.put("bookingid",truckListJsonModel.getBookingID());
-                            object.put("truckid",truckListJsonModel.getTruckId());
-                            object.put("transpoterid",truckListJsonModel.getTransPorterID());
+                            object.put("bookingid", truckListJsonModel.getBookingID());
+                            object.put("truckid", truckListJsonModel.getTruckId());
+                            object.put("transpoterid", truckListJsonModel.getTransPorterID());
                             object.put("trucknumber", truckListJsonModel.getTrucknumber());
                             object.put("truckweight", truckListJsonModel.getTruckweight());
-                            object.put("truckavailibilty", truckListJsonModel.getTruckavailibilty());
+                            object.put("rate", currentBookings.getRate());
+                            object.put("rateunitid", currentBookings.getUnitid());
+                            object.put("advance", currentBookings.getAdvance());
+                            object.put("balance", currentBookings.getBalance());
+                            if (currentBookings.getRate() != null)
+                                object.put("freight", Constants.calculateFreight(currentBookings.getUnitid(), Double.parseDouble(currentBookings.getRate()), truckListJsonModel.getTruckweight()));
+                            else
+                                object.put("freight", Constants.calculateFreight(currentBookings.getUnitid(), 0, truckListJsonModel.getTruckweight()));
+
                             jsonArray.put(object);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -469,7 +477,7 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
         });
     }
 
-    private void manualTruckForm(int bookingid) {
+    private void manualTruckForm(int bookingid, ModelCurrentBooking currentBookings) {
         final ManualTruckBinding manualTruckBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.manual_truck, null, false);
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -555,14 +563,14 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
                 } else {
                     AddManual(dialog, bookingid, manualTruckBinding.truckOwnerName.getText().toString(), manualTruckBinding.TruckNumber.getText().toString(),
                             manualTruckBinding.TruckWeight.getText().toString(), manualTruckBinding.DriverName.getText().toString(),
-                            manualTruckBinding.DriverMobile.getText().toString(), manualTruckBinding.truckavailibilty.getText().toString());
+                            manualTruckBinding.DriverMobile.getText().toString(), manualTruckBinding.truckavailibilty.getText().toString(), currentBookings);
                 }
             }
         });
 
     }
 
-    private void AddManual(Dialog dialog, int bookingid, String truckOwnerName, String TruckNumber, String TruckWeight, String DriverName, String DriverMobile, String truckavailibilty) {
+    private void AddManual(Dialog dialog, int bookingid, String truckOwnerName, String TruckNumber, String TruckWeight, String DriverName, String DriverMobile, String truckavailibilty, ModelCurrentBooking currentBookings) {
         progress.show();
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(20 * 1000);
@@ -577,9 +585,18 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
             jsonParams.put("drivername", DriverName);
             jsonParams.put("mobileno", DriverMobile);
             jsonParams.put("truckavailibilty", truckavailibilty);
+            jsonParams.put("rate", currentBookings.getRate());
+            jsonParams.put("rateunitid", currentBookings.getUnitid());
+            jsonParams.put("advance", currentBookings.getAdvance());
+            jsonParams.put("balance", currentBookings.getBalance());
+            if (currentBookings.getRate() != null)
+                jsonParams.put("freight", Constants.calculateFreight(currentBookings.getUnitid(), Double.parseDouble(currentBookings.getRate()), Double.parseDouble(TruckWeight)));
+            else
+                jsonParams.put("freight", Constants.calculateFreight(currentBookings.getUnitid(), 0, Double.parseDouble(TruckWeight)));
+
             entity = new StringEntity(jsonParams.toString());
 
-            Log.d(TAG, "getTrucks: "+jsonParams.toString());
+            Log.d(TAG, "getTrucks: " + jsonParams.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
