@@ -21,6 +21,7 @@ import com.truckexpress.Adapter.Rv_UnLoadedTrucklistAdapter;
 import com.truckexpress.Extras.Progress;
 import com.truckexpress.Models.ModelCurrentBooking;
 import com.truckexpress.Models.ModelLoadedTrcukList;
+import com.truckexpress.Models.ModelUnLoadedTrcukList;
 import com.truckexpress.R;
 
 import org.json.JSONArray;
@@ -41,7 +42,7 @@ public class Frg_UnLoadedTrucks extends DialogFragment {
     private static final String TAG = "Frg_BookingDetails";
     Bundle bundle;
     RecyclerView rvDetails;
-    List<ModelLoadedTrcukList> loadingTrucklists = new ArrayList<>();
+    List<ModelUnLoadedTrcukList> loadingTrucklists = new ArrayList<>();
     ModelCurrentBooking booking;
     TextView noData;
     private View root_view;
@@ -118,7 +119,7 @@ public class Frg_UnLoadedTrucks extends DialogFragment {
                         for (int y = 0; y < jsonArray.length(); y++) {
                             JSONObject object = jsonArray.getJSONObject(y);
                             Gson gson = new Gson();
-                            ModelLoadedTrcukList trucklist = gson.fromJson(object.toString(), ModelLoadedTrcukList.class);
+                            ModelUnLoadedTrcukList trucklist = gson.fromJson(object.toString(), ModelUnLoadedTrcukList.class);
                             loadingTrucklists.add(trucklist);
                         }
                         if (loadingTrucklists.size() > 0) {

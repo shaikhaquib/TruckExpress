@@ -109,7 +109,6 @@
                 android:id="@+id/Showmore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:button="@drawable/drop_down_selector"
                 android:buttonTint="@color/blue_700"
@@ -121,7 +120,7 @@
                 android:textSize="12sp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/noofTruck" />
+                app:layout_constraintTop_toTopOf="@+id/Amount" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/viewMore"

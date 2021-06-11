@@ -2,379 +2,401 @@ package com.truckexpress.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ModelLoadingTrucklist {
+public class ModelLoadingTrucklist{
 
-    @SerializedName("truckid")
-    private int truckid;
+	@SerializedName("truckid")
+	private int truckid;
 
-    @SerializedName("tyre_id")
-    private int tyreId;
+	@SerializedName("tyre_id")
+	private int tyreId;
 
-    @SerializedName("nooftrucks")
-    private String nooftrucks;
+	@SerializedName("nooftrucks")
+	private String nooftrucks;
 
-    @SerializedName("freight")
-    private String freight;
+	@SerializedName("freight")
+	private String freight;
 
-    @SerializedName("noofbags")
-    private String noofbags;
+	@SerializedName("noofbags")
+	private String noofbags;
 
-    @SerializedName("userid")
-    private int userid;
+	@SerializedName("userid")
+	private int userid;
 
-    @SerializedName("bookingid")
-    private int bookingid;
+	@SerializedName("bookingid")
+	private int bookingid;
 
-    @SerializedName("truckdeparture")
-    private String truckdeparture;
+	@SerializedName("truckdeparture")
+	private String truckdeparture;
 
-    @SerializedName("tyre")
-    private String tyre;
+	@SerializedName("tyre")
+	private String tyre;
 
-    @SerializedName("trucktypeid")
-    private int trucktypeid;
+	@SerializedName("trucktypeid")
+	private int trucktypeid;
 
-    @SerializedName("phone1")
-    private String phone1;
+	@SerializedName("advance")
+	private String advance;
 
-    @SerializedName("transporterid")
-    private int transporterid;
+	@SerializedName("phone1")
+	private String phone1;
 
-    @SerializedName("trucktype")
-    private int trucktype;
+	@SerializedName("transporterid")
+	private int transporterid;
 
-    @SerializedName("rate")
-    private String rate;
+	@SerializedName("trucktype")
+	private int trucktype;
 
-    @SerializedName("unitname")
-    private String unitname;
+	@SerializedName("balance")
+	private String balance;
 
-    @SerializedName("trucktypename")
-    private String trucktypename;
+	@SerializedName("rate")
+	private String rate;
 
-    @SerializedName("id")
-    private int id;
+	@SerializedName("unitname")
+	private String unitname;
 
-    @SerializedName("Ln_no")
-    private String lnNo;
+	@SerializedName("trucktypename")
+	private String trucktypename;
 
-    @SerializedName("loadingno")
-    private int loadingno;
+	@SerializedName("id")
+	private int id;
 
-    @SerializedName("bookingtype")
-    private String bookingtype;
+	@SerializedName("Ln_no")
+	private String lnNo;
 
-    @SerializedName("truckacailabilitytime")
-    private String truckacailabilitytime;
+	@SerializedName("loadingno")
+	private int loadingno;
 
-    @SerializedName("truckname")
-    private String truckname;
+	@SerializedName("bookingtype")
+	private String bookingtype;
 
-    @SerializedName("truckdeparturetime")
-    private String truckdeparturetime;
+	@SerializedName("truckacailabilitytime")
+	private String truckacailabilitytime;
 
-    @SerializedName("weight")
-    private String weight;
+	@SerializedName("truckname")
+	private String truckname;
 
-    @SerializedName("statusname")
-    private String statusname;
+	@SerializedName("truckdeparturetime")
+	private String truckdeparturetime;
 
-    @SerializedName("truckavailabilitydate")
-    private String truckavailabilitydate;
+	@SerializedName("weight")
+	private String weight;
 
-    @SerializedName("truckweight_id")
-    private int truckweightId;
+	@SerializedName("statusname")
+	private String statusname;
 
-    @SerializedName("unit")
-    private int unit;
+	@SerializedName("truckavailabilitydate")
+	private String truckavailabilitydate;
 
-    @SerializedName("pageloadingStatus")
-    private int pageloadingStatus;
+	@SerializedName("truckweight_id")
+	private int truckweightId;
 
-    @SerializedName("unitid")
-    private String unitid;
+	@SerializedName("unit")
+	private int unit;
 
-    @SerializedName("amountpaid")
-    private String amountpaid;
+	@SerializedName("pageloadingStatus")
+	private int pageloadingStatus;
 
-    @SerializedName("fullname")
-    private String fullname;
+	@SerializedName("unitid")
+	private String unitid;
 
-    @SerializedName("loadedweight")
-    private String loadedweight;
+	@SerializedName("amountpaid")
+	private String amountpaid;
 
-    @SerializedName("status")
-    private String status;
+	@SerializedName("fullname")
+	private String fullname;
 
-    public int getTruckid() {
-        return truckid;
-    }
+	@SerializedName("loadedweight")
+	private String loadedweight;
 
-    public void setTruckid(int truckid) {
-        this.truckid = truckid;
-    }
+	@SerializedName("status")
+	private String status;
 
-    public int getTyreId() {
-        return tyreId;
-    }
+	public void setTruckid(int truckid){
+		this.truckid = truckid;
+	}
 
-    public void setTyreId(int tyreId) {
-        this.tyreId = tyreId;
-    }
+	public int getTruckid(){
+		return truckid;
+	}
 
-    public String getNooftrucks() {
-        return nooftrucks;
-    }
+	public void setTyreId(int tyreId){
+		this.tyreId = tyreId;
+	}
 
-    public void setNooftrucks(String nooftrucks) {
-        this.nooftrucks = nooftrucks;
-    }
+	public int getTyreId(){
+		return tyreId;
+	}
 
-    public String getFreight() {
-        return freight;
-    }
+	public void setNooftrucks(String nooftrucks){
+		this.nooftrucks = nooftrucks;
+	}
 
-    public void setFreight(String freight) {
-        this.freight = freight;
-    }
+	public String getNooftrucks(){
+		return nooftrucks;
+	}
 
-    public String getNoofbags() {
-        return noofbags;
-    }
+	public void setFreight(String freight){
+		this.freight = freight;
+	}
 
-    public void setNoofbags(String noofbags) {
-        this.noofbags = noofbags;
-    }
+	public String getFreight(){
+		return freight;
+	}
 
-    public int getUserid() {
-        return userid;
-    }
+	public void setNoofbags(String noofbags){
+		this.noofbags = noofbags;
+	}
 
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
+	public String getNoofbags(){
+		return noofbags;
+	}
 
-    public int getBookingid() {
-        return bookingid;
-    }
+	public void setUserid(int userid){
+		this.userid = userid;
+	}
 
-    public void setBookingid(int bookingid) {
-        this.bookingid = bookingid;
-    }
+	public int getUserid(){
+		return userid;
+	}
 
-    public String getTruckdeparture() {
-        return truckdeparture;
-    }
+	public void setBookingid(int bookingid){
+		this.bookingid = bookingid;
+	}
 
-    public void setTruckdeparture(String truckdeparture) {
-        this.truckdeparture = truckdeparture;
-    }
+	public int getBookingid(){
+		return bookingid;
+	}
 
-    public String getTyre() {
-        return tyre;
-    }
+	public void setTruckdeparture(String truckdeparture){
+		this.truckdeparture = truckdeparture;
+	}
 
-    public void setTyre(String tyre) {
-        this.tyre = tyre;
-    }
+	public String getTruckdeparture(){
+		return truckdeparture;
+	}
 
-    public int getTrucktypeid() {
-        return trucktypeid;
-    }
+	public void setTyre(String tyre){
+		this.tyre = tyre;
+	}
 
-    public void setTrucktypeid(int trucktypeid) {
-        this.trucktypeid = trucktypeid;
-    }
+	public String getTyre(){
+		return tyre;
+	}
 
-    public String getPhone1() {
-        return phone1;
-    }
+	public void setTrucktypeid(int trucktypeid){
+		this.trucktypeid = trucktypeid;
+	}
 
-    public void setPhone1(String phone1) {
-        this.phone1 = phone1;
-    }
+	public int getTrucktypeid(){
+		return trucktypeid;
+	}
 
-    public int getTransporterid() {
-        return transporterid;
-    }
+	public void setAdvance(String advance){
+		this.advance = advance;
+	}
 
-    public void setTransporterid(int transporterid) {
-        this.transporterid = transporterid;
-    }
+	public String getAdvance(){
+		return advance;
+	}
 
-    public int getTrucktype() {
-        return trucktype;
-    }
+	public void setPhone1(String phone1){
+		this.phone1 = phone1;
+	}
 
-    public void setTrucktype(int trucktype) {
-        this.trucktype = trucktype;
-    }
+	public String getPhone1(){
+		return phone1;
+	}
 
-    public String getRate() {
-        return rate;
-    }
+	public void setTransporterid(int transporterid){
+		this.transporterid = transporterid;
+	}
 
-    public void setRate(String rate) {
-        this.rate = rate;
-    }
+	public int getTransporterid(){
+		return transporterid;
+	}
 
-    public String getUnitname() {
-        return unitname;
-    }
+	public void setTrucktype(int trucktype){
+		this.trucktype = trucktype;
+	}
 
-    public void setUnitname(String unitname) {
-        this.unitname = unitname;
-    }
+	public int getTrucktype(){
+		return trucktype;
+	}
 
-    public String getTrucktypename() {
-        return trucktypename;
-    }
+	public void setBalance(String balance){
+		this.balance = balance;
+	}
 
-    public void setTrucktypename(String trucktypename) {
-        this.trucktypename = trucktypename;
-    }
+	public String getBalance(){
+		return balance;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setRate(String rate){
+		this.rate = rate;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public String getRate(){
+		return rate;
+	}
 
-    public String getLnNo() {
-        return lnNo;
-    }
+	public void setUnitname(String unitname){
+		this.unitname = unitname;
+	}
 
-    public void setLnNo(String lnNo) {
-        this.lnNo = lnNo;
-    }
+	public String getUnitname(){
+		return unitname;
+	}
 
-    public int getLoadingno() {
-        return loadingno;
-    }
+	public void setTrucktypename(String trucktypename){
+		this.trucktypename = trucktypename;
+	}
 
-    public void setLoadingno(int loadingno) {
-        this.loadingno = loadingno;
-    }
+	public String getTrucktypename(){
+		return trucktypename;
+	}
 
-    public String getBookingtype() {
-        return bookingtype;
-    }
+	public void setId(int id){
+		this.id = id;
+	}
 
-    public void setBookingtype(String bookingtype) {
-        this.bookingtype = bookingtype;
-    }
+	public int getId(){
+		return id;
+	}
 
-    public String getTruckacailabilitytime() {
-        return truckacailabilitytime;
-    }
+	public void setLnNo(String lnNo){
+		this.lnNo = lnNo;
+	}
 
-    public void setTruckacailabilitytime(String truckacailabilitytime) {
-        this.truckacailabilitytime = truckacailabilitytime;
-    }
+	public String getLnNo(){
+		return lnNo;
+	}
 
-    public String getTruckname() {
-        return truckname;
-    }
+	public void setLoadingno(int loadingno){
+		this.loadingno = loadingno;
+	}
 
-    public void setTruckname(String truckname) {
-        this.truckname = truckname;
-    }
+	public int getLoadingno(){
+		return loadingno;
+	}
 
-    public String getTruckdeparturetime() {
-        return truckdeparturetime;
-    }
+	public void setBookingtype(String bookingtype){
+		this.bookingtype = bookingtype;
+	}
 
-    public void setTruckdeparturetime(String truckdeparturetime) {
-        this.truckdeparturetime = truckdeparturetime;
-    }
+	public String getBookingtype(){
+		return bookingtype;
+	}
 
-    public String getWeight() {
-        return weight;
-    }
+	public void setTruckacailabilitytime(String truckacailabilitytime){
+		this.truckacailabilitytime = truckacailabilitytime;
+	}
 
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
+	public String getTruckacailabilitytime(){
+		return truckacailabilitytime;
+	}
 
-    public String getStatusname() {
-        return statusname;
-    }
+	public void setTruckname(String truckname){
+		this.truckname = truckname;
+	}
 
-    public void setStatusname(String statusname) {
-        this.statusname = statusname;
-    }
+	public String getTruckname(){
+		return truckname;
+	}
 
-    public String getTruckavailabilitydate() {
-        return truckavailabilitydate;
-    }
+	public void setTruckdeparturetime(String truckdeparturetime){
+		this.truckdeparturetime = truckdeparturetime;
+	}
 
-    public void setTruckavailabilitydate(String truckavailabilitydate) {
-        this.truckavailabilitydate = truckavailabilitydate;
-    }
+	public String getTruckdeparturetime(){
+		return truckdeparturetime;
+	}
 
-    public int getTruckweightId() {
-        return truckweightId;
-    }
+	public void setWeight(String weight){
+		this.weight = weight;
+	}
 
-    public void setTruckweightId(int truckweightId) {
-        this.truckweightId = truckweightId;
-    }
+	public String getWeight(){
+		return weight;
+	}
 
-    public int getUnit() {
-        return unit;
-    }
+	public void setStatusname(String statusname){
+		this.statusname = statusname;
+	}
 
-    public void setUnit(int unit) {
-        this.unit = unit;
-    }
+	public String getStatusname(){
+		return statusname;
+	}
 
-    public int getPageloadingStatus() {
-        return pageloadingStatus;
-    }
+	public void setTruckavailabilitydate(String truckavailabilitydate){
+		this.truckavailabilitydate = truckavailabilitydate;
+	}
 
-    public void setPageloadingStatus(int pageloadingStatus) {
-        this.pageloadingStatus = pageloadingStatus;
-    }
+	public String getTruckavailabilitydate(){
+		return truckavailabilitydate;
+	}
 
-    public String getUnitid() {
-        return unitid;
-    }
+	public void setTruckweightId(int truckweightId){
+		this.truckweightId = truckweightId;
+	}
 
-    public void setUnitid(String unitid) {
-        this.unitid = unitid;
-    }
+	public int getTruckweightId(){
+		return truckweightId;
+	}
 
-    public String getAmountpaid() {
-        return amountpaid;
-    }
+	public void setUnit(int unit){
+		this.unit = unit;
+	}
 
-    public void setAmountpaid(String amountpaid) {
-        this.amountpaid = amountpaid;
-    }
+	public int getUnit(){
+		return unit;
+	}
 
-    public String getFullname() {
-        return fullname;
-    }
+	public void setPageloadingStatus(int pageloadingStatus){
+		this.pageloadingStatus = pageloadingStatus;
+	}
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
+	public int getPageloadingStatus(){
+		return pageloadingStatus;
+	}
 
-    public String getLoadedweight() {
-        return loadedweight;
-    }
+	public void setUnitid(String unitid){
+		this.unitid = unitid;
+	}
 
-    public void setLoadedweight(String loadedweight) {
-        this.loadedweight = loadedweight;
-    }
+	public String getUnitid(){
+		return unitid;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public void setAmountpaid(String amountpaid){
+		this.amountpaid = amountpaid;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public String getAmountpaid(){
+		return amountpaid;
+	}
+
+	public void setFullname(String fullname){
+		this.fullname = fullname;
+	}
+
+	public String getFullname(){
+		return fullname;
+	}
+
+	public void setLoadedweight(String loadedweight){
+		this.loadedweight = loadedweight;
+	}
+
+	public String getLoadedweight(){
+		return loadedweight;
+	}
+
+	public void setStatus(String status){
+		this.status = status;
+	}
+
+	public String getStatus(){
+		return status;
+	}
 }

@@ -64,7 +64,7 @@ public class Frg_LoadedTrucks extends DialogFragment {
         noData = root_view.findViewById(R.id.noData);
         rvDetails.setHasFixedSize(true);
         rvDetails.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvDetails.setAdapter(new Rv_LoadedTrucklistAdapter(getActivity(), loadingTrucklists));
+        rvDetails.setAdapter(new Rv_LoadedTrucklistAdapter(getActivity(), loadingTrucklists, booking));
         getDriverList();
         return root_view;
     }

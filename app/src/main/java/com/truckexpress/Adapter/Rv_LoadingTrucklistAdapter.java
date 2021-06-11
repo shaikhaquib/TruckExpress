@@ -85,7 +85,7 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
             viewHolder.btnloading.setText("Arrival");
         } else {
             viewHolder.btnloading.setText("Loading");
-            viewHolder.cancelAssignedTruck.setVisibility(View.GONE);
+         //   viewHolder.cancelAssignedTruck.setVisibility(View.GONE);
         }
 
         viewHolder.cancelAssignedTruck.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +119,24 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
         viewHolder.truckNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg = "Truck Number : " + trucklist.getTruckname().toUpperCase() + "\n" + "Driver Name : " + trucklist.getFullname() + "\n" +
-                        "Driver Phone : " + trucklist.getPhone1();
+                String msg = null;
+                if (trucklist.getPageloadingStatus() == 0) {
+                     msg = "Truck Number : " + trucklist.getTruckname().toUpperCase()
+                            +"\nDriver Name : " + trucklist.getFullname()
+                             +"\nDriver Phone : " + trucklist.getPhone1()
+                             +"\nFreight  : " + trucklist.getFreight()
+                             +"\nAdvance  : "+  trucklist.getAdvance()
+                             +"\nBalance  : " + trucklist.getBalance();
+                }else {
+                    msg = "Truck Number : " + trucklist.getTruckname().toUpperCase()
+                            +"\nDriver Name : " + trucklist.getFullname()
+                            +"\nDriver Phone : " + trucklist.getPhone1()
+                            +"\nFreight  : " + trucklist.getFreight()
+                            +"\nArrival Time  :"+trucklist.getTruckacailabilitytime()
+                            +"\nArrival Date  : "+trucklist.getTruckavailabilitydate()
+                            +"\nLRNo  : " + trucklist.getLnNo()
+                            +"\nAdvance  : "+trucklist.getAdvance()
+                            +"\nBalance  : "+trucklist.getBalance();                }
                 AlertAutoLink(context, msg, "Truck Details");
             }
         });
@@ -376,13 +392,18 @@ public class Rv_LoadingTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadingT
             jsonParams.put("departuretime", time);
             jsonParams.put("departuredate", date);
 
-            jsonParams.put("rateunitid", booking.getUnitid());
-            jsonParams.put("advance", booking.getAdvance());
-            jsonParams.put("balance", booking.getBalance());
-            if (booking.getRate() != null)
-                jsonParams.put("freight", Constants.calculateFreight(booking.getUnitid(), Double.parseDouble(booking.getRate()), Double.parseDouble(trucklist.getWeight())));
+            jsonParams.put("rateunitid", trucklist.getUnitid());
+            jsonParams.put("advance", trucklist.getAdvance());
+            jsonParams.put("balance", trucklist.getBalance());
+
+            Log.d(TAG, "addLoading: "+Integer.parseInt(trucklist.getUnitid()));
+            Log.d(TAG, "addLoading: "+ Double.parseDouble(trucklist.getRate()));
+            Log.d(TAG, "addLoading: "+Double.parseDouble(loadedweight));
+
+            if (trucklist.getRate() != null)
+                jsonParams.put("freight", Constants.calculateFreight(Integer.parseInt(trucklist.getUnitid()), Double.parseDouble(trucklist.getRate()), Double.parseDouble(loadedweight)));
             else
-                jsonParams.put("freight", Constants.calculateFreight(booking.getUnitid(), 0, Double.parseDouble(trucklist.getWeight())));
+                jsonParams.put("freight", Constants.calculateFreight(Integer.parseInt(trucklist.getUnitid()), 0, Double.parseDouble(loadedweight)));
 
 
             entity = new StringEntity(jsonParams.toString());

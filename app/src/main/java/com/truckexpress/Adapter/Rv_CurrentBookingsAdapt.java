@@ -234,6 +234,7 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
                             object.put("rateunitid", currentBookings.getUnitid());
                             object.put("advance", currentBookings.getAdvance());
                             object.put("balance", currentBookings.getBalance());
+                            object.put("truckavailibilty", truckListJsonModel.getTruckavailibilty());
                             if (currentBookings.getRate() != null)
                                 object.put("freight", Constants.calculateFreight(currentBookings.getUnitid(), Double.parseDouble(currentBookings.getRate()), truckListJsonModel.getTruckweight()));
                             else
@@ -536,10 +537,7 @@ public class Rv_CurrentBookingsAdapt extends RecyclerView.Adapter<Rv_CurrentBook
 
                 Pattern pattern1 = Pattern.compile("^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$");
                 Matcher matcher1 = pattern1.matcher(manualTruckBinding.TruckNumber.getText().toString());
-                if (manualTruckBinding.truckOwnerName.getText().toString().isEmpty()) {
-                    manualTruckBinding.truckOwnerName.setError(manualTruckBinding.truckOwnerName.getHint().toString() + " Field Requires");
-                    Alert(context, manualTruckBinding.truckOwnerName.getHint().toString() + " Field Requires");
-                } else if (manualTruckBinding.TruckNumber.getText().toString().isEmpty()) {
+               if (manualTruckBinding.TruckNumber.getText().toString().isEmpty()) {
                     manualTruckBinding.TruckNumber.setError(manualTruckBinding.TruckNumber.getHint().toString() + " Field Requires");
                     Alert(context, manualTruckBinding.TruckNumber.getHint().toString() + " Field Requires");
                 } else if (!matcher1.matches() && !manualTruckBinding.TruckNumber.getText().toString().toUpperCase().isEmpty()) {

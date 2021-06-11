@@ -21,6 +21,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.truckexpress.Extras.Progress;
 import com.truckexpress.Models.ModelLoadedTrcukList;
+import com.truckexpress.Models.ModelUnLoadedTrcukList;
 import com.truckexpress.R;
 import com.truckexpress.databinding.UnloadingViewBinding;
 
@@ -40,11 +41,11 @@ import static com.truckexpress.Network.API.saveunloading;
 public class Rv_UnLoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_UnLoadedTrucklistAdapter.ViewHolder> {
 
     private static final String TAG = "Rv_LoadingTrucklistAdap";
-    List<ModelLoadedTrcukList> loadingTrucklists;
+    List<ModelUnLoadedTrcukList> loadingTrucklists;
     Context context;
     Progress progress;
 
-    public Rv_UnLoadedTrucklistAdapter(Context context, List<ModelLoadedTrcukList> modelLOTS) {
+    public Rv_UnLoadedTrucklistAdapter(Context context, List<ModelUnLoadedTrcukList> modelLOTS) {
         this.loadingTrucklists = modelLOTS;
         this.context = context;
         progress = new Progress(context);
@@ -58,7 +59,7 @@ public class Rv_UnLoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_UnLoade
 
     @Override
     public void onBindViewHolder(@NonNull Rv_UnLoadedTrucklistAdapter.ViewHolder holder, int position) {
-        ModelLoadedTrcukList trucklist = loadingTrucklists.get(position);
+        ModelUnLoadedTrcukList trucklist = loadingTrucklists.get(position);
         Rv_UnLoadedTrucklistAdapter.ViewHolder viewHolder = holder;
         viewHolder.truckNumber.setText("Vehicle Number : " + trucklist.getTruckname().toUpperCase());
         viewHolder.status.setText("Status : " + trucklist.getStatusname());
@@ -67,8 +68,20 @@ public class Rv_UnLoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_UnLoade
         viewHolder.truckNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg = "Truck Number : " + trucklist.getTruckname().toUpperCase() + "\n" + "Driver Name : " + trucklist.getFullname() + "\n" +
-                        "Driver Phone : " + trucklist.getPhone1();
+                String   msg = "Truck Number : " + trucklist.getTruckname().toUpperCase()
+                        +"\nDriver Name   : " + trucklist.getFullname()
+                        +"\nDriver Phone  : " + trucklist.getPhone1()
+                        +"\nFreight       : " + trucklist.getFreight()
+                        //  +"\nArrival Time  :"+trucklist.getTruckacailabilitytime()
+                        //  +"\nArrival Date  : "+trucklist.getTruckavailabilitydate()
+                        +"\nLRNo           : " + trucklist.getLnNo()
+                        +"\nAdvance        : "+trucklist.getAdvance()
+                        +"\nBalance        : "+trucklist.getBalance()
+                        +"\nLoading Weight : "+trucklist.getLoadedweight()
+                        +"\nNo Of Bags     : "+trucklist.getNoofbags()
+                        +"\nUnloaded Weight: "+trucklist.getWeightunloading()
+                        +"\nNo Of Bags unloaded : "
+                        ;
                 AlertAutoLink(context, msg, "Truck Details");
             }
         });
@@ -83,7 +96,7 @@ public class Rv_UnLoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_UnLoade
         });
     }
 
-    private void loading(ModelLoadedTrcukList trucklist) {
+    private void loading(ModelUnLoadedTrcukList trucklist) {
         Dialog dialog;
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -134,7 +147,7 @@ public class Rv_UnLoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_UnLoade
 
     }
 
-    private void addLoading(ModelLoadedTrcukList trucklist, Dialog dialog, String loadedweight, String noofbags, String unloadingno) {
+    private void addLoading(ModelUnLoadedTrcukList trucklist, Dialog dialog, String loadedweight, String noofbags, String unloadingno) {
         final Progress progress = new Progress(context);
         progress.show();
         AsyncHttpClient client = new AsyncHttpClient();

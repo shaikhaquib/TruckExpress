@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.truckexpress.Extras.Constants;
 import com.truckexpress.Extras.Progress;
+import com.truckexpress.Models.ModelCurrentBooking;
 import com.truckexpress.Models.ModelLoadedTrcukList;
 import com.truckexpress.R;
 import com.truckexpress.databinding.UnloadingViewBinding;
@@ -43,11 +45,13 @@ public class Rv_LoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadedTru
     List<ModelLoadedTrcukList> loadingTrucklists;
     Context context;
     Progress progress;
+    ModelCurrentBooking booking;
 
-    public Rv_LoadedTrucklistAdapter(Context context, List<ModelLoadedTrcukList> modelLOTS) {
+    public Rv_LoadedTrucklistAdapter(Context context, List<ModelLoadedTrcukList> modelLOTS,    ModelCurrentBooking booking) {
         this.loadingTrucklists = modelLOTS;
         this.context = context;
         progress = new Progress(context);
+        this.booking = booking;
     }
 
     @NonNull
@@ -67,9 +71,20 @@ public class Rv_LoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadedTru
         viewHolder.truckNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg = "Truck Number : " + trucklist.getTruckname().toUpperCase() + "\n" + "Driver Name : " + trucklist.getFullname() + "\n" +
-                        "Driver Phone : " + trucklist.getPhone1();
-                AlertAutoLink(context, msg, "Truck Details");
+             String   msg = "Truck Number : " + trucklist.getTruckname().toUpperCase()
+                        +"\nDriver Name   : " + trucklist.getFullname()
+                        +"\nDriver Phone  : " + trucklist.getPhone1()
+                        +"\nFreight       : " + trucklist.getFreight()
+                      //  +"\nArrival Time  :"+trucklist.getTruckacailabilitytime()
+                      //  +"\nArrival Date  : "+trucklist.getTruckavailabilitydate()
+                        +"\nLRNo           : " + trucklist.getLnNo()
+                        +"\nAdvance        : "+trucklist.getAdvance()
+                        +"\nBalance        : "+trucklist.getBalance()
+                        +"\nLoading Weight : "+trucklist.getLoadedweight()
+                        +"\nNo Of Bags     : "+trucklist.getNoofbags()
+                     ;
+
+             AlertAutoLink(context, msg, "Truck Details");
             }
         });
 
@@ -126,7 +141,7 @@ public class Rv_LoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadedTru
                     loadingVeiwBinding.noofBags.setError("Field required");
                     Toast.makeText(context, "Unloading No Required", Toast.LENGTH_SHORT).show();
                 } else {
-                    addLoading(trucklist, dialog, loadingVeiwBinding.weightLoading.getText().toString(), loadingVeiwBinding.noofBags.getText().toString(), loadingVeiwBinding.unloadingno.getText().toString());
+                    addLoading(trucklist, dialog, loadingVeiwBinding.unloadedWeight.getText().toString(), loadingVeiwBinding.noofBags.getText().toString(), loadingVeiwBinding.unloadingno.getText().toString());
                 }
             }
         });
@@ -151,6 +166,13 @@ public class Rv_LoadedTrucklistAdapter extends RecyclerView.Adapter<Rv_LoadedTru
             jsonParams.put("unloadedweight", loadedweight);
             jsonParams.put("noofbags", noofbags);
             jsonParams.put("unloadingno", unloadingno);
+            jsonParams.put("rateunitid", trucklist.getUnitid());
+            jsonParams.put("advance", trucklist.getAdvance());
+            jsonParams.put("balance", trucklist.getBalance());
+            if (trucklist.getRate() != null)
+                jsonParams.put("freight", Constants.calculateFreight(Integer.parseInt(trucklist.getUnitid()), Double.parseDouble(trucklist.getRate()), Double.parseDouble(loadedweight)));
+            else
+                jsonParams.put("freight", Constants.calculateFreight(Integer.parseInt(trucklist.getUnitid()), 0, Double.parseDouble(loadedweight)));
 
 
             entity = new StringEntity(jsonParams.toString());
