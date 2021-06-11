@@ -138,6 +138,7 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="start"
                 android:hint="State"
+                app:layout_constraintCircleRadius="24dp"
                 app:hintEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
